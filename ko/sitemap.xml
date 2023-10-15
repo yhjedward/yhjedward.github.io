@@ -2,8 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://yhjedward.github.io/ko/</loc>
+    <lastmod>2019-10-19T11:44:14+09:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://yhjedward.github.io/en/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://yhjedward.github.io/ko/"
+                />
+  </url><url>
     <loc>https://yhjedward.github.io/ko/archive/</loc>
-    <lastmod>2023-10-11T09:56:12+08:00</lastmod>
+    <lastmod>2019-10-19T11:44:14+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -16,7 +29,7 @@
                 />
   </url><url>
     <loc>https://yhjedward.github.io/ko/about/</loc>
-    <lastmod>2023-10-11T09:56:12+08:00</lastmod>
+    <lastmod>2019-10-09T11:44:14+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -29,25 +42,42 @@
                 />
   </url><url>
     <loc>https://yhjedward.github.io/ko/gallery/</loc>
-    <lastmod>2023-10-11T09:56:12+08:00</lastmod>
-  </url><url>
-    <loc>https://yhjedward.github.io/ko/gallery/photo/</loc>
-    <lastmod>2023-10-11T09:56:12+08:00</lastmod>
-  </url><url>
-    <loc>https://yhjedward.github.io/ko/gallery/cartoon/</loc>
-    <lastmod>2023-10-11T09:56:12+08:00</lastmod>
-  </url><url>
-    <loc>https://yhjedward.github.io/ko/</loc>
-    <lastmod>2023-10-11T09:56:12+08:00</lastmod>
+    <lastmod>2018-10-12T10:20:16+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://yhjedward.github.io/en/"
+                href="https://yhjedward.github.io/en/gallery/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://yhjedward.github.io/ko/"
+                href="https://yhjedward.github.io/ko/gallery/"
+                />
+  </url><url>
+    <loc>https://yhjedward.github.io/ko/gallery/photo/</loc>
+    <lastmod>2018-10-12T10:20:16+09:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://yhjedward.github.io/en/gallery/photo/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://yhjedward.github.io/ko/gallery/photo/"
+                />
+  </url><url>
+    <loc>https://yhjedward.github.io/ko/gallery/cartoon/</loc>
+    <lastmod>2018-10-11T10:20:16+09:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://yhjedward.github.io/en/gallery/cartoon/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://yhjedward.github.io/ko/gallery/cartoon/"
                 />
   </url><url>
     <loc>https://yhjedward.github.io/ko/categories/</loc>
@@ -63,10 +93,8 @@
                 />
   </url><url>
     <loc>https://yhjedward.github.io/ko/tags/index/</loc>
-    <lastmod>2023-10-11T09:56:12+08:00</lastmod>
   </url><url>
     <loc>https://yhjedward.github.io/ko/posts/</loc>
-    <lastmod>2023-10-11T09:56:12+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -91,7 +119,6 @@
                 />
   </url><url>
     <loc>https://yhjedward.github.io/ko/tags/</loc>
-    <lastmod>2023-10-11T09:56:12+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
