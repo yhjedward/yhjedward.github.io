@@ -14,11 +14,65 @@
     <managingEditor>y3021454052@gmail.com (YHJ)</managingEditor>
     <webMaster>y3021454052@gmail.com (YHJ)</webMaster>
     <copyright>©2023, All Rights Reserved</copyright>
-    <lastBuildDate>Sat, 21 Oct 2023 10:31:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 24 Oct 2023 09:30:50 +0800</lastBuildDate>
     
         <atom:link href="https://yhjedward.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
     
 
+      
+      <item>
+        <title>广度优先搜索(BFS)</title>
+        <link>https://yhjedward.github.io/en/tags/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2bfs/</link>
+        <pubDate>Tue, 24 Oct 2023 09:30:50 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        
+        <guid>https://yhjedward.github.io/en/tags/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2bfs/</guid>
+        <description></description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>树</title>
+        <link>https://yhjedward.github.io/en/tags/%E6%A0%91/</link>
+        <pubDate>Tue, 24 Oct 2023 09:30:50 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        
+        <guid>https://yhjedward.github.io/en/tags/%E6%A0%91/</guid>
+        <description></description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>贪心法</title>
+        <link>https://yhjedward.github.io/en/tags/%E8%B4%AA%E5%BF%83%E6%B3%95/</link>
+        <pubDate>Mon, 23 Oct 2023 10:37:15 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        
+        <guid>https://yhjedward.github.io/en/tags/%E8%B4%AA%E5%BF%83%E6%B3%95/</guid>
+        <description></description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
       
       <item>
         <title>递归法</title>
