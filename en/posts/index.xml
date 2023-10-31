@@ -14,11 +14,41 @@
     <managingEditor>y3021454052@gmail.com (YHJ)</managingEditor>
     <webMaster>y3021454052@gmail.com (YHJ)</webMaster>
     <copyright>©2023, All Rights Reserved</copyright>
-    <lastBuildDate>Tue, 24 Oct 2023 09:30:50 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 31 Oct 2023 11:21:08 +0800</lastBuildDate>
     
         <atom:link href="https://yhjedward.github.io/en/posts/index.xml" rel="self" type="application/rss+xml" />
     
 
+      
+      <item>
+        <title>最小路径和</title>
+        <link>https://yhjedward.github.io/en/posts/leetcode/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/</link>
+        <pubDate>Tue, 31 Oct 2023 11:21:08 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        <atom:modified>Tue, 31 Oct 2023 11:21:08 +0800</atom:modified>
+        <guid>https://yhjedward.github.io/en/posts/leetcode/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/</guid>
+        <description>题目描述1 代码 c java python 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; using namespace</description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>动态规划</category>
+            
+          
+        
+        
+          
+            
+              <category>题解</category>
+            
+          
+        
+        
+      </item>
       
       <item>
         <title>二叉树的层序遍历</title>
