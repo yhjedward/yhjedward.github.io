@@ -9,7 +9,7 @@
     <lastmod>2020-01-19T21:13:42+09:00</lastmod>
   </url><url>
     <loc>https://yhjedward.github.io/en/</loc>
-    <lastmod>2023-10-31T11:21:08+08:00</lastmod>
+    <lastmod>2023-11-18T11:47:29+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
@@ -20,6 +20,25 @@
                 hreflang="en"
                 href="https://yhjedward.github.io/en/"
                 />
+  </url><url>
+    <loc>https://yhjedward.github.io/en/posts/</loc>
+    <lastmod>2023-11-18T11:47:29+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://yhjedward.github.io/ko/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://yhjedward.github.io/en/posts/"
+                />
+  </url><url>
+    <loc>https://yhjedward.github.io/en/posts/csharp/%E6%8E%A5%E5%8F%A3/</loc>
+    <lastmod>2023-11-18T11:47:29+08:00</lastmod>
+  </url><url>
+    <loc>https://yhjedward.github.io/en/posts/csharp/%E5%A7%94%E6%89%98/</loc>
+    <lastmod>2023-11-18T11:39:32+08:00</lastmod>
   </url><url>
     <loc>https://yhjedward.github.io/en/categories/</loc>
     <lastmod>2023-10-31T11:21:08+08:00</lastmod>
@@ -32,19 +51,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://yhjedward.github.io/en/categories/"
-                />
-  </url><url>
-    <loc>https://yhjedward.github.io/en/posts/</loc>
-    <lastmod>2023-10-31T11:21:08+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://yhjedward.github.io/ko/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://yhjedward.github.io/en/posts/"
                 />
   </url><url>
     <loc>https://yhjedward.github.io/en/tags/</loc>

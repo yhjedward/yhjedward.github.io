@@ -14,11 +14,47 @@
     <managingEditor>y3021454052@gmail.com (YHJ)</managingEditor>
     <webMaster>y3021454052@gmail.com (YHJ)</webMaster>
     <copyright>©2023, All Rights Reserved</copyright>
-    <lastBuildDate>Tue, 31 Oct 2023 11:21:08 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 18 Nov 2023 11:47:29 +0800</lastBuildDate>
     
         <atom:link href="https://yhjedward.github.io/en/posts/index.xml" rel="self" type="application/rss+xml" />
     
 
+      
+      <item>
+        <title>接口</title>
+        <link>https://yhjedward.github.io/en/posts/csharp/%E6%8E%A5%E5%8F%A3/</link>
+        <pubDate>Sat, 18 Nov 2023 11:47:29 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        <atom:modified>Sat, 18 Nov 2023 11:47:29 +0800</atom:modified>
+        <guid>https://yhjedward.github.io/en/posts/csharp/%E6%8E%A5%E5%8F%A3/</guid>
+        <description>接口 概述 接口是指定一组函数成员而不实现它们的引用类型,只能使用类和结构来实现接口. 接口可以有访问修饰符,接口成员不能有访问修饰符. 接口实例 多</description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>委托</title>
+        <link>https://yhjedward.github.io/en/posts/csharp/%E5%A7%94%E6%89%98/</link>
+        <pubDate>Sat, 18 Nov 2023 11:39:32 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        <atom:modified>Sat, 18 Nov 2023 11:39:32 +0800</atom:modified>
+        <guid>https://yhjedward.github.io/en/posts/csharp/%E5%A7%94%E6%89%98/</guid>
+        <description>委托 与 事件 概述 委托是引用类型, 委托有引用和对象, 委托类型必须在被用来创建变量以及类型的对象之前声明. 委托声明与方法声明相似, 只是没有实现块.</description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
       
       <item>
         <title>最小路径和</title>
