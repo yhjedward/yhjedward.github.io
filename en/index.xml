@@ -14,7 +14,7 @@
     <managingEditor>y3021454052@gmail.com (YHJ)</managingEditor>
     <webMaster>y3021454052@gmail.com (YHJ)</webMaster>
     <copyright>©2023, All Rights Reserved</copyright>
-    <lastBuildDate>Wed, 22 Nov 2023 09:52:17 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 19 Dec 2023 10:49:23 +0800</lastBuildDate>
     
         <atom:link href="https://yhjedward.github.io/en/index.xml" rel="self" type="application/rss+xml" />
     
@@ -40,6 +40,138 @@
         
       
 
+      
+      <item>
+        <title>协变与逆变</title>
+        <link>https://yhjedward.github.io/en/posts/csharp/%E5%8D%8F%E5%8F%98%E4%B8%8E%E9%80%86%E5%8F%98/</link>
+        <pubDate>Tue, 19 Dec 2023 10:49:23 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        <atom:modified>Tue, 19 Dec 2023 10:49:23 +0800</atom:modified>
+        <guid>https://yhjedward.github.io/en/posts/csharp/%E5%8D%8F%E5%8F%98%E4%B8%8E%E9%80%86%E5%8F%98/</guid>
+        <description>概述 协变性: 子类到父类的转换(如：string-&amp;gt;object). 逆变性: 父类到子类的转换(如：object-&amp;gt;string).</description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+        
+          
+            
+              <category>csharp</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>Javascript箭头函数</title>
+        <link>https://yhjedward.github.io/en/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0/</link>
+        <pubDate>Sat, 02 Dec 2023 10:40:16 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        <atom:modified>Sat, 02 Dec 2023 10:40:16 +0800</atom:modified>
+        <guid>https://yhjedward.github.io/en/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0/</guid>
+        <description>概述 箭头函数与常规函数对比 常规函数 箭头函数 带有块语法的箭头函数 1 2 3 4 5 function funcName(params) { return params + 2; } funcName(2); // 4 1 2 3 var funcName = (params) =&amp;gt; params + 2 funcName(2); // 4 1 2 3 // 如果使用块</description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>Javascript</category>
+            
+          
+        
+        
+          
+            
+              <category>前端</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>Electron环境搭建</title>
+        <link>https://yhjedward.github.io/en/posts/%E5%89%8D%E7%AB%AF/electron/electron%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+        <pubDate>Sat, 02 Dec 2023 10:34:56 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        <atom:modified>Sat, 02 Dec 2023 10:34:56 +0800</atom:modified>
+        <guid>https://yhjedward.github.io/en/posts/%E5%89%8D%E7%AB%AF/electron/electron%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+        <description>概述 配置安装 electron nodejs官网下载安装 nodejs.js. 使用 npm 安装 pnpm 1 npm install -g pnpm 创建目标项目文件夹 1 mkdir electron_Project 在当前文件夹下使用 pnpm 快速生成 package.json 默认配置 1 pnpm init 使用 pnpm 安装</description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>Electron</category>
+            
+          
+        
+        
+          
+            
+              <category>前端</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>泛型</title>
+        <link>https://yhjedward.github.io/en/posts/csharp/%E6%B3%9B%E5%9E%8B/</link>
+        <pubDate>Fri, 01 Dec 2023 10:14:56 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        <atom:modified>Fri, 01 Dec 2023 10:14:56 +0800</atom:modified>
+        <guid>https://yhjedward.github.io/en/posts/csharp/%E6%B3%9B%E5%9E%8B/</guid>
+        <description>概述 泛型(generic)特性可以让多个类型共享一组代码。泛型允许我们声明类型参数化(type-parameterized)的代码,用不同的</description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+        
+          
+            
+              <category>csharp</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>继承</title>
+        <link>https://yhjedward.github.io/en/posts/csharp/%E7%BB%A7%E6%89%BF/</link>
+        <pubDate>Thu, 23 Nov 2023 11:27:24 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        <atom:modified>Thu, 23 Nov 2023 11:27:24 +0800</atom:modified>
+        <guid>https://yhjedward.github.io/en/posts/csharp/%E7%BB%A7%E6%89%BF/</guid>
+        <description></description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+        
+          
+            
+              <category>csharp</category>
+            
+          
+        
+        
+      </item>
       
       <item>
         <title>组合和继承</title>
@@ -72,7 +204,7 @@
         <author>y3021454052@gmail.com (YHJ)</author>
         <atom:modified>Sat, 18 Nov 2023 11:47:29 +0800</atom:modified>
         <guid>https://yhjedward.github.io/en/posts/csharp/%E6%8E%A5%E5%8F%A3/</guid>
-        <description>接口 概述 接口是指定一组函数成员而不实现它们的引用类型,只能使用类和结构来实现接口. 接口可以有访问修饰符,接口成员不能有访问修饰符. 接口实例 多</description>
+        <description>概述 接口是指定一组函数成员而不实现它们的引用类型,只能使用类和结构来实现接口. 接口可以有访问修饰符,接口成员不能有访问修饰符. 接口实例 多个接</description>
         
         <dc:creator>YHJ</dc:creator>
         
@@ -90,13 +222,13 @@
       </item>
       
       <item>
-        <title>委托</title>
-        <link>https://yhjedward.github.io/en/posts/csharp/%E5%A7%94%E6%89%98/</link>
+        <title>委托与事件</title>
+        <link>https://yhjedward.github.io/en/posts/csharp/%E5%A7%94%E6%89%98%E4%B8%8E%E4%BA%8B%E4%BB%B6/</link>
         <pubDate>Sat, 18 Nov 2023 11:39:32 +0800</pubDate>
         <author>y3021454052@gmail.com (YHJ)</author>
         <atom:modified>Sat, 18 Nov 2023 11:39:32 +0800</atom:modified>
-        <guid>https://yhjedward.github.io/en/posts/csharp/%E5%A7%94%E6%89%98/</guid>
-        <description>委托 与 事件 概述 委托是引用类型, 委托有引用和对象, 委托类型必须在被用来创建变量以及类型的对象之前声明. 委托声明与方法声明相似, 只是没有实现块.</description>
+        <guid>https://yhjedward.github.io/en/posts/csharp/%E5%A7%94%E6%89%98%E4%B8%8E%E4%BA%8B%E4%BB%B6/</guid>
+        <description>概述 委托是引用类型, 委托有引用和对象, 委托类型必须在被用来创建变量以及类型的对象之前声明. 委托声明与方法声明相似, 只是没有实现块. 委托不需要</description>
         
         <dc:creator>YHJ</dc:creator>
         

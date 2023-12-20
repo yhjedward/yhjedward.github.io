@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" 
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Electron on Hugo Zzo Theme</title>
+    <link>https://yhjedward.github.io/en/tags/electron/</link>
+    <description>Recent content in Electron on Hugo Zzo Theme</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>y3021454052@gmail.com (YHJ)</managingEditor>
+    <webMaster>y3021454052@gmail.com (YHJ)</webMaster>
+    <copyright>©2023, All Rights Reserved</copyright>
+    <lastBuildDate>Sat, 02 Dec 2023 10:34:56 +0800</lastBuildDate>
+    
+        <atom:link href="https://yhjedward.github.io/en/tags/electron/index.xml" rel="self" type="application/rss+xml" />
+    
+
+      
+      <item>
+        <title>Electron环境搭建</title>
+        <link>https://yhjedward.github.io/en/posts/%E5%89%8D%E7%AB%AF/electron/electron%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+        <pubDate>Sat, 02 Dec 2023 10:34:56 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        <atom:modified>Sat, 02 Dec 2023 10:34:56 +0800</atom:modified>
+        <guid>https://yhjedward.github.io/en/posts/%E5%89%8D%E7%AB%AF/electron/electron%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+        <description>概述 配置安装 electron nodejs官网下载安装 nodejs.js. 使用 npm 安装 pnpm 1 npm install -g pnpm 创建目标项目文件夹 1 mkdir electron_Project 在当前文件夹下使用 pnpm 快速生成 package.json 默认配置 1 pnpm init 使用 pnpm 安装</description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>Electron</category>
+            
+          
+        
+        
+          
+            
+              <category>前端</category>
+            
+          
+        
+        
+      </item>
+      
+
+    
+  </channel>
+</rss>

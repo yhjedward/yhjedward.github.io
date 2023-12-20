@@ -14,19 +14,19 @@
     <managingEditor>y3021454052@gmail.com (YHJ)</managingEditor>
     <webMaster>y3021454052@gmail.com (YHJ)</webMaster>
     <copyright>©2023, All Rights Reserved</copyright>
-    <lastBuildDate>Wed, 22 Nov 2023 09:52:17 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 19 Dec 2023 10:49:23 +0800</lastBuildDate>
     
         <atom:link href="https://yhjedward.github.io/en/categories/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
-        <title>Java</title>
-        <link>https://yhjedward.github.io/en/categories/java/</link>
-        <pubDate>Wed, 22 Nov 2023 09:52:17 +0800</pubDate>
+        <title>csharp</title>
+        <link>https://yhjedward.github.io/en/categories/csharp/</link>
+        <pubDate>Tue, 19 Dec 2023 10:49:23 +0800</pubDate>
         <author>y3021454052@gmail.com (YHJ)</author>
         
-        <guid>https://yhjedward.github.io/en/categories/java/</guid>
+        <guid>https://yhjedward.github.io/en/categories/csharp/</guid>
         <description></description>
         
         <dc:creator>YHJ</dc:creator>
@@ -39,12 +39,30 @@
       </item>
       
       <item>
-        <title>csharp</title>
-        <link>https://yhjedward.github.io/en/categories/csharp/</link>
-        <pubDate>Sat, 18 Nov 2023 11:47:29 +0800</pubDate>
+        <title>前端</title>
+        <link>https://yhjedward.github.io/en/categories/%E5%89%8D%E7%AB%AF/</link>
+        <pubDate>Sat, 02 Dec 2023 10:40:16 +0800</pubDate>
         <author>y3021454052@gmail.com (YHJ)</author>
         
-        <guid>https://yhjedward.github.io/en/categories/csharp/</guid>
+        <guid>https://yhjedward.github.io/en/categories/%E5%89%8D%E7%AB%AF/</guid>
+        <description></description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>Java</title>
+        <link>https://yhjedward.github.io/en/categories/java/</link>
+        <pubDate>Wed, 22 Nov 2023 09:52:17 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        
+        <guid>https://yhjedward.github.io/en/categories/java/</guid>
         <description></description>
         
         <dc:creator>YHJ</dc:creator>
