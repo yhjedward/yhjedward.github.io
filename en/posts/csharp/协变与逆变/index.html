@@ -1977,8 +1977,20 @@
   }
 </script>
 <h2 id="接口的逆变与协变">接口的逆变与协变</h2>
-<h4 id="协变学习">协变学习</h4>
-<div class="highlight"><div class="chroma">
+<h4 id="代码示例-1">代码示例</h4>
+
+<div id="350d200040db7d43" class="codetab">
+  <div class="codetab__links">
+    
+      <button class="codetab__link" aria-label="Tab link">协变</button>
+    
+      <button class="codetab__link" aria-label="Tab link">逆变</button>
+    
+  </div>
+  
+
+<div id="5d10eeff50f5b70f" class="codetab__content">
+  <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -2038,8 +2050,11 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h4 id="逆变学习">逆变学习</h4>
-<div class="highlight"><div class="chroma">
+</div>
+</div>
+
+<div id="fd1dee0162d2999c" class="codetab__content">
+  <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -2097,7 +2112,49 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h4 id="代码示例-1">代码示例</h4>
+</div>
+</div>
+
+</div>
+
+<script>
+  'use strict';
+
+  var containerId = JSON.parse("\"350d200040db7d43\"");
+  var containerElem = document.getElementById(containerId);
+  var codetabLinks = null;
+  var codetabContents = null;
+  var ids = [];
+
+  if (containerElem) {
+    codetabLinks = containerElem.querySelectorAll('.codetab__link');
+    codetabContents = containerElem.querySelectorAll('.codetab__content');
+  }
+
+  for (var i = 0; i < codetabContents.length; i++) {
+    ids = ids.concat(codetabContents[i].getAttribute('id'));
+    codetabContents[i].style.display = 'none';
+
+    if (0 === parseInt(i, 10) && !codetabContents[i].classList.contains('active')) {
+      codetabContents[i].classList.add('active');
+    }
+  }
+
+  for (var i = 0; i < codetabLinks.length; i++) {
+    codetabLinks[i].setAttribute('id', ids[i]);
+
+    if (0 === parseInt(i, 10) && !codetabLinks[i].classList.contains('active')) {
+      codetabLinks[i].classList.add('active');
+    } else {
+      codetabLinks[i].classList.remove('active');
+    }
+  }
+
+  if (codetabContents.length > 0) {
+    codetabContents[0].style.display = 'block';
+  }
+</script>
+<h4 id="代码示例-2">代码示例</h4>
 <h2 id="参考链接">参考链接</h2>
 <ol>
 <li><a href="https://segmentfault.com/a/1190000007005115">协变与逆变</a></li>
@@ -2851,9 +2908,8 @@ document.addEventListener('DOMContentLoaded', function () {
       <ul>
         <li>
           <ul>
-            <li><a href="#协变学习">协变学习</a></li>
-            <li><a href="#逆变学习">逆变学习</a></li>
             <li><a href="#代码示例-1">代码示例</a></li>
+            <li><a href="#代码示例-2">代码示例</a></li>
           </ul>
         </li>
       </ul>
