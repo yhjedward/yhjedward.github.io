@@ -13,12 +13,42 @@
     <language>en</language>
     <managingEditor>y3021454052@gmail.com (YHJ)</managingEditor>
     <webMaster>y3021454052@gmail.com (YHJ)</webMaster>
-    <copyright>©2023, All Rights Reserved</copyright>
-    <lastBuildDate>Tue, 19 Dec 2023 10:49:23 +0800</lastBuildDate>
+    <copyright>©2024, All Rights Reserved</copyright>
+    <lastBuildDate>Sat, 16 Mar 2024 16:37:51 +0800</lastBuildDate>
     
         <atom:link href="https://yhjedward.github.io/en/posts/index.xml" rel="self" type="application/rss+xml" />
     
 
+      
+      <item>
+        <title>单例模式</title>
+        <link>https://yhjedward.github.io/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+        <pubDate>Sat, 16 Mar 2024 16:37:51 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        <atom:modified>Sat, 16 Mar 2024 16:37:51 +0800</atom:modified>
+        <guid>https://yhjedward.github.io/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+        <description>懒汉模式 概述 他是一个懒汉,不愿动弹.只有你主动叫他的时候他才会工作,即实例在类加载的时候不被初始化,到了需要使用的时候才进行初始化. 饿汉模式</description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>单例模式</category>
+            
+          
+        
+        
+          
+            
+              <category>设计模式</category>
+            
+          
+        
+        
+      </item>
       
       <item>
         <title>协变与逆变</title>

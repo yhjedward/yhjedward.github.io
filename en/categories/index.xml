@@ -13,12 +13,30 @@
     <language>en</language>
     <managingEditor>y3021454052@gmail.com (YHJ)</managingEditor>
     <webMaster>y3021454052@gmail.com (YHJ)</webMaster>
-    <copyright>©2023, All Rights Reserved</copyright>
-    <lastBuildDate>Tue, 19 Dec 2023 10:49:23 +0800</lastBuildDate>
+    <copyright>©2024, All Rights Reserved</copyright>
+    <lastBuildDate>Sat, 16 Mar 2024 16:37:51 +0800</lastBuildDate>
     
         <atom:link href="https://yhjedward.github.io/en/categories/index.xml" rel="self" type="application/rss+xml" />
     
 
+      
+      <item>
+        <title>设计模式</title>
+        <link>https://yhjedward.github.io/en/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+        <pubDate>Sat, 16 Mar 2024 16:37:51 +0800</pubDate>
+        <author>y3021454052@gmail.com (YHJ)</author>
+        
+        <guid>https://yhjedward.github.io/en/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
+        <description></description>
+        
+        <dc:creator>YHJ</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
       
       <item>
         <title>csharp</title>
