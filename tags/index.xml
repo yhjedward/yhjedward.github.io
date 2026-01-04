@@ -2,108 +2,108 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Windows 7 Style Blog</title>
-    <link>/tags/</link>
+    <link>https://yhjedward.github.io/tags/</link>
     <description>Recent content in Tags on Windows 7 Style Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sat, 26 Jul 2025 00:00:00 +0800</lastBuildDate>
-    <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://yhjedward.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Shortcode</title>
-      <link>/tags/shortcode/</link>
+      <link>https://yhjedward.github.io/tags/shortcode/</link>
       <pubDate>Sat, 26 Jul 2025 00:00:00 +0800</pubDate>
-      <guid>/tags/shortcode/</guid>
+      <guid>https://yhjedward.github.io/tags/shortcode/</guid>
       <description></description>
     </item>
     <item>
       <title>Video</title>
-      <link>/tags/video/</link>
+      <link>https://yhjedward.github.io/tags/video/</link>
       <pubDate>Sat, 26 Jul 2025 00:00:00 +0800</pubDate>
-      <guid>/tags/video/</guid>
+      <guid>https://yhjedward.github.io/tags/video/</guid>
       <description></description>
     </item>
     <item>
       <title>Linux</title>
-      <link>/tags/linux/</link>
+      <link>https://yhjedward.github.io/tags/linux/</link>
       <pubDate>Fri, 09 Aug 2024 15:40:45 +0800</pubDate>
-      <guid>/tags/linux/</guid>
+      <guid>https://yhjedward.github.io/tags/linux/</guid>
       <description></description>
     </item>
     <item>
       <title>多线程</title>
-      <link>/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</link>
+      <link>https://yhjedward.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</link>
       <pubDate>Mon, 06 May 2024 15:11:08 +0800</pubDate>
-      <guid>/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</guid>
+      <guid>https://yhjedward.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</guid>
       <description></description>
     </item>
     <item>
       <title>Css</title>
-      <link>/tags/css/</link>
+      <link>https://yhjedward.github.io/tags/css/</link>
       <pubDate>Thu, 18 Apr 2024 15:40:37 +0800</pubDate>
-      <guid>/tags/css/</guid>
+      <guid>https://yhjedward.github.io/tags/css/</guid>
       <description></description>
     </item>
     <item>
       <title>Sass</title>
-      <link>/tags/sass/</link>
+      <link>https://yhjedward.github.io/tags/sass/</link>
       <pubDate>Mon, 08 Apr 2024 16:08:48 +0800</pubDate>
-      <guid>/tags/sass/</guid>
+      <guid>https://yhjedward.github.io/tags/sass/</guid>
       <description></description>
     </item>
     <item>
       <title>运放电路</title>
-      <link>/tags/%E8%BF%90%E6%94%BE%E7%94%B5%E8%B7%AF/</link>
+      <link>https://yhjedward.github.io/tags/%E8%BF%90%E6%94%BE%E7%94%B5%E8%B7%AF/</link>
       <pubDate>Fri, 29 Mar 2024 11:29:14 +0800</pubDate>
-      <guid>/tags/%E8%BF%90%E6%94%BE%E7%94%B5%E8%B7%AF/</guid>
+      <guid>https://yhjedward.github.io/tags/%E8%BF%90%E6%94%BE%E7%94%B5%E8%B7%AF/</guid>
       <description></description>
     </item>
     <item>
       <title>Electron</title>
-      <link>/tags/electron/</link>
+      <link>https://yhjedward.github.io/tags/electron/</link>
       <pubDate>Sat, 02 Dec 2023 10:34:56 +0800</pubDate>
-      <guid>/tags/electron/</guid>
+      <guid>https://yhjedward.github.io/tags/electron/</guid>
       <description></description>
     </item>
     <item>
       <title>泛型编程</title>
-      <link>/tags/%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/</link>
+      <link>https://yhjedward.github.io/tags/%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Fri, 01 Dec 2023 10:14:56 +0800</pubDate>
-      <guid>/tags/%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/</guid>
+      <guid>https://yhjedward.github.io/tags/%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/</guid>
       <description></description>
     </item>
     <item>
       <title>动态规划</title>
-      <link>/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
+      <link>https://yhjedward.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
       <pubDate>Tue, 31 Oct 2023 11:21:08 +0800</pubDate>
-      <guid>/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</guid>
+      <guid>https://yhjedward.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</guid>
       <description></description>
     </item>
     <item>
       <title>递归法</title>
-      <link>/tags/%E9%80%92%E5%BD%92%E6%B3%95/</link>
+      <link>https://yhjedward.github.io/tags/%E9%80%92%E5%BD%92%E6%B3%95/</link>
       <pubDate>Sat, 21 Oct 2023 10:31:00 +0800</pubDate>
-      <guid>/tags/%E9%80%92%E5%BD%92%E6%B3%95/</guid>
+      <guid>https://yhjedward.github.io/tags/%E9%80%92%E5%BD%92%E6%B3%95/</guid>
       <description></description>
     </item>
     <item>
       <title>链表</title>
-      <link>/tags/%E9%93%BE%E8%A1%A8/</link>
+      <link>https://yhjedward.github.io/tags/%E9%93%BE%E8%A1%A8/</link>
       <pubDate>Sat, 21 Oct 2023 10:31:00 +0800</pubDate>
-      <guid>/tags/%E9%93%BE%E8%A1%A8/</guid>
+      <guid>https://yhjedward.github.io/tags/%E9%93%BE%E8%A1%A8/</guid>
       <description></description>
     </item>
     <item>
       <title>器件</title>
-      <link>/tags/%E5%99%A8%E4%BB%B6/</link>
+      <link>https://yhjedward.github.io/tags/%E5%99%A8%E4%BB%B6/</link>
       <pubDate>Wed, 14 Jun 2023 12:02:51 +0800</pubDate>
-      <guid>/tags/%E5%99%A8%E4%BB%B6/</guid>
+      <guid>https://yhjedward.github.io/tags/%E5%99%A8%E4%BB%B6/</guid>
       <description></description>
     </item>
     <item>
       <title>晶体管</title>
-      <link>/tags/%E6%99%B6%E4%BD%93%E7%AE%A1/</link>
+      <link>https://yhjedward.github.io/tags/%E6%99%B6%E4%BD%93%E7%AE%A1/</link>
       <pubDate>Wed, 14 Jun 2023 12:02:51 +0800</pubDate>
-      <guid>/tags/%E6%99%B6%E4%BD%93%E7%AE%A1/</guid>
+      <guid>https://yhjedward.github.io/tags/%E6%99%B6%E4%BD%93%E7%AE%A1/</guid>
       <description></description>
     </item>
   </channel>
