@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 文生图 API 测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            display: none;
+        }
+        .result.show {
+            display: block;
+        }
+        .success {
+            color: #28a745;
+            border-color: #28a745;
+            background-color: #f0f8f4;
+        }
+        .error {
+            color: #dc3545;
+            border-color: #dc3545;
+            background-color: #fdf0f1;
+        }
+        .loading {
+            color: #007bff;
+            text-align: center;
+            padding: 20px;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .info {
+            background-color: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            color: #004085;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .image-preview {
+            margin-top: 20px;
+            max-width: 100%;
+            border-radius: 4px;
+        }
+        .response-text {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            word-break: break-all;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖼️ AI 文生图 API 测试工具</h1>
+        
+        <div class="info">
+            <strong>ℹ️ 说明：</strong> 使用此页面直接测试后端 API，用于诊断 404 问题。
+        </div>
+
+        <div class="form-group">
+            <label for="prompt">图像描述 (Prompt):</label>
+            <textarea id="prompt" placeholder="例如: 一个蓝色的简单几何形状">一个蓝色的简单几何形状</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="style">风格 (可选):</label>
+            <input type="text" id="style" placeholder="例如: 素描, 油画, 3D渲染" value="素描">
+        </div>
+
+        <div class="form-group">
+            <label for="size">尺寸 (可选):</label>
+            <select id="size">
+                <option value="256x256">256x256</option>
+                <option value="512x512" selected>512x512</option>
+                <option value="768x768">768x768</option>
+                <option value="1024x1024">1024x1024</option>
+            </select>
+        </div>
+
+        <button onclick="testAPI()">测试 API</button>
+        <button onclick="testNetworking()">测试网络连接</button>
+
+        <div id="result" class="result">
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            const prompt = document.getElementById('prompt').value;
+            const style = document.getElementById('style').value;
+            const size = document.getElementById('size').value;
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('resultContent');
+
+            if (!prompt.trim()) {
+                showError('请输入图像描述');
+                return;
+            }
+
+            // 显示加载状态
+            resultDiv.classList.add('show', 'loading');
+            resultContent.innerHTML = '<div class="spinner"></div><p>正在发送请求...</p>';
+
+            try {
+                // 测试请求
+                const response = await fetch('/api/generate-image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        prompt: prompt.trim(),
+                        style: style || '',
+                        size: size
+                    })
+                });
+
+                console.log('响应状态:', response.status, response.statusText);
+                console.log('响应头:', {
+                    'content-type': response.headers.get('content-type'),
+                    'content-length': response.headers.get('content-length')
+                });
+
+                // 尝试解析响应
+                const contentType = response.headers.get('content-type');
+                let data;
+                
+                if (contentType && contentType.includes('application/json')) {
+                    data = await response.json();
+                } else {
+                    const text = await response.text();
+                    showError(`服务器返回非 JSON 响应 (${response.status} ${response.statusText}):<br><pre>${escapeHtml(text.substring(0, 500))}</pre>`);
+                    return;
+                }
+
+                // 检查响应状态
+                if (!response.ok) {
+                    showError(`API 请求失败 (${response.status}):<br>${data.error || data.message || JSON.stringify(data)}`);
+                    return;
+                }
+
+                // 显示成功结果
+                if (data.success && data.image) {
+                    resultDiv.classList.remove('loading');
+                    resultDiv.classList.add('success');
+                    resultContent.innerHTML = `
+                        <h3>✅ 成功！</h3>
+                        <p><strong>提供商：</strong> ${data.provider || 'N/A'}</p>
+                        <p><strong>响应状态：</strong> ${response.status} OK</p>
+                        <img src="${data.image}" alt="生成的图像" class="image-preview">
+                        <div style="margin-top: 20px;">
+                            <h4>完整响应：</h4>
+                            <div class="response-text">${escapeHtml(JSON.stringify(data, null, 2))}</div>
+                        </div>
+                    `;
+                } else {
+                    showError('API 返回成功但数据格式错误：' + JSON.stringify(data));
+                }
+
+            } catch (error) {
+                console.error('请求错误:', error);
+                showError(`网络错误: ${error.message}`);
+            }
+        }
+
+        async function testNetworking() {
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('resultContent');
+
+            resultDiv.classList.add('show', 'loading');
+            resultContent.innerHTML = '<div class="spinner"></div><p>正在测试网络连接...</p>';
+
+            try {
+                // 测试不同的端点
+                const tests = [
+                    { url: '/api/generate-image', method: 'OPTIONS', name: '检查 CORS' },
+                    { url: '/api/generate-image', method: 'POST', name: '检查 POST 端点存在' }
+                ];
+
+                let results = '<h3>网络连接测试结果</h3>';
+                
+                for (const test of tests) {
+                    try {
+                        const response = await fetch(test.url, {
+                            method: test.method,
+                            headers: test.method === 'POST' ? {
+                                'Content-Type': 'application/json'
+                            } : {}
+                        });
+                        
+                        results += `<p>✅ <strong>${test.name}：</strong> ${response.status} ${response.statusText}</p>`;
+                    } catch (err) {
+                        results += `<p>❌ <strong>${test.name}：</strong> ${err.message}</p>`;
+                    }
+                }
+
+                // 测试 API 配置
+                try {
+                    const configResponse = await fetch('/js/api-config.js');
+                    results += `<p>✅ <strong>API 配置脚本：</strong> ${configResponse.status} ${configResponse.statusText}</p>`;
+                } catch (err) {
+                    results += `<p>❌ <strong>API 配置脚本：</strong> ${err.message}</p>`;
+                }
+
+                resultDiv.classList.remove('loading');
+                resultDiv.classList.add('success');
+                resultContent.innerHTML = results;
+
+            } catch (error) {
+                showError(`测试错误: ${error.message}`);
+            }
+        }
+
+        function showError(message) {
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('resultContent');
+            
+            resultDiv.classList.remove('loading');
+            resultDiv.classList.add('error');
+            resultContent.innerHTML = `<h3>❌ 错误</h3><p>${message}</p>`;
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // 页面加载时自动检查连接
+        window.addEventListener('load', () => {
+            console.log('测试页面已加载');
+            console.log('当前 URL:', window.location.href);
+            console.log('API 端点:', '/api/generate-image');
+        });
+    </script>
+</body>
+</html>

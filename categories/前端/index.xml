@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>前端 on Windows 7 Style Blog</title>
+    <link>/categories/%E5%89%8D%E7%AB%AF/</link>
+    <description>Recent content in 前端 on Windows 7 Style Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 02 Dec 2023 10:34:56 +0800</lastBuildDate>
+    <atom:link href="/categories/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Electron环境搭建</title>
+      <link>/posts/%E5%89%8D%E7%AB%AF/electron/electron%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Sat, 02 Dec 2023 10:34:56 +0800</pubDate>
+      <guid>/posts/%E5%89%8D%E7%AB%AF/electron/electron%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;&#xA;&lt;h2 id=&#34;配置安装-electron&#34;&gt;配置安装 electron&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;nodejs官网下载安装 nodejs.js.&lt;/li&gt;&#xA;&lt;li&gt;使用 npm 安装 pnpm&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm install -g pnpm&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;&#xA;&lt;li&gt;创建目标项目文件夹&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir electron_Project&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;&#xA;&lt;li&gt;在当前文件夹下使用 pnpm 快速生成 package.json 默认配置&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pnpm init&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;5&#34;&gt;&#xA;&lt;li&gt;使用 pnpm 安装 electron&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pnpm add -D electron&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;配置-mainjs-文件&#34;&gt;配置 main.js 文件&lt;/h2&gt;</description>
+    </item>
+  </channel>
+</rss>

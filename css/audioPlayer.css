@@ -1,0 +1,142 @@
+/* 音频播放器样式 */
+.audio-player {
+    display: none;
+    position: fixed;
+    top: 150px;
+    left: 150px;
+    width: 400px;
+    height: 200px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    z-index: 120;
+    flex-direction: column;
+}
+
+.audio-player .window-titlebar {
+    background: linear-gradient(to bottom, #0078d7, #005fb3);
+    color: white;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    flex-shrink: 0;
+}
+
+.audio-player .audio-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background: #f8f8f8;
+}
+
+.audio-player .audio-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.audio-player .song-title {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.audio-player .song-controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.audio-player .play-pause {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: var(--win7-blue);
+    color: white;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.audio-player .play-pause:hover {
+    background: #0068c0;
+}
+
+.audio-player .progress-container {
+    flex: 1;
+    height: 8px;
+    background: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.audio-player .progress-bar {
+    height: 100%;
+    background: var(--win7-blue);
+    width: 0;
+    border-radius: 4px;
+}
+
+.audio-player .time-info {
+    font-size: 12px;
+    color: #555;
+    min-width: 80px;
+    text-align: center;
+}
+
+.audio-player .volume-control {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.audio-player .volume-control span {
+    margin-right: 10px;
+}
+
+.audio-player .volume-slider {
+    flex: 1;
+    height: 5px;
+}
+
+/* 音频播放器最大化样式 */
+.audio-player.maximized {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100% - 40px) !important;
+    /* 减去任务栏高度 */
+    transform: none !important;
+    transition: all 0.3s ease;
+    border-radius: 0;
+    z-index: 9999;
+}
+
+.audio-player.minimized {
+    display: none;
+}
+
+/* 为音频播放器添加过渡效果 */
+.audio-player:not(.maximized) {
+    transition: all 0.3s ease;
+}
+
+.audio-player.maximized .window-titlebar {
+    cursor: default;
+}

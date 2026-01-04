@@ -1,0 +1,3107 @@
+:root {
+    --win7-blue: #0078d7;
+    --win7-gray: #f0f0f0;
+    --win7-dark-gray: #e1e1e1;
+    --win7-border: #c1c1c1;
+    --win7-text: #333333;
+    --background-overlay: rgba(0, 0, 0, 0.12);
+    --background-image: url('https://img-api.pipw.top/?pc=true');
+    --background-gradient: linear-gradient(135deg, rgba(0, 120, 215, 0.3) 0%, rgba(0, 95, 179, 0.3) 100%);
+    --window-bg: #ffffff;
+    --window-titlebar-bg: linear-gradient(to bottom, #0078d7, #005fb3);
+    --window-titlebar-text: #ffffff;
+    --text-color: #333333;
+    --text-color-secondary: #666666;
+    --border-color: #c1c1c1;
+    --link-color: var(--win7-blue);
+    --taskbar-bg: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
+    --card-bg: #fafafa;
+    --item-hover: rgba(0, 120, 215, 0.06);
+    --taskbar-text: #ffffff;
+    --overlay-06: rgba(255, 255, 255, 0.06);
+    --overlay-10: rgba(255, 255, 255, 0.10);
+    --overlay-12: rgba(255, 255, 255, 0.12);
+    --overlay-20: rgba(255, 255, 255, 0.20);
+    --scrollbar-thumb: #c1c1c1;
+    --scrollbar-track: #f0f0f0;
+    /* card gradient defaults (used for subtle panel gradients) */
+    --card-gradient-start: #f9f9f9;
+    --card-gradient-end: #e6e6e6;
+    /* TOC unvisited link color (defaults to site link color) */
+    --toc-link-unvisited: var(--link-color);
+}
+
+/* Back-compat: override legacy hard-coded white/light backgrounds so theme tokens take effect.
+   This prevents scattered 'background: white' from breaking dark mode without editing every rule. */
+body.win7-theme .md-window,
+body.win7-theme .drawing-window,
+body.win7-theme .layers-panel,
+body.win7-theme .layers-header,
+body.win7-theme .md-toolbar,
+body.win7-theme .md-btn,
+body.win7-theme .drawing-toolbar,
+body.win7-theme .drawing-content,
+body.win7-theme .post-item,
+body.win7-theme .post-list,
+body.win7-theme .article-content,
+body.win7-theme .window-content,
+body.win7-theme .image-viewer,
+body.win7-theme .explorer-window,
+body.win7-theme .explorer-content,
+body.win7-theme .explorer-sidebar,
+body.win7-theme .files-container,
+body.win7-theme .file-item-grid,
+body.win7-theme .file-item-list,
+body.win7-theme .toolbar-toggle,
+body.win7-theme .panel-toggle {
+    background: var(--window-bg) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Buttons and small panels should use card background */
+body.win7-theme .md-btn,
+body.win7-theme .drawing-toolbar .tool-btn,
+body.win7-theme .layers-btn,
+body.win7-theme .taskbar-item,
+body.win7-theme .start-item {
+    background: var(--card-bg) !important;
+}
+
+/* Dark theme tokens (applied when body[data-theme="dark"]) */
+body[data-theme="dark"] {
+    --background-gradient: linear-gradient(135deg, rgba(0, 20, 40, 0.7) 0%, rgba(0, 30, 60, 0.7) 100%);
+    --background-overlay: rgba(0, 0, 0, 0.5);
+    --window-bg: #161616;
+    --window-titlebar-bg: linear-gradient(to bottom, #2b2b2b, #1f1f1f);
+    --window-titlebar-text: #e6e6e6;
+    --text-color: #e6e6e6;
+    --text-color-secondary: #a8a8a8;
+    --border-color: #333333;
+    --link-color: #58a6ff;
+    --taskbar-bg: linear-gradient(to bottom, #111111, #0b0b0b);
+    --card-bg: #1f1f1f;
+    --item-hover: rgba(255, 255, 255, 0.03);
+    --scrollbar-thumb: #444444;
+    --scrollbar-track: #0f0f0f;
+    --card-gradient-start: #222222;
+    --card-gradient-end: #1a1a1a;
+    /* TOC unvisited link color in dark mode */
+    --toc-link-unvisited: #ffd24d;
+    --taskbar-text: #ffffff;
+    --overlay-06: rgba(255, 255, 255, 0.03);
+    --overlay-10: rgba(255, 255, 255, 0.06);
+    --overlay-12: rgba(255, 255, 255, 0.08);
+    --overlay-20: rgba(255, 255, 255, 0.10);
+}
+
+/* Respect user's OS preference by default */
+@media (prefers-color-scheme: dark) {
+    body:not([data-theme]) {
+        /* apply dark tokens when no explicit preference stored */
+        --background-gradient: linear-gradient(135deg, rgba(0, 20, 40, 0.7) 0%, rgba(0, 30, 60, 0.7) 100%);
+        --background-overlay: rgba(0, 0, 0, 0.45);
+        --window-bg: #161616;
+        --window-titlebar-bg: linear-gradient(to bottom, #2b2b2b, #1f1f1f);
+        --window-titlebar-text: #e6e6e6;
+        --text-color: #e6e6e6;
+    }
+}
+
+/** 背景图片 **/
+/* 
+picsum: https://picsum.photos/1920/1080
+动漫: https://api.mtyqx.cn/api/random.php
+必应: https://bing.img.run/rand.php
+动漫风景: https://imgapi.xl0408.top/index.php
+樱花随机: https://www.dmoe.cc/random.php
+PC: https://t.alcy.cc/
+多种选择: https://t.alcy.cc/
+超级小兔API ：https://imgapi.xl0408.top
+GckJoy ：https://api.neix.in/random/
+随机ACG: https://www.loliapi.com/acg/
+美女: https://api.liuzhuai.com/img/m.php
+美女: http(s)://api.fenei.net/api/girl/random.php
+美女: https://api.bducds.com/api/pic/?pic=girl
+随机: https://img-api.pipw.top/?pc=true
+*/
+body.win7-theme {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: var(--background-gradient), var(--background-image) no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    color: var(--text-color);
+    position: relative;
+}
+
+/* 调整遮罩层的透明度 */
+body.win7-theme::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--background-overlay);
+    z-index: -1;
+}
+
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: var(--taskbar-bg);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+}
+
+.start-button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: linear-gradient(to bottom, #0078d7, #005fb3);
+    border-radius: 3px;
+    margin-right: 5px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.start-button:hover {
+    background: linear-gradient(to bottom, #0086f0, #0067d6);
+    transform: translateY(-1px);
+}
+
+.start-button:active {
+    background: linear-gradient(to bottom, #0067d6, #005fb3);
+    transform: translateY(1px);
+}
+
+.start-button svg {
+    width: 24px;
+    height: 24px;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+    transition: transform 0.2s ease;
+}
+
+.start-button:hover svg {
+    transform: scale(1.1);
+}
+
+.start-button.active {
+    background: linear-gradient(to bottom, #0092ff, #0067d6);
+}
+
+.start-menu {
+    position: fixed;
+    left: 10px;
+    bottom: 46px;
+    width: 420px;
+    max-width: calc(100vw - 20px);
+    height: 420px;
+    max-height: calc(100vh - 70px);
+    display: none;
+    grid-template-columns: 1fr 0.9fr;
+    gap: 0;
+    background: #ffffff;
+    color: #222;
+    border: 1px solid var(--win7-border);
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    z-index: 10002;
+}
+
+.start-menu.open {
+    display: grid;
+}
+
+.dark-theme .start-menu,
+body[data-theme="dark"] .start-menu {
+    background: #1f1f1f;
+    color: #e0e0e0;
+    border-color: #333;
+}
+
+.start-menu-left,
+.start-menu-right {
+    padding: 10px;
+    overflow: auto;
+}
+
+.start-menu-right {
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    background: linear-gradient(to bottom, #f9f9f9, #ececec);
+}
+
+.dark-theme .start-menu-right,
+body[data-theme="dark"] .start-menu-right {
+    border-left-color: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(to bottom, #222, #1a1a1a);
+}
+
+.start-menu-title {
+    font-size: 12px;
+    font-weight: 700;
+    margin: 4px 2px 8px;
+    opacity: 0.8;
+    letter-spacing: 0.06em;
+}
+
+.start-menu-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    margin: 2px 0;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.2;
+    text-align: left;
+}
+
+.start-menu-item:hover {
+    background: rgba(0, 120, 215, 0.12);
+}
+
+.start-menu-item:focus {
+    outline: 2px solid rgba(0, 120, 215, 0.25);
+    outline-offset: 1px;
+}
+
+.start-menu-link {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+    .start-menu {
+        left: 6px;
+        bottom: 56px;
+        width: calc(100vw - 12px);
+        height: min(420px, calc(100vh - 80px));
+    }
+}
+
+.taskbar-items {
+    flex: 1;
+    display: flex;
+    gap: 5px;
+    margin-left: 10px;
+}
+
+.taskbar-item {
+    padding: 5px 15px;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.taskbar-item:hover {
+    background-color: var(--overlay-10);
+}
+
+.taskbar-item.active {
+    background-color: var(--overlay-20);
+}
+
+.taskbar-item .icon {
+    width: 16px;
+    height: 16px;
+    background: var(--win7-blue);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--taskbar-text);
+}
+
+.system-tray {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--taskbar-text);
+}
+
+.theme-toggle {
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 8px;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.2);
+}
+
+.dark-theme {
+    --background-color: linear-gradient(135deg, rgba(0, 20, 40, 0.7) 0%, rgba(0, 30, 60, 0.7) 100%);
+    --window-bg: #1e1e1e;
+    --window-titlebar-bg: linear-gradient(to bottom, #323232 0%, #252525 100%);
+    --window-titlebar-text: #e0e0e0;
+    --text-color: #e0e0e0;
+    --text-color-secondary: #aaa;
+    --border-color: #444;
+    --link-color: #58a6ff;
+    --scrollbar-thumb: #555;
+    --scrollbar-track: #222;
+    --card-bg: #2a2a2a;
+    --taskbar-bg: linear-gradient(to bottom, #1a1a1a 0%, #111111 100%);
+}
+
+.dark-theme .enhanced-code-block {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+}
+
+.dark-theme .code-header {
+    background: #252525;
+    border-bottom: 1px solid #333;
+    color: #e0e0e0;
+}
+
+.dark-theme .code-pre {
+    background-color: #1e1e1e;
+}
+
+.dark-theme .code-editor {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+.image-viewer,
+.audio-player {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--window-bg);
+    border: 1px solid var(--win7-border);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: none;
+    flex-direction: column;
+    z-index: 10001;
+    min-width: 400px;
+    min-height: 300px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.image-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.audio-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 拖动中的窗口样式 */
+.window.dragging {
+    opacity: 0.95;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+.window-titlebar {
+    background: var(--window-titlebar-bg);
+    color: var(--window-titlebar-text);
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    /* 拖动光标 */
+    flex-shrink: 0;
+    /* 防止标题栏被压缩 */
+    user-select: none;
+}
+
+/* Group title and its action buttons so toggles are adjacent to title */
+.title-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.title-left .window-title {
+    white-space: nowrap;
+    margin-right: 4px;
+}
+
+.window-controls {
+    display: flex;
+    gap: 5px;
+}
+
+/* Toolbar toggle (隐藏/显示 工具栏) */
+.titlebar-actions {
+    display: flex;
+    align-items: start;
+    margin-right: 6px;
+}
+
+.toolbar-toggle {
+    background: transparent;
+    border: 1px solid var(--overlay-12);
+    color: var(--window-titlebar-text);
+    padding: 2px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    margin-left: 6px;
+}
+
+.toolbar-toggle:hover {
+    background: var(--item-hover);
+}
+
+.toolbar-toggle.toggled {
+    opacity: 0.8;
+    transform: rotate(180deg);
+}
+
+/* 小型面板切换按钮（图层等） */
+.panel-toggle {
+    background: transparent;
+    border: 1px solid var(--overlay-06);
+    color: var(--window-titlebar-text);
+    padding: 2px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    margin-left: 6px;
+}
+
+.panel-toggle:hover {
+    background: var(--item-hover);
+}
+
+/* Toolbar containers */
+.drawing-toolbar,
+.md-toolbar {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    align-items: center;
+    border-bottom: 1px solid var(--win7-border);
+    background: var(--card-bg);
+    flex-shrink: 0;
+}
+
+/* Hidden state */
+.hidden-toolbar {
+    display: none !important;
+}
+
+/* Hidden panel state (for layers etc.) */
+.hidden-panel {
+    display: none !important;
+}
+
+/* Responsive: allow toolbars to scroll/wrap on small screens */
+@media (max-width: 900px) {
+
+    .drawing-toolbar,
+    .md-toolbar {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 6px;
+    }
+
+    .titlebar-actions .toolbar-toggle,
+    .titlebar-actions .panel-toggle {
+        padding: 6px 8px;
+        font-size: 16px;
+    }
+
+    /* Layers panel sizing */
+    .drawing-window .layers-panel {
+        min-width: 120px;
+    }
+}
+
+/* Dark theme adjustments for toolbars */
+.dark-theme .drawing-toolbar,
+.dark-theme .md-toolbar {
+    background: rgba(30, 30, 30, 0.95);
+    border-bottom: 1px solid #333;
+    color: #eaeaea;
+}
+
+.window-controls button {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--window-titlebar-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.window-controls button:hover {
+    background-color: var(--item-hover);
+}
+
+.window-controls .close:hover {
+    background-color: #e81123;
+}
+
+.window-content {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    /* 允许内容垂直滚动 */
+    background: var(--window-bg);
+}
+
+/* 自定义滚动条样式 */
+.window-content::-webkit-scrollbar {
+    width: 12px;
+}
+
+.window-content::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.window-content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 6px;
+}
+
+.window-content::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+/* 文章列表样式 */
+.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-item {
+    padding: 15px;
+    border-bottom: 1px solid var(--win7-border);
+}
+
+.post-item:last-child {
+    border-bottom: none;
+}
+
+.post-title {
+    color: var(--win7-blue);
+    text-decoration: none;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.post-date {
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* 文章内容样式 */
+.article-content {
+    line-height: 1.6;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3 {
+    color: var(--win7-blue);
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.article-content p {
+    margin-bottom: 1em;
+}
+
+.article-content code {
+    background: var(--win7-gray);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.article-content pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    margin: 16px 0;
+    border: 1px solid #333;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+}
+
+.article-content pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    font-family: inherit;
+    display: block;
+}
+
+/* 代码块顶部语言标签 */
+.article-content pre::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: 0;
+    right: 12px;
+    background: #3c3c3c;
+    color: #ccc;
+    padding: 2px 8px;
+    font-size: 12px;
+    border-radius: 0 0 4px 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* 语法高亮配色 */
+.article-content .hljs-keyword,
+.article-content .hljs-tag,
+.article-content .hljs-selector-tag {
+    color: #569cd6;
+    /* 蓝色 - 关键字 */
+}
+
+.article-content .hljs-string,
+.article-content .hljs-attribute {
+    color: #ce9178;
+    /* 橙红色 - 字符串 */
+}
+
+.article-content .hljs-comment {
+    color: #c2a92c;
+    /* 注释颜色 */
+}
+
+.article-content .hljs-number,
+.article-content .hljs-built_in,
+.article-content .hljs-literal {
+    color: #b5cea8;
+    /* 淡绿色 - 数字/内置函数 */
+}
+
+.article-content .hljs-type,
+.article-content .hljs-class,
+.article-content .hljs-title {
+    color: #4ec9b0;
+    /* 青色 - 类型/类名/标题 */
+}
+
+.article-content .hljs-function {
+    color: #dcdcaa;
+    /* 浅黄色 - 函数 */
+}
+
+.article-content .hljs-variable,
+.article-content .hljs-params {
+    color: #9cdcfe;
+    /* 淡蓝色 - 变量/参数 */
+}
+
+.article-content .hljs-regexp {
+    color: #d16969;
+    /* 红色 - 正则表达式 */
+}
+
+/* 行内代码美化 */
+.article-content code:not([class*="language-"]) {
+    background: #2d2d2d;
+    color: #e0e0e0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9em;
+    border: 1px solid #444;
+}
+
+/* 代码复制按钮 */
+.article-content pre .copy-button,
+.enhanced-code-block .copy-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #3c3c3c;
+    color: #ccc;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0 !important;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 15;
+}
+
+.article-content pre:hover .copy-button,
+.enhanced-code-block:hover .copy-button {
+    opacity: 1 !important;
+    visibility: visible;
+}
+
+.article-content pre .copy-button:hover,
+.enhanced-code-block .copy-button:hover {
+    background: #505050;
+    color: #fff;
+}
+
+.article-content pre .copy-button.copied,
+.enhanced-code-block .copy-button.copied {
+    background: #22863a;
+    color: #fff;
+}
+
+/* 代码编辑按钮，与复制按钮风格一致 */
+.article-content pre .edit-button {
+    position: absolute;
+    top: 8px;
+    right: 60px;
+    /* 位于复制按钮左侧 */
+    background: #3c3c3c;
+    color: #ccc;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 15;
+}
+
+.article-content pre:hover .edit-button {
+    opacity: 1;
+}
+
+.article-content pre .edit-button:hover {
+    background: #505050;
+    color: #fff;
+}
+
+/* inline textarea editor overlay */
+.article-content pre.editing {
+    position: relative;
+}
+
+.article-content pre .inline-code-editor {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    background: inherit;
+    border-radius: inherit;
+    border: none;
+    outline: none;
+    resize: vertical;
+    z-index: 10;
+}
+
+/* 窗口最小化动画 */
+.window.minimized {
+    transform: translateY(100vh);
+    transition: transform 0.3s ease-in-out;
+}
+
+.window.restored {
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* 桌面区域 */
+.desktop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 40px;
+    z-index: 1;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 80px);
+    grid-gap: 20px;
+    align-content: start;
+    pointer-events: auto;
+}
+
+/* 桌面图标 */
+.desktop-icon {
+    width: 80px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    padding: 5px;
+    border-radius: 3px;
+    z-index: 2;
+}
+
+/* 桌面中央文字（打字机效果） */
+#desktop-central {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    /* 不阻塞桌面交互 */
+    /* Exposable style variables (can be set via JS from front-matter) */
+    --desktop-text-color: rgba(255, 255, 255, 0.95);
+    --desktop-text-size: 36px;
+    --desktop-z-index: 2;
+    z-index: var(--desktop-z-index);
+    opacity: 0;
+    animation: win7-desktop-fadein 700ms ease-out 200ms forwards;
+}
+
+#desktop-central-text {
+    color: var(--desktop-text-color);
+    font-size: var(--desktop-text-size);
+    font-weight: 600;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+}
+
+#desktop-central-caret {
+    display: inline-block;
+    margin-left: 6px;
+    color: var(--desktop-text-color);
+    font-weight: 600;
+    animation: win7-caret-blink 1s steps(2, start) infinite;
+}
+
+@keyframes win7-caret-blink {
+    50% {
+        visibility: hidden;
+    }
+}
+
+/* 小屏幕适配 */
+@media (max-width: 600px) {
+    #desktop-central-text {
+        font-size: 20px;
+    }
+}
+
+@keyframes win7-desktop-fadein {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.desktop-icon:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.desktop-icon:active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.desktop-icon .icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.desktop-icon .label {
+    font-size: 12px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 添加导航按钮样式 */
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.nav-button:hover {
+    opacity: 1;
+}
+
+.prev-button {
+    left: 15px;
+}
+
+.next-button {
+    right: 15px;
+}
+
+.image-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.image-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    cursor: grab;
+    transition: transform 0.1s ease-out;
+}
+
+.image-content img:active {
+    cursor: grabbing;
+}
+
+/* 博客文章内的图片灯箱效果 */
+.window-content img {
+    transition: all 0.3s ease;
+    max-width: 100%;
+    height: auto;
+    border: 2px solid transparent;
+    position: relative;
+    cursor: zoom-in !important;
+}
+
+.window-content img:hover {
+    border-color: #0078d7;
+    box-shadow: 0 0 8px rgba(0, 120, 215, 0.5);
+    transform: scale(1.02);
+}
+
+/* 添加灯箱图标提示 */
+.window-content img::after {
+    content: '🔍';
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.window-content img:hover::after {
+    opacity: 1;
+}
+
+/* 窗口最大化状态 */
+.image-viewer.maximized,
+.audio-player.maximized,
+.video-player.maximized {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100% - 40px) !important;
+    /* 减去任务栏高度 */
+    transform: none !important;
+    transition: all 0.3s ease;
+    border-radius: 0;
+    box-shadow: none;
+    z-index: 9999;
+}
+
+/* 窗口非最大化状态 */
+.image-viewer:not(.maximized):not(.minimized),
+.audio-player:not(.maximized):not(.minimized),
+.video-player:not(.maximized):not(.minimized) {
+    position: fixed !important;
+    border-radius: 6px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    transition: all 0.3s ease;
+}
+
+/* 保持窗口的固定尺寸 */
+.image-viewer:not(.maximized):not(.minimized) {
+    width: 800px;
+    height: 600px;
+}
+
+.audio-player:not(.maximized):not(.minimized) {
+    width: 400px;
+    height: 200px;
+}
+
+.video-player:not(.maximized):not(.minimized) {
+    width: 800px;
+    height: 500px;
+}
+
+/* 增强型代码块样式 - 适配黑色主题 */
+.enhanced-code-block {
+    margin: 20px 0;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: #2d2d2d;
+    border-bottom: 1px solid #444;
+    color: #d4d4d4;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.code-language {
+    text-transform: uppercase;
+    display: inline-block;
+    color: #569cd6;
+}
+
+.code-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.code-action {
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    color: #d4d4d4;
+}
+
+.code-action:hover {
+    opacity: 1;
+}
+
+.code-pre {
+    margin: 0;
+    padding: 12px;
+    overflow-x: auto;
+    background-color: #1e1e1e;
+    tab-size: 4;
+}
+
+.code-editor {
+    width: 100%;
+    min-height: 150px;
+    padding: 12px;
+    font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    resize: vertical;
+    border: none;
+    outline: none;
+    tab-size: 4;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+}
+
+/* 增强型代码块中的代码高亮兼容 */
+.enhanced-code-block code {
+    background: transparent;
+    color: #d4d4d4;
+    padding: 0;
+    border-radius: 0;
+    font-family: inherit;
+    display: block;
+}
+
+.collapse-container {
+    margin: 15px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: var(--card-bg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.collapse-header {
+    padding: 10px 15px;
+    background-color: var(--card-bg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(var(--card-gradient-start), var(--card-gradient-end));
+    border-bottom: 1px solid var(--border-color);
+}
+
+.collapse-header:hover {
+    background: linear-gradient(var(--card-gradient-end), var(--border-color));
+}
+
+.collapse-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    margin-right: 8px;
+    color: var(--link-color);
+    font-weight: bold;
+}
+
+.collapse-title {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.collapse-content {
+    padding: 0 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    background-color: var(--card-bg);
+}
+
+.collapse-content {
+    padding: 0 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    background-color: var(--card-bg);
+}
+
+.collapse-content>*:first-child {
+    margin-top: 15px;
+}
+
+.collapse-content>*:last-child {
+    margin-bottom: 15px;
+}
+
+/* 添加激活状态样式 */
+.collapse-container.active .collapse-content {
+    max-height: 2000px;
+    /* 设置一个足够大的值 */
+}
+
+.collapse-container.active .collapse-icon {
+    content: '-';
+}
+
+/* 标签面板样式 */
+.tabpanel-container {
+    margin: 15px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: var(--card-bg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tabpanel-tabs {
+    display: flex;
+    background: linear-gradient(var(--card-gradient-start), var(--card-gradient-end));
+    border-bottom: 1px solid var(--border-color);
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+}
+
+.tabpanel-tab {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-right: 1px solid var(--border-color);
+    font-weight: 500;
+    color: var(--text-color);
+    transition: background-color 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: fit-content;
+}
+
+.tabpanel-tab:hover {
+    background-color: var(--item-hover);
+}
+
+.tabpanel-tab.active {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--card-bg);
+    margin-bottom: -1px;
+    color: var(--link-color);
+    font-weight: bold;
+}
+
+/* TabPanel 标题区域滚动条样式 */
+.tabpanel-tabs::-webkit-scrollbar {
+    height: 6px;
+}
+
+.tabpanel-tabs::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 3px;
+}
+
+.tabpanel-tabs::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 3px;
+}
+
+.tabpanel-tabs::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--scrollbar-thumb) 80%, black 20%);
+}
+
+/* 暗色主题 TabPanel 标题区域滚动条样式 */
+.dark-theme .tabpanel-tabs::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+.dark-theme .tabpanel-tabs::-webkit-scrollbar-thumb {
+    background: #555;
+}
+
+.dark-theme .tabpanel-tabs::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+.tabpanel-content-container {
+    padding: 0;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.tabpanel-content {
+    display: none;
+    padding: 15px;
+}
+
+.tabpanel-content.active {
+    display: block;
+}
+
+/* TabPanel 滚动条样式 */
+.tabpanel-content-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.tabpanel-content-container::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 4px;
+}
+
+.tabpanel-content-container::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
+}
+
+.tabpanel-content-container::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--scrollbar-thumb) 80%, black 20%);
+}
+
+/* 水平滚动条样式 */
+.tabpanel-content-container::-webkit-scrollbar:horizontal {
+    height: 8px;
+}
+
+/* 暗色主题 TabPanel 滚动条样式 (legacy class kept for compatibility) */
+.dark-theme .tabpanel-content-container::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.dark-theme .tabpanel-content-container::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+}
+
+.dark-theme .tabpanel-content-container::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--scrollbar-thumb) 80%, black 20%);
+}
+
+/* TabPanel 高度变体 */
+.tabpanel-container.tabpanel-small .tabpanel-content-container {
+    max-height: 300px;
+}
+
+.tabpanel-container.tabpanel-large .tabpanel-content-container {
+    max-height: 700px;
+}
+
+.tabpanel-container.tabpanel-full .tabpanel-content-container {
+    max-height: none;
+    overflow-y: visible;
+}
+
+/* 增强型代码块样式 */
+.enhanced-code-block {
+    margin: 20px 0;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: linear-gradient(to bottom, #f9f9f9, #e6e6e6);
+    border-bottom: 1px solid #ddd;
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.code-language {
+    text-transform: uppercase;
+    display: inline-block;
+    color: #0078d7;
+}
+
+.code-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.code-action {
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+}
+
+.code-action:hover {
+    opacity: 1;
+}
+
+.code-pre {
+    margin: 0;
+    padding: 12px;
+    overflow-x: auto;
+    background-color: #fff;
+    tab-size: 4;
+}
+
+.code-editor {
+    width: 100%;
+    min-height: 150px;
+    padding: 12px;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    resize: vertical;
+    border: none;
+    outline: none;
+    tab-size: 4;
+}
+
+/* 添加复制成功状态 */
+.code-copy-btn.success svg {
+    stroke: #00aa00;
+}
+
+/* 添加复制成功状态 */
+.code-copy-btn.success svg {
+    stroke: #4ec9b0;
+}
+
+/* LaTeX 数学公式样式 */
+.katex-display {
+    padding: 15px 0;
+    margin: 20px 0;
+    overflow-x: auto;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #e6e6e6;
+}
+
+.katex {
+    font-size: 1.1em;
+}
+
+/* 行内公式样式 */
+.katex-inline {
+    padding: 2px 4px;
+}
+
+/* LaTeX 块公式与代码块样式统一 */
+.latex-block {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    overflow-x: auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 添加LaTeX块标题样式 */
+.latex-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: linear-gradient(to bottom, #f9f9f9, #e6e6e6);
+    border-bottom: 1px solid #ddd;
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 为带标题的LaTeX块添加特殊样式 */
+.latex-block-with-title .katex-display {
+    margin-top: 0;
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* 带编号的方程式样式 */
+.latex-equation .equation-container {
+    display: flex;
+    position: relative;
+    width: 100%;
+}
+
+.latex-equation .equation-body {
+    flex-grow: 1;
+}
+
+.latex-equation .equation-number {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-family: 'Times New Roman', serif;
+    padding-left: 15px;
+}
+
+/* ---------- Spoiler (遮盖显示) ---------- */
+.spoiler {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.spoiler-content {
+    filter: blur(6px);
+    transition: filter 0.3s ease;
+}
+
+.spoiler-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 4px;
+    pointer-events: none;
+    /* 让点击事件落到父容器上 */
+    user-select: none;
+}
+
+.spoiler.revealed .spoiler-content {
+    filter: none;
+}
+
+.spoiler.revealed .spoiler-overlay {
+    display: none;
+}
+
+.article-content pre.editing .edit-button {
+    opacity: 1;
+    z-index: 20;
+}
+
+.article-content pre.editing .copy-button {
+    opacity: 1;
+    z-index: 18;
+}
+
+/* TabPanel中复制按钮始终可见 */
+.tabpanel-content pre .copy-button {
+    opacity: 1;
+}
+
+/* ---------- Table Styling ---------- */
+.article-content table {
+    border-collapse: collapse;
+    margin: 1em 0;
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+.article-content th,
+.article-content td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    text-align: left;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.article-content thead {
+    background-color: #f5f5f5;
+}
+
+/* ---------- Override HLJS comment color ---------- */
+.article-content pre code .hljs-comment,
+.article-content .hljs-comment {
+    color: #c2a92c !important;
+}
+
+/* Chroma comment style override */
+.article-content .chroma .c {
+    color: #c2a92c !important;
+}
+
+/* ---------- Chroma Monokai Palette ---------- */
+.article-content .chroma .k {
+    color: #66d9ef;
+}
+
+/* Keyword */
+.article-content .chroma .kt {
+    color: #66d9ef;
+}
+
+.article-content .chroma .kn {
+    color: #f92672;
+}
+
+.article-content .chroma .kp {
+    color: #66d9ef;
+}
+
+.article-content .chroma .kr {
+    color: #66d9ef;
+}
+
+.article-content .chroma .kc {
+    color: #66d9ef;
+}
+
+.article-content .chroma .s {
+    color: #e6db74;
+}
+
+/* String */
+.article-content .chroma .s1 {
+    color: #e6db74;
+}
+
+.article-content .chroma .s2 {
+    color: #e6db74;
+}
+
+.article-content .chroma .mi {
+    color: #ae81ff;
+}
+
+/* Number */
+.article-content .chroma .mf {
+    color: #ae81ff;
+}
+
+.article-content .chroma .il {
+    color: #ae81ff;
+}
+
+.article-content .chroma .nb {
+    color: #a6e22e;
+}
+
+/* Builtin and functions */
+.article-content .chroma .nf {
+    color: #a6e22e;
+}
+
+.article-content .chroma .nc {
+    color: #a6e22e;
+}
+
+.article-content .chroma .nn {
+    color: #f8f8f2;
+}
+
+.article-content .chroma .nt {
+    color: #f92672;
+}
+
+.article-content .chroma .na {
+    color: #a6e22e;
+}
+
+.article-content .chroma .o {
+    color: #f92672;
+}
+
+/* Operator */
+.article-content .chroma .p {
+    color: #f8f8f2;
+}
+
+.article-content .chroma .c {
+    color: #c2a92c !important;
+}
+
+/* Comment override */
+.article-content .chroma .cm {
+    color: #c2a92c !important;
+}
+
+.article-content .chroma .cp {
+    color: #c2a92c !important;
+}
+
+.article-content .chroma .c1 {
+    color: #c2a92c !important;
+}
+
+/* 任务栏搜索框 */
+.taskbar {
+    position: fixed;
+}
+
+.taskbar-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 450px;
+    max-width: 60vw;
+    height: 28px;
+    margin: 0 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 0 8px 0 28px;
+    color: #fff;
+}
+
+/* Search fuzzy toggle button */
+.taskbar-search .search-fuzzy {
+    margin-left: 8px;
+    border: none;
+    background: transparent;
+    color: var(--win7-text, #111);
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.taskbar-search .search-fuzzy.toggled {
+    background: rgba(0, 120, 215, 0.12);
+    color: #0078d7;
+}
+
+.taskbar-search .search-fuzzy:focus {
+    outline: 2px solid rgba(0, 120, 215, 0.18);
+}
+
+.taskbar-search .search-icon {
+    position: absolute;
+    left: 8px;
+    font-size: 14px;
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.taskbar-search input {
+    flex: 1;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    font-size: 13px;
+}
+
+.taskbar-search input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.taskbar-search .search-mode-toggles {
+    display: flex;
+    gap: 4px;
+    margin-left: 8px;
+}
+
+.taskbar-search .search-mode-btn {
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex: none;
+}
+
+.taskbar-search .search-mode-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.taskbar-search .search-mode-btn.active {
+    background: #0078d4;
+    color: #ffffff;
+    border-color: #0078d4;
+}
+
+/* 随机文章按钮 */
+.taskbar-random-btn {
+    height: 28px;
+    width: 32px;
+    padding: 0;
+    margin: 0 2px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.taskbar-random-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.taskbar-random-btn:active {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(0.95);
+}
+
+.search-mode-toggles {
+    display: flex;
+    gap: 4px;
+}
+
+.search-mode-btn {
+    flex: 1;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    background: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.search-mode-btn:hover {
+    background: #f0f0f0;
+    border-color: #a0a0a0;
+}
+
+.search-mode-btn.active {
+    background: #0078d4;
+    color: #ffffff;
+    border-color: #0078d4;
+}
+
+.search-results-panel {
+    position: absolute;
+    left: 0;
+    bottom: 38px;
+    width: 520px;
+    max-width: 60vw;
+    max-height: 60vh;
+    overflow: auto;
+    background: #ffffff;
+    color: #333;
+    border: 1px solid var(--win7-border);
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    z-index: 9999;
+}
+
+.search-results-panel.empty {
+    padding: 12px;
+    font-size: 13px;
+    color: #666;
+}
+
+.search-group-title {
+    padding: 10px 12px 6px 12px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.search-result-item {
+    display: grid;
+    grid-template-columns: 22px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    border-top: 1px solid #f0f0f0;
+}
+
+.search-result-item:first-of-type {
+    border-top: none;
+}
+
+.search-result-item .item-icon {
+    width: 22px;
+    text-align: center;
+}
+
+.search-result-item .item-text {
+    font-size: 14px;
+    color: #222;
+}
+
+.search-result-item .item-meta {
+    font-size: 12px;
+    color: #888;
+    white-space: nowrap;
+}
+
+.search-result-item:hover,
+.search-result-item.active {
+    background: #f5f9ff;
+}
+
+/* 暗色主题适配 */
+.dark-theme .taskbar-search {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+.dark-theme .taskbar-search .search-mode-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark-theme .taskbar-search .search-mode-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.dark-theme .taskbar-search .search-mode-btn.active {
+    background: #0078d4;
+    color: #ffffff;
+    border-color: #0078d4;
+}
+
+/* 暗色主题 - 随机文章按钮 */
+.dark-theme .taskbar-random-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.dark-theme .taskbar-random-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.dark-theme .search-mode-toggles {
+    background: #2a2a2a;
+    border-bottom-color: #3a3a3a;
+}
+
+.dark-theme .search-mode-btn {
+    background: #1f1f1f;
+    color: #aaa;
+    border-color: #3a3a3a;
+}
+
+.dark-theme .search-mode-btn:hover {
+    background: #2a2a2a;
+    border-color: #555;
+}
+
+.dark-theme .search-mode-btn.active {
+    background: #0078d4;
+    color: #ffffff;
+    border-color: #0078d4;
+}
+
+.dark-theme .search-results-panel {
+    background: #1f1f1f;
+    color: #e0e0e0;
+    border-color: #333;
+}
+
+.dark-theme .search-group-title {
+    color: #aaa;
+}
+
+.dark-theme .search-result-item {
+    border-top-color: #2a2a2a;
+}
+
+
+.dark-theme .search-result-item .item-text {
+    color: #e0e0e0;
+}
+
+.dark-theme .search-result-item .item-meta {
+    color: #9a9a9a;
+}
+
+.dark-theme .search-result-item:hover,
+.dark-theme .search-result-item.active {
+    background: #2a3642;
+}
+
+/* ---------- 任务栏日历（Windows风格飞出层） ---------- */
+.calendar-flyout {
+    position: fixed;
+    right: 10px;
+    bottom: 50px;
+    /* 高于任务栏 */
+    width: 360px;
+    max-height: 70vh;
+    background: #ffffff;
+    color: #222;
+    border: 1px solid var(--win7-border);
+    border-radius: 8px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    z-index: 10001;
+    display: none;
+    overflow: hidden;
+}
+
+.calendar-flyout.open {
+    display: flex;
+    flex-direction: column;
+}
+
+body[data-theme="dark"] .calendar-flyout,
+.dark-theme .calendar-flyout {
+    background: #1f1f1f;
+    color: #e0e0e0;
+    border-color: #333;
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: linear-gradient(to bottom, #f9f9f9, #ececec);
+    border-bottom: 1px solid var(--win7-border);
+}
+
+body[data-theme="dark"] .calendar-header,
+.dark-theme .calendar-header {
+    background: linear-gradient(to bottom, #2a2a2a, #222);
+    border-bottom-color: #333;
+}
+
+.calendar-header .cal-title {
+    font-weight: 600;
+}
+
+.calendar-header .cal-nav {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: inherit;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+}
+
+.calendar-header .cal-nav:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body[data-theme="dark"] .calendar-header .cal-nav:hover,
+.dark-theme .calendar-header .cal-nav:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    padding: 10px 12px 6px 12px;
+}
+
+.calendar-weekday {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+}
+
+body[data-theme="dark"] .calendar-weekday,
+.dark-theme .calendar-weekday {
+    color: #aaa;
+}
+
+.calendar-day {
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.calendar-day.empty {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.calendar-day:hover {
+    background: #f2f7ff;
+}
+
+body[data-theme="dark"] .calendar-day:hover,
+.dark-theme .calendar-day:hover {
+    background: #2a3642;
+}
+
+.calendar-day.today {
+    outline: 2px solid var(--win7-blue);
+}
+
+.calendar-day.has-posts::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 6px;
+    width: 6px;
+    height: 6px;
+    background: var(--win7-blue);
+    border-radius: 50%;
+}
+
+.calendar-day.selected {
+    background: rgba(0, 120, 215, 0.12);
+}
+
+body[data-theme="dark"] .calendar-day.selected,
+.dark-theme .calendar-day.selected {
+    background: rgba(88, 166, 255, 0.18);
+}
+
+.calendar-posts {
+    border-top: 1px solid var(--win7-border);
+    max-height: 40vh;
+    overflow: auto;
+}
+
+body[data-theme="dark"] .calendar-posts,
+.dark-theme .calendar-posts {
+    border-top-color: #333;
+}
+
+.calendar-posts-title {
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #666;
+}
+
+body[data-theme="dark"] .calendar-posts-title,
+.dark-theme .calendar-posts-title {
+    color: #aaa;
+}
+
+.calendar-posts-list {
+    padding: 0 8px 8px 8px;
+}
+
+.calendar-post-item {
+    padding: 8px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.calendar-post-item:hover {
+    background: #f5f9ff;
+}
+
+body[data-theme="dark"] .calendar-post-item:hover,
+.dark-theme .calendar-post-item:hover {
+    background: #2a3642;
+}
+
+.calendar-post-item .meta {
+    color: #888;
+    font-size: 12px;
+}
+
+body[data-theme="dark"] .calendar-post-item .meta,
+.dark-theme .calendar-post-item .meta {
+    color: #9a9a9a;
+}
+
+.calendar-flyout .calendar-posts {
+    padding: 8px;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.calendar-flyout .calendar-posts-list {
+    overflow: auto;
+    /* 关键：启用滚动 */
+    flex: 1 1 auto;
+    /* 填满父容器，配合上面的 height 限制 */
+    padding-right: 8px;
+    /* 防止内容被滚动条遮挡 */
+    padding-bottom: 20px;
+    /* 保证完全显示文章列表 */
+}
+
+/* 可选：美化 WebKit 滚动条 */
+.calendar-flyout .calendar-posts-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.calendar-flyout .calendar-posts-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+}
+
+/* ---------- 文章目录样式 ---------- */
+.article-layout {
+    display: flex;
+    gap: 20px;
+    max-width: 100%;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.article-content {
+    flex: 1;
+    min-width: 0;
+    /* 防止内容溢出 */
+    overflow-x: auto;
+    /* 允许水平滚动 */
+    margin-right: 320px;
+    /* 为固定目录留出空间 */
+}
+
+.article-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    height: fit-content;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    z-index: 100;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .article-layout {
+        flex-direction: column;
+    }
+
+    .article-content {
+        margin-right: 0;
+        /* 移除右边距 */
+        order: 2;
+        /* 确保文章内容在目录下方 */
+    }
+
+    .article-sidebar {
+        width: 100%;
+        position: static;
+        top: auto;
+        right: auto;
+        order: 1;
+        /* 在小屏幕上目录显示在文章上方 */
+        max-height: none;
+    }
+
+    .toc-container {
+        margin-bottom: 20px;
+    }
+}
+
+/* 暗色主题适配 */
+.dark-theme .toc-container {
+    background: #1f1f1f;
+    border-color: #333;
+}
+
+.dark-theme .toc-header {
+    background: linear-gradient(to bottom, #2a2a2a, #222);
+    border-bottom-color: #333;
+}
+
+.dark-theme .toc-title {
+    color: #e0e0e0;
+}
+
+.dark-theme .toc-toggle-icon {
+    color: #aaa;
+}
+
+.dark-theme .toc-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme .toc-link {
+    color: var(--toc-link-unvisited);
+    border-bottom-color: #2a2a2a;
+}
+
+.dark-theme .toc-link:hover {
+    background: #2a3642;
+    color: #88a6ff;
+}
+
+.dark-theme .toc-link.active {
+    background: #1a3a5a;
+    color: #88a6ff;
+    border-left-color: #88a6ff;
+}
+
+.dark-theme .toc-link.active::before {
+    background: #88a6ff;
+}
+
+/* Also support theme toggle that uses body[data-theme="dark"] */
+body[data-theme="dark"] .toc-link {
+    color: var(--toc-link-unvisited);
+    border-bottom-color: #2a2a2a;
+}
+
+/* Force unvisited TOC links to use the TOC token in dark mode (higher specificity + explicit :link) */
+body[data-theme="dark"] .toc-container .toc-link:link {
+    color: var(--toc-link-unvisited) !important;
+}
+
+/* Visited TOC links: keep a slightly muted tone for readability */
+body[data-theme="dark"] .toc-container .toc-link:visited {
+    color: var(--text-color-secondary) !important;
+}
+
+/* 滚动条样式 */
+.toc-nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.toc-nav::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.toc-nav::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.toc-nav::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.dark-theme .toc-nav::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+.dark-theme .toc-nav::-webkit-scrollbar-thumb {
+    background: #555;
+}
+
+.dark-theme .toc-nav::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+/* 目录链接激活样式增强 */
+.toc-link.active {
+    background: #e6f3ff;
+    color: var(--win7-blue);
+    border-left: 3px solid var(--win7-blue);
+    padding-left: 13px;
+}
+
+.dark-theme .toc-link.active {
+    background: #1a3a5a;
+    color: #88a6ff;
+    border-left-color: #88a6ff;
+}
+
+/* 目标标题高亮 */
+.heading-highlight {
+    background: rgba(231, 40, 122, 0.3);
+    transition: background-color .6s ease;
+}
+
+/* Center Mermaid diagrams */
+.article-content .mermaid,
+.window-content .mermaid {
+    display: block;
+    margin: 16px auto;
+    max-width: 100%;
+}
+
+.article-content .mermaid svg,
+.window-content .mermaid svg {
+    display: block;
+    margin: 0 auto;
+    height: auto;
+}
+
+/* 图片短代码样式 */
+.image-container {
+    margin: 20px 0;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fafafa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: zoom-in;
+}
+
+.image-container img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.image-container figcaption {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+    text-align: center;
+}
+
+/* 图片容器变体 */
+.image-container.image-small {
+    max-width: 300px;
+    margin: 10px auto;
+}
+
+.image-container.image-large {
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.image-container.image-full {
+    max-width: 100%;
+    margin: 20px 0;
+}
+
+.image-container.image-left {
+    float: left;
+    margin: 10px 20px 10px 0;
+    max-width: 50%;
+}
+
+.image-container.image-right {
+    float: right;
+    margin: 10px 0 10px 20px;
+    max-width: 50%;
+}
+
+/* 暗色主题图片样式 */
+.dark-theme .image-container {
+    background: #2a2a2a;
+    border-color: #444;
+}
+
+.dark-theme .image-container figcaption {
+    color: #aaa;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+
+    .image-container.image-left,
+    .image-container.image-right {
+        float: none;
+        margin: 15px auto;
+        max-width: 100%;
+    }
+}
+
+/* 移动设备适配 - 小屏幕手机 */
+@media (max-width: 480px) {
+
+    /* 任务栏适配 */
+    .taskbar {
+        height: 50px;
+        padding: 0 5px;
+    }
+
+    .start-button {
+        width: 45px;
+        height: 45px;
+    }
+
+    .taskbar-item {
+        padding: 3px 8px;
+        font-size: 12px;
+    }
+
+    .taskbar-search {
+        width: 200px;
+        max-width: 50vw;
+        height: 32px;
+    }
+
+    /* 桌面图标适配 */
+    .desktop {
+        grid-template-columns: repeat(auto-fill, 60px);
+        grid-gap: 15px;
+        padding: 15px;
+    }
+
+    .desktop-icon {
+        width: 60px;
+        height: 70px;
+    }
+
+    .desktop-icon .icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .desktop-icon .label {
+        font-size: 10px;
+    }
+
+    .window-content {
+        padding: 15px;
+    }
+
+    /* 图片查看器移动适配 */
+    .image-viewer {
+        top: 10px !important;
+        left: 10px !important;
+        width: calc(100vw - 20px) !important;
+        height: calc(100vh - 60px) !important;
+        border-radius: 0;
+    }
+
+    .image-viewer .window-titlebar {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .image-viewer .window-controls button {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    /* 音频播放器移动适配 */
+    .audio-player {
+        top: 20px !important;
+        left: 20px !important;
+        width: calc(100vw - 40px) !important;
+        height: 180px !important;
+        border-radius: 8px;
+    }
+
+    .audio-player .window-titlebar {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .audio-player .window-controls button {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    .audio-player .audio-content {
+        padding: 12px;
+    }
+
+    .audio-player .song-title {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .audio-player .play-pause {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .audio-player .progress-container {
+        height: 10px;
+    }
+
+    .audio-player .time-info {
+        font-size: 11px;
+        min-width: 70px;
+    }
+
+    /* 视频播放器移动适配 */
+    .video-player {
+        top: 10px !important;
+        left: 10px !important;
+        width: calc(100vw - 20px) !important;
+        height: calc(100vh - 60px) !important;
+        border-radius: 0;
+    }
+
+    .video-player .window-titlebar {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .video-player .window-controls button {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    .video-player .video-controls {
+        padding: 8px;
+    }
+
+    .video-player button {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+        margin: 0 3px;
+    }
+
+    .video-player .play-pause {
+        font-size: 22px;
+    }
+
+    .video-player .volume-slider {
+        width: 50px;
+    }
+
+    .video-player .progress-time {
+        font-size: 11px;
+        min-width: 70px;
+    }
+
+    /* 导航按钮移动适配 */
+    .nav-button {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
+
+    .prev-button {
+        left: 10px;
+    }
+
+    .next-button {
+        right: 10px;
+    }
+
+    /* 文件资源管理器移动适配 */
+    .explorer-window {
+        top: 10px !important;
+        left: 10px !important;
+        width: calc(100vw - 20px) !important;
+        height: calc(100vh - 60px) !important;
+        border-radius: 0;
+    }
+
+    .explorer-sidebar {
+        width: 150px;
+    }
+
+    .files-container.grid-view {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        grid-gap: 6px;
+    }
+
+    .file-item-grid {
+        width: 70px;
+        min-height: 70px;
+        padding: 3px;
+    }
+
+    .file-icon-large {
+        width: 28px;
+        height: 28px;
+    }
+
+    .file-name {
+        font-size: 10px;
+    }
+
+    /* 画板移动适配 */
+    .drawing-window {
+        top: 10px !important;
+        left: 10px !important;
+        width: calc(100vw - 20px) !important;
+        height: calc(100vh - 60px) !important;
+        border-radius: 0;
+    }
+
+    .drawing-toolbar {
+        padding: 6px 8px;
+    }
+
+    .drawing-toolbar .tool-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .drawing-content {
+        grid-template-columns: 150px 1fr;
+    }
+
+    .layers-panel {
+        width: 150px;
+    }
+
+    /* 搜索面板移动适配 */
+    .search-results-panel {
+        width: calc(100vw - 20px);
+        max-width: none;
+        left: 10px;
+        bottom: 48px;
+    }
+
+    /* 日历面板移动适配 */
+    .calendar-flyout {
+        width: calc(100vw - 20px);
+        right: 10px;
+        bottom: 60px;
+    }
+
+    /* 文章目录移动适配 */
+    .article-layout {
+        flex-direction: column;
+    }
+
+    .article-content {
+        order: 2;
+        /* 确保文章内容在目录下方 */
+    }
+
+    .article-sidebar {
+        width: 100%;
+        position: static;
+        order: 1;
+        /* 在小屏幕上目录显示在文章上方 */
+        margin-bottom: 20px;
+    }
+
+    .toc-container {
+        margin-bottom: 15px;
+    }
+
+    /* 代码块移动适配 */
+    .article-content pre {
+        padding: 12px;
+        font-size: 13px;
+        overflow-x: auto;
+    }
+
+    /* 表格移动适配 */
+    .article-content table {
+        font-size: 12px;
+    }
+
+    .article-content th,
+    .article-content td {
+        padding: 4px 6px;
+    }
+
+    /* 音频和视频容器小屏幕适配 */
+    .audio-container,
+    .video-embed {
+        margin: 8px 0;
+        border-radius: 4px;
+    }
+
+    .audio-container audio {
+        height: 36px;
+    }
+
+    .video-embed iframe {
+        height: 180px;
+    }
+}
+
+/* 中等屏幕平板适配 */
+@media (max-width: 768px) and (min-width: 481px) {
+
+    /* 图片查看器平板适配 */
+    .image-viewer {
+        top: 20px !important;
+        left: 20px !important;
+        width: calc(100vw - 40px) !important;
+        height: calc(100vh - 80px) !important;
+    }
+
+    /* 音频播放器平板适配 */
+    .audio-player {
+        top: 30px !important;
+        left: 30px !important;
+        width: 350px !important;
+        height: 180px !important;
+    }
+
+    /* 视频播放器平板适配 */
+    .video-player {
+        top: 20px !important;
+        left: 20px !important;
+        width: calc(100vw - 40px) !important;
+        height: calc(100vh - 80px) !important;
+    }
+
+    /* 文件资源管理器平板适配 */
+    .explorer-window {
+        top: 20px !important;
+        left: 20px !important;
+        width: calc(100vw - 40px) !important;
+        height: calc(100vh - 80px) !important;
+    }
+
+    /* 画板平板适配 */
+    .drawing-window {
+        top: 20px !important;
+        left: 20px !important;
+        width: calc(100vw - 40px) !important;
+        height: calc(100vh - 80px) !important;
+    }
+}
+
+/* 音频和视频容器样式 */
+.audio-container,
+.video-embed {
+    margin: 15px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.audio-container audio {
+    border-radius: 8px;
+}
+
+.video-embed iframe {
+    border-radius: 8px;
+}
+
+/* 移动设备音频和视频容器适配 */
+@media (max-width: 768px) {
+
+    .audio-container,
+    .video-embed {
+        margin: 10px 0;
+        border-radius: 6px;
+    }
+
+    .audio-container audio {
+        height: 40px;
+    }
+
+    .video-embed iframe {
+        height: 200px;
+    }
+}
+
+/* ============================================
+   密码保护文章样式
+   ============================================ */
+
+/* 密码保护文章的内容容器（初始隐藏） */
+[data-password-protected="true"] #article-body-content {
+    display: none;
+}
+
+/* 解锁后的文章内容（显示） */
+[data-password-protected="true"] #article-body-content[style*="display: block"],
+[data-password-protected="true"] #article-body-content.unlocked {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* 文章锁定徽章 */
+.article-locked-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    margin-left: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--text-color-secondary);
+    vertical-align: middle;
+}
+
+/* 密码保护容器 */
+.password-protection-container {
+    margin: 40px 0;
+    padding: 40px 20px;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.password-prompt {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.password-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+.password-prompt h2 {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.password-prompt p {
+    margin: 0 0 30px 0;
+    color: var(--text-color-secondary);
+    font-size: 14px;
+}
+
+/* 密码输入组 */
+.password-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.password-input {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--window-bg);
+    color: var(--text-color);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.password-input:focus {
+    border-color: var(--link-color);
+}
+
+.password-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.password-submit-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background: var(--win7-blue);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    white-space: nowrap;
+}
+
+.password-submit-btn:hover:not(:disabled) {
+    background: #0066b3;
+    transform: translateY(-1px);
+}
+
+.password-submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.password-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 错误消息 */
+.password-error-message {
+    padding: 12px 16px;
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    border-radius: 4px;
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 10px;
+    animation: shake 0.3s;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+/* 暗色主题适配 */
+body[data-theme="dark"] .password-protection-container {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+body[data-theme="dark"] .password-error-message {
+    background: rgba(220, 53, 69, 0.15);
+    border-color: rgba(220, 53, 69, 0.4);
+    color: #ff6b7a;
+}
+
+/* 移动设备适配 */
+@media (max-width: 768px) {
+    .password-protection-container {
+        margin: 20px 0;
+        padding: 30px 15px;
+    }
+
+    .password-icon {
+        font-size: 48px;
+        margin-bottom: 15px;
+    }
+
+    .password-prompt h2 {
+        font-size: 20px;
+    }
+
+    .password-input-group {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .password-submit-btn {
+        width: 100%;
+    }
+}

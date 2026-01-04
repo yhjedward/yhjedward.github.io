@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>设计模式 on Windows 7 Style Blog</title>
+    <link>/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+    <description>Recent content in 设计模式 on Windows 7 Style Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 16 Mar 2024 16:37:51 +0800</lastBuildDate>
+    <atom:link href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>单例模式</title>
+      <link>/posts/%E5%90%8E%E7%AB%AF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Sat, 16 Mar 2024 16:37:51 +0800</pubDate>
+      <guid>/posts/%E5%90%8E%E7%AB%AF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+      <description>&lt;h2 id=&#34;懒汉模式&#34;&gt;懒汉模式&lt;/h2&gt;&#xA;&lt;h3 id=&#34;概述&#34;&gt;概述&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;他是一个懒汉,不愿动弹.只有你主动叫他的时候他才会工作,即实例在类加载的时候不被初始化,到了需要使用的时候才进行初始化.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;饿汉模式&#34;&gt;饿汉模式&lt;/h2&gt;&#xA;&lt;h3 id=&#34;概述-1&#34;&gt;概述&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;他是一个饿汉,他总是先把食物准备好,什么时候需要吃了,随时拿来吃.即在初始阶段就主动进行实例化,无论此单例是否使用,但是加载慢,获取对象快.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://refactoring.guru/design-patterns/singleton&#34;&gt;design-patterns&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://liuwangshu.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/&#34;&gt;java版本设计模式&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://awesome-programming-books.github.io/design-pattern/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%A6%85.pdf&#34;&gt;设计模式之禅&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.sulvblog.cn/posts/tech/go_design_pattern/&#34;&gt;设计模式&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+    </item>
+  </channel>
+</rss>

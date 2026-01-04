@@ -1,0 +1,29 @@
+/* 博客图标 */
+.blog-icon .icon {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M40 12H24l-4-4H8c-2.2 0-4 1.8-4 4v24c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V16c0-2.2-1.8-4-4-4z" fill="%234CAF50"/><path d="M40 12H8c-2.2 0-4 1.8-4 4v24c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V16c0-2.2-1.8-4-4-4z" fill="%238BC34A"/><path d="M28 24h-8c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V26c0-1.1-.9-2-2-2z" fill="%23FFF"/></svg>');
+}
+
+/* 博客窗口样式 */
+.blog-window {
+    position: fixed;
+    width: 100%;
+    height: calc(100vh - 40px);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 40px;
+    /* 留出任务栏的高度 */
+    background: var(--window-bg);
+    border-radius: 0;
+    /* 移除圆角 */
+    box-shadow: none;
+    /* 移除阴影 */
+    overflow: hidden;
+    display: none;
+    /* 默认隐藏所有窗口 */
+    flex-direction: column;
+    /* 确保博客窗口在资源管理器窗口之下 */
+    z-index: 50;
+    /* 初始透明度为0 */
+    opacity: 0;
+}

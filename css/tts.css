@@ -1,0 +1,384 @@
+/* TTS 桌面图标 */
+.tts-icon .icon {
+    font-size: 32px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="6" y="8" width="36" height="28" rx="4" fill="%23ffffff" stroke="%232563eb" stroke-width="2"/><text x="10" y="28" font-size="14" fill="%232563eb">TTS</text></svg>');
+}
+
+.tts-icon .label {
+    font-size: 12px;
+    word-wrap: break-word;
+    max-width: 60px;
+}
+
+/* TTS 文本转语音窗口样式 */
+.tts-window {
+    background: var(--window-bg, #f0f0f0);
+    border: 1px solid #808080;
+    box-shadow: 1px 1px 0 #ffffff inset, -1px -1px 0 #808080, 1px 1px 0 #000000;
+    border-radius: 2px;
+    position: fixed;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color, #333333);
+}
+
+.tts-window.active{
+    display: flex;
+}
+
+.window-titlebar {
+    background: linear-gradient(90deg, #0078d7 0%, #1084d7 100%);
+    color: white;
+    padding: 2px 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    cursor: move;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.title-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 8px;
+}
+
+.window-title {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.window-controls {
+    display: flex;
+    gap: 2px;
+    margin-right: 2px;
+}
+
+.window-controls button {
+    width: 16px;
+    height: 14px;
+    padding: 0;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    background: linear-gradient(135deg, #f5f5f5 0%, #c8c8c8 100%);
+    color: #000;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.window-controls button:active {
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    background: linear-gradient(135deg, #c8c8c8 0%, #f5f5f5 100%);
+}
+
+.window-controls button:hover {
+    background: linear-gradient(135deg, #f0f0f0 0%, #c0c0c0 100%);
+}
+
+.minimize, .maximize, .close {
+    background-color: #c0c0c0 !important;
+}
+
+/* TTS 窗口内容 */
+.tts-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--window-bg, #f0f0f0);
+    padding: 4px;
+    gap: 4px;
+}
+
+/* 设置面板 */
+.tts-settings {
+    display: flex;
+    gap: 8px;
+    padding: 4px;
+    background: var(--card-bg, #ffffff);
+    border: 1px inset #dfdfdf;
+    border-radius: 2px;
+}
+
+.setting-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+}
+
+.setting-group label {
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.setting-group select {
+    flex: 1;
+    padding: 2px 4px;
+    border: 1px solid #808080;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    background: #ffffff;
+    font-size: 12px;
+    font-family: inherit;
+}
+
+/* 输入区域 */
+.tts-input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-height: 100px;
+}
+
+#tts-text-input {
+    flex: 1;
+    padding: 6px;
+    border: 1px inset #dfdfdf;
+    border-radius: 2px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
+    resize: none;
+    background: var(--input-bg, #ffffff);
+    color: var(--text-color, #333333);
+}
+
+#tts-text-input:focus {
+    outline: none;
+    border: 1px solid #0078d7;
+}
+
+/* 控制按钮 */
+.tts-controls {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.tts-btn {
+    padding: 4px 12px;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    background: linear-gradient(135deg, #f5f5f5 0%, #c8c8c8 100%);
+    color: #000000;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 2px;
+    transition: background-color 0.2s;
+    flex: 1;
+    min-width: 80px;
+}
+
+.tts-btn:active {
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    background: linear-gradient(135deg, #c8c8c8 0%, #f5f5f5 100%);
+}
+
+.tts-btn:hover {
+    background: linear-gradient(135deg, #f0f0f0 0%, #c0c0c0 100%);
+}
+
+.tts-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.tts-btn.primary {
+    background: linear-gradient(135deg, #0078d7 0%, #005a9e 100%);
+    color: #ffffff;
+    border-color: #004a8e #ffffff #ffffff #004a8e;
+}
+
+.tts-btn.primary:hover {
+    background: linear-gradient(135deg, #0084e8 0%, #0066b2 100%);
+}
+
+.tts-btn.secondary {
+    flex: none;
+    min-width: 60px;
+}
+
+/* 状态消息 */
+.tts-status {
+    padding: 4px 6px;
+    border: 1px inset #dfdfdf;
+    border-radius: 2px;
+    font-size: 12px;
+    background: var(--card-bg, #ffffff);
+    color: var(--text-color, #333333);
+    min-height: 18px;
+}
+
+.tts-status.status-info {
+    color: #0078d7;
+}
+
+.tts-status.status-success {
+    color: #107c10;
+}
+
+.tts-status.status-warning {
+    color: #ff8c00;
+}
+
+.tts-status.status-error {
+    color: #da3b01;
+}
+
+/* 历史记录 */
+.tts-history-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-height: 60px;
+    border-top: 1px solid #c1c1c1;
+}
+
+.tts-history-title {
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--text-color, #333333);
+}
+
+#tts-history {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px inset #dfdfdf;
+    border-radius: 2px;
+    background: var(--card-bg, #ffffff);
+}
+
+.tts-history-item {
+    padding: 3px 4px;
+    border-bottom: 1px solid #e1e1e1;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s;
+}
+
+.tts-history-item:last-child {
+    border-bottom: none;
+}
+
+.tts-history-item:hover {
+    background: var(--hover-bg, #e0e0e0);
+}
+
+.tts-history-item:active {
+    background: var(--active-bg, #d0d0d0);
+}
+
+.history-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 2px;
+    transition: all 0.15s;
+}
+
+.history-text:hover {
+    background: rgba(0, 120, 215, 0.15);
+    color: #0078d7;
+}
+
+.history-lang {
+    font-size: 10px;
+    background: #e0e0e0;
+    padding: 1px 4px;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+
+.history-delete {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #da3b01;
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0.5;
+}
+
+.history-delete:hover {
+    opacity: 1;
+}
+
+/* 开始菜单中的 TTS 按钮 */
+.start-menu-item[data-start-action="tts"] {
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.start-menu-item[data-start-action="tts"]:hover {
+    background: #0078d7;
+    color: white;
+}
+
+/* 任务栏中的 TTS 按钮 */
+.taskbar-window-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0 6px;
+    color: var(--text-color, #333333);
+    transition: all 0.2s;
+}
+
+.taskbar-window-btn:hover {
+    background: rgba(0, 120, 215, 0.1);
+}
+
+.taskbar-window-btn.active {
+    background: rgba(0, 120, 215, 0.3);
+    border: 1px solid #0078d7;
+}
+
+/* 深色主题支持 */
+body.dark-mode .tts-window {
+    background: var(--window-bg-dark, #2d2d2d);
+}
+
+body.dark-mode .tts-settings,
+body.dark-mode .tts-status,
+body.dark-mode #tts-history {
+    background: var(--card-bg-dark, #3d3d3d);
+}
+
+body.dark-mode #tts-text-input {
+    background: var(--input-bg-dark, #1e1e1e);
+    color: var(--text-color-dark, #e0e0e0);
+    border-color: #666;
+}
+
+body.dark-mode .tts-btn {
+    background: linear-gradient(135deg, #4d4d4d 0%, #3d3d3d 100%);
+    color: #e0e0e0;
+    border-color: #666 #333 #333 #666;
+}
+
+body.dark-mode .tts-btn.primary {
+    background: linear-gradient(135deg, #0078d7 0%, #005a9e 100%);
+}
+
+body.dark-mode .history-lang {
+    background: #555;
+}

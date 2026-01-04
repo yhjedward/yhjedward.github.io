@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Windows 标志背景 -->
+    <path d="M4 4H20V20H4V4Z" fill="#0078D7"/>
+    <!-- Windows 标志 -->
+    <path d="M6 6H10V10H6V6Z" fill="white"/>
+    <path d="M14 6H18V10H14V6Z" fill="white"/>
+    <path d="M6 14H10V18H6V14Z" fill="white"/>
+    <path d="M14 14H18V18H14V14Z" fill="white"/>
+    <!-- 光泽效果 -->
+    <path d="M4 4H20V6H4V4Z" fill="rgba(255,255,255,0.2)"/>
+</svg> 

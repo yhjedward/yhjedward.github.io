@@ -1,0 +1,96 @@
+/* 图片查看器 */
+.image-viewer {
+    display: none;
+    position: fixed;
+    top: 100px;
+    left: 100px;
+    width: 600px;
+    height: 500px;
+    background: var(--window-bg);
+    border-radius: 6px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    z-index: 9997;
+    flex-direction: column;
+}
+
+.image-viewer .window-titlebar {
+    background: var(--window-titlebar-bg);
+    color: var(--window-titlebar-text);
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    flex-shrink: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+
+.image-viewer .image-content {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    position: relative;
+}
+
+.image-viewer img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transform-origin: center center;
+    transition: transform 0.1s ease-out;
+}
+
+/* 缩放信息样式 */
+.image-viewer .zoom-info {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    /* 避免干扰鼠标事件 */
+}
+
+/* 图片预览窗口最大化样式 */
+.image-viewer.maximized {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100% - 40px) !important;
+    /* 减去任务栏高度 */
+    transform: none !important;
+    transition: all 0.3s ease;
+    border-radius: 0;
+    z-index: 9999;
+}
+
+.image-viewer.minimized {
+    display: none;
+}
+
+/* 为图片预览窗口添加过渡效果 */
+.image-viewer:not(.maximized) {
+    transition: all 0.3s ease;
+}
+
+.image-viewer.maximized .window-titlebar {
+    cursor: default;
+}
+
+/* 调整最大化后的图片大小 */
+.image-viewer.maximized img {
+    max-height: calc(100vh - 80px);
+    /* 减去标题栏和任务栏高度 */
+}

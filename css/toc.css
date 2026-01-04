@@ -1,0 +1,130 @@
+/* 文章目录样式 */
+.toc-container {
+    background: #ffffff;
+    border: 1px solid var(--win7-border);
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: linear-gradient(to bottom, #f9f9f9, #ececec);
+    border-bottom: 1px solid var(--win7-border);
+    cursor: pointer;
+}
+
+.toc-title {
+    font-weight: 600;
+    color: var(--win7-text);
+    font-size: 14px;
+}
+
+.toc-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toc-toggle:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.toc-toggle-icon {
+    font-size: 24px;
+    color: #666;
+    transition: transform 0.2s;
+}
+
+.toc-toggle-icon.collapsed {
+    transform: rotate(-90deg);
+    /* 逆时针旋转90度表示折叠状态 */
+}
+
+.toc-nav {
+    max-height: 500px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease;
+}
+
+.toc-nav.collapsed {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.toc-list {
+    list-style: none;
+    margin: 10px 0 30px 0;
+    padding: 0;
+}
+
+.toc-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.toc-item {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.toc-item:last-child {
+    border-bottom: none;
+}
+
+.toc-link {
+    display: block;
+    padding: 8px 16px;
+    color: var(--win7-text);
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.4;
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+}
+
+.toc-link:hover {
+    background: #f5f9ff;
+    color: var(--win7-blue);
+}
+
+.toc-link.active {
+    background: #e6f3ff;
+    color: var(--win7-blue);
+    border-left: 3px solid var(--win7-blue);
+    padding-left: 13px;
+}
+
+.toc-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--win7-blue);
+}
+
+/* 子级目录缩进 */
+.toc-list ul .toc-link {
+    padding-left: 32px;
+    font-size: 12px;
+}
+
+.toc-list ul ul .toc-link {
+    padding-left: 48px;
+}
+
+.toc-list ul ul ul .toc-link {
+    padding-left: 64px;
+}

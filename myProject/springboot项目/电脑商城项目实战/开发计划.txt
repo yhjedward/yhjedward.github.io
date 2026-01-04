@@ -1,0 +1,19 @@
+涉及的框架(springboot + MyBatis + Mysql)
+前端: 
+后端: springboot + java24 + MyBatis + mysql
+
+
+- 当前的进度
+1. 配置项目，登录前端页面可以加载.
+2. 用户注册-持久层.(保存数据到数据库，查询数据库的数据).
+
+- 未完成的进度
+1. 用户注册-业务层.
+
+- 当前遇到的问题
+1. 配置时没有遇到spring Initializr，默认使用了spring boot.
+2. MyBatis 相关教程
+3. 了解学习 spring 的注解
+
+- 已经解决的问题
+1. 环境配置已完成

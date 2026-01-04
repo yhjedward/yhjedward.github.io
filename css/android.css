@@ -1,0 +1,90 @@
+@media (max-width: 768px) {
+    /* Increase touch target sizes and optimize spacing */
+    .taskbar {
+        height: 48px;
+    }
+
+    .window {
+        bottom: 48px; /* Ensure content is not hidden behind the taskbar */
+    }
+
+    .window-titlebar {
+        padding: 8px;
+    }
+
+    .window-content {
+        padding: 10px;
+    }
+
+    /* Desktop icons */
+    .desktop-icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .desktop-icon .icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .desktop-icon .label {
+        font-size: 12px;
+    }
+
+    /* Hide explorer sidebar to save space */
+    .explorer-sidebar {
+        display: none;
+    }
+
+    .files-container.grid-view {
+        grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further optimizations for very small screens */
+    .taskbar-items {
+        display: none;
+    }
+
+    .window-titlebar {
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    .window-controls button {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+
+    .desktop-icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    .desktop-icon .label {
+        font-size: 10px;
+    }
+} 
+@media (max-width: 768px) {
+
+    /* 让资源管理器占满手机屏幕（下方预留任务栏 48px） */
+    .explorer-window{
+        top: 0   !important;
+        left: 0  !important;
+        width: 100% !important;
+        height: calc(100vh - 48px) !important;   /* 48px 为我们在 android.css 中设置的任务栏高度 */
+        border-radius: 0;                         /* 去掉圆角 */
+    }
+
+    /* 如果希望窗口标题栏的按钮更大一点，可顺带调整 */
+    .explorer-window .window-titlebar{
+        padding: 6px 8px;
+    }
+    .explorer-window .window-controls button{
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
+    }
+}

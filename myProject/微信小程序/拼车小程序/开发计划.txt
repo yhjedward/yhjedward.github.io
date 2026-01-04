@@ -1,0 +1,26 @@
+涉及的框架: 
+前端: 微信小程序原生开发(WXML + WXSS + JS) 
+后端: Node.js + Express + Mysql
+
+- 当前的进度
+1. 已完成基本结构
+2. 数据库已经建立
+
+- 未完成的进度
+1. 前端页面修改
+2. 登录功能
+3. 用户管理
+4. 行程管理
+5. 订单管理
+6. 支付功能
+
+- 当前遇到的问题
+1. JWT 身份验证
+2. CORS跨域配置
+3. RESTful API
+4. 前后端没有联系起来
+5. 项目涉及的库: axios等
+6. 如何测试前端项目
+
+- 已经解决的问题
+1. mysql命令: mysql -u root -p --default-character-set=utf8mb4 pingce_db < database\schema.sql

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on Windows 7 Style Blog</title>
+    <link>/categories/java/</link>
+    <description>Recent content in Java on Windows 7 Style Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 22 Nov 2023 11:29:52 +0800</lastBuildDate>
+    <atom:link href="/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java命令行调试程序</title>
+      <link>/posts/%E5%90%8E%E7%AB%AF/java/java%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F/</link>
+      <pubDate>Wed, 22 Nov 2023 11:29:52 +0800</pubDate>
+      <guid>/posts/%E5%90%8E%E7%AB%AF/java/java%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F/</guid>
+      <description>&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/future234/article/details/80856038&#34;&gt;Java命令行调试程序&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+    </item>
+  </channel>
+</rss>
