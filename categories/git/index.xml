@@ -20,7 +20,7 @@
       <link>https://yhjedward.github.io/posts/git/git%E8%AE%B0%E5%BD%95/</link>
       <pubDate>Thu, 25 May 2023 19:24:26 +0800</pubDate>
       <guid>https://yhjedward.github.io/posts/git/git%E8%AE%B0%E5%BD%95/</guid>
-      <description>&lt;h2 id=&#34;取消文件追踪&#34;&gt;取消文件追踪&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git rm --cached 文件名&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;&#xA;&lt;p&gt;[1] .gitignore 只对未跟踪的文件起作用.如果文件已被版本库控制,再在 .gitignore 添加忽略文件会不起作用.&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;[2] 已跟踪的文件是指那些被纳入了版本控制的文件，在上一次提交中有它们的记录。未跟踪文件就是指那些从没提交过的文件.&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description></description>
     </item>
     <item>
       <title>Git其它</title>

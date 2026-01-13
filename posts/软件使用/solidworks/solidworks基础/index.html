@@ -236,6 +236,8 @@
       <a href="https://onecompiler.com/" class="start-menu-item start-menu-link" target="_blank" rel="noopener">在线编程</a>
       <a href="https://stackedit.io/app#" class="start-menu-item start-menu-link" target="_blank"
         rel="noopener">StackEdit</a>
+      <a href="https://z-library.sk/" class="start-menu-item start-menu-link" target="_blank"
+        rel="noopener">Zlib</a>
       <a href="https://codepen.io/" class="start-menu-item start-menu-link" target="_blank" rel="noopener">codepen</a>
       
     </div>
@@ -672,6 +674,62 @@
   <script id="blog-data" type="application/json">
       {
         "posts": [{
+            "title": "React的hooks",
+            "url": "\/posts\/%E5%89%8D%E7%AB%AF\/react\/react%E5%88%9D%E7%BA%A7\/react%E7%9A%84hooks\/",
+            "date": "2026-01-13",
+            "filename": "React的hooks.md",
+            "section": "posts\/前端\/react\/react初级",
+            "lastmod": "2026-01-13",
+            "content": " p strong React Hooks \/strong 是 React 16.8 引入的革命性特性，它让你在 strong 函数组件 \/strong 中使用状态（state）和其他 React 特性，而无需编写 class。 \/p p 简单来说： strong Hooks 就是让函数组件拥有类组件的能力，但代码更简洁。 \/strong \/p hr h2 id=\u0026#34;一为什么需要-hooks\u0026#34; 一、为什么需要 Hooks？ \/h2 h3 id=\u0026#34;11-类组件的痛点\u0026#34; 1.1 类组件的痛点 \/h3 div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-jsx\u0026#34; data-lang=\u0026#34;jsx\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; \/\/ 类组件示例 - 复杂、冗余 \/span \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; \/span span …"
+          },{
+            "title": "Python中的pydantic",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/python\/python%E4%B8%AD%E7%BA%A7\/python%E4%B8%AD%E7%9A%84pydantic\/",
+            "date": "2026-01-13",
+            "filename": "Python中的pydantic.md",
+            "section": "posts\/后端\/python\/python中级",
+            "lastmod": "2026-01-13",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-python\u0026#34; data-lang=\u0026#34;python\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;kn\u0026#34; from \/span span class=\u0026#34;nn\u0026#34; pydantic \/span span class=\u0026#34;kn\u0026#34; import \/span span class=\u0026#34;n\u0026#34; BaseModel \/span \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;k\u0026#34; class \/span span class=\u0026#34;nc\u0026#34; Person \/span span class=\u0026#34;p\u0026#34; ( \/span span class=\u0026#34;n\u0026#34; BaseModel \/span span class=\u0026#34;p\u0026#34; ): \/span …"
+          },{
+            "title": "React基础",
+            "url": "\/posts\/%E5%89%8D%E7%AB%AF\/react\/react%E5%9F%BA%E7%A1%80\/",
+            "date": "2026-01-12",
+            "filename": "React基础.md",
+            "section": "posts\/前端\/react",
+            "lastmod": "2026-01-12",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li useState, useEffet, hooks. \/li \/ol h2 \/h2 "
+          },{
+            "title": "Python类与方法",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/python\/python%E5%88%9D%E7%BA%A7\/python%E7%B1%BB%E4%B8%8E%E6%96%B9%E6%B3%95\/",
+            "date": "2026-01-12",
+            "filename": "Python类与方法.md",
+            "section": "posts\/后端\/python\/python初级",
+            "lastmod": "2026-01-12",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 对于函数方法, python有一种约定俗成的写法. ol li 单下划线前缀 _method: 表示这是一个内部方法，不建议在类外部直接调用.这只是约定, 外部依然可以调用 code obj._method() \/code , 不会报错. \/li li 双下划线前缀 __method: __method 会触发名称改写, Python会把方法名改成 code _类名__方法名 \/code , 避免子类或外部直接访问.外部使用 code obj.__secret() \/code 会报错, 使用 code obj._MyClass__secret() \/code 可以访问. \/li li 普通方法(没有下划线)就是公开方法, 推荐给外部使用. \/li \/ol \/li \/ol "
+          },{
+            "title": "CommonJS转向ECMAScriptModules",
+            "url": "\/posts\/%E9%9A%8F%E7%AC%94\/%E6%8A%80%E6%9C%AF\/commonjs%E8%BD%AC%E5%90%91ecmascriptmodules\/",
+            "date": "2026-01-11",
+            "filename": "CommonJS转向ECMAScriptModules.md",
+            "section": "posts\/随笔\/技术",
+            "lastmod": "2026-01-11",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 一句警告引发的思考: “The CJS build of Vite\u0026amp;rsquo;s Node API is deprecated.” \/li \/ol h3 id=\u0026#34;commonjscjs是什么\u0026#34; CommonJS(CJS)是什么? \/h3 ol li CJS 写法 \/li \/ol p code const vite = require(\u0026#39;vite\u0026#39;) \/code \/p h3 id=\u0026#34;ecmascriptmodulesesm是什么\u0026#34; ECMAScriptModules(ESM)是什么? \/h3 ol li p ESM 使用 code import \/code 和 code export \/code 来组织代码 \/p \/li li p ESM 写法 code import { createServer } from \u0026#39;vite\u0026#39; \/code \/p \/li \/ol "
+          },{
+            "title": "Postgresql数据库基础",
+            "url": "\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/postgresql%E6%95%B0%E6%8D%AE%E5%BA%93\/postgresql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80\/",
+            "date": "2026-01-07",
+            "filename": "Postgresql数据库基础.md",
+            "section": "posts\/数据库\/postgresql数据库",
+            "lastmod": "2026-01-07",
+            "content": " h2 id=\u0026#34;参考链接\u0026#34; 参考链接 \/h2 ol li a href=\u0026#34;https:\/\/zhuanlan.zhihu.com\/p\/644955668\u0026#34; 一小时实践入门 pgAdmin \/a \/li \/ol "
+          },{
+            "title": "数据库基础",
+            "url": "\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80\/",
+            "date": "2026-01-07",
+            "filename": "数据库基础.md",
+            "section": "posts\/数据库",
+            "lastmod": "2026-01-07",
+            "content": ""
+          },{
             "title": "Springboot源码1",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/java\/spring\/springboot\/springboot%E6%BA%90%E7%A0%811\/",
             "date": "2026-01-05",
@@ -1054,7 +1112,7 @@
             "filename": "Blender快捷键.md",
             "section": "posts\/软件使用\/Blender",
             "lastmod": "2025-11-06",
-            "content": " h2 id=\u0026#34;blender-快捷键\u0026#34; Blender 快捷键 \/h2 table tr td 快捷键 \/td \/tr tr td A: 全选物体 \/td \/tr tr td shift\u002bA: 新建物体 \/td \/tr tr td shift\u002bD: 复制物体 \/td td alt\u002bD: 关联的形式复制物体，修改时可以同步修改 \/td \/tr tr td X: 删除物体 \/td \/tr tr td P: 分离选中的物体 \/td \/tr tr td E: 向外挤出 \/td \/tr tr td I: 内插面 \/td \/tr tr td 小键盘数字0: 切换\/退出摄像机视图 \/td td 小键盘数字1: 正视图 \/td td 小键盘数字2: 向下转15° \/td \/tr tr td 小键盘数字3: 侧视图 \/td td 小键盘数字4: 向左转15° \/td td 小键盘数字5: 切换正交视图与透视视图 \/td \/tr tr td 小键盘数字7: 顶视图 \/td td 小键盘数字9: 去相反方向视图 \/td td 小键盘小数点: 便于观察物体 \/td \/tr tr td tab: 饼菜单 …"
+            "content": " h2 id=\u0026#34;blender-快捷键\u0026#34; Blender 快捷键 \/h2 table tr td 快捷键 \/td \/tr tr td A: 全选物体 \/td \/tr tr td shift\u002bA: 新建物体 \/td \/tr tr td shift\u002bD: 复制物体 \/td td shift\u002bD - x: 复制出的物体只能沿 X 轴移动. td alt\u002bD: 关联的形式复制物体，修改时可以同步修改 \/td \/tr tr td X: 删除物体 \/td \/tr tr td P: 分离选中的物体 \/td \/tr tr td E: 向外挤出 \/td \/tr tr td I: 内插面 \/td \/tr tr td 小键盘数字0: 切换\/退出摄像机视图 \/td td 小键盘数字1: 正视图 \/td td 小键盘数字2: 向下转15° \/td \/tr tr td 小键盘数字3: 侧视图 \/td td 小键盘数字4: 向左转15° \/td td 小键盘数字5: 切换正交视图与透视视图 \/td \/tr tr td 小键盘数字7: 顶视图 \/td td 小键盘数字9: 去相反方向视图 \/td td 小键盘小数点: …"
           },{
             "title": "Unity3D基础",
             "url": "\/posts\/%E6%B8%B8%E6%88%8F\/unity3d\/unity3d%E5%9F%BA%E7%A1%80\/",
@@ -1673,10 +1731,10 @@
             "content": " h1 id=\u0026#34;bbc-audio-shortcode-测试\u0026#34; BBC Audio Shortcode 测试 \/h1 p 本文用于测试新短代码 code bbc-audio \/code 的单条与批量解析能力。 \/p h2 id=\u0026#34;单条示例随身英语\u0026#34; 单条示例（随身英语） \/h2 p 源页面： \/p ul li a href=\u0026#34;https:\/\/www.bbc.co.uk\/learningenglish\/chinese\/features\/take-away-english\/ep-250811\u0026#34; https:\/\/www.bbc.co.uk\/learningenglish\/chinese\/features\/take-away-english\/ep-250811 \/a \/li \/ul p 短代码： \/p p 效果： \/p div class=\u0026#34;bbc-audio-item\u0026#34; style=\u0026#34;max-width:800px; margin: 8px 0;\u0026#34; audio …"
           },{
             "title": "python装饰器",
-            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/python\/python%E8%AF%AD%E6%B3%95\/python%E8%A3%85%E9%A5%B0%E5%99%A8\/",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/python\/python%E5%88%9D%E7%BA%A7\/python%E8%A3%85%E9%A5%B0%E5%99%A8\/",
             "date": "2025-08-06",
             "filename": "python装饰器.md",
-            "section": "posts\/后端\/python\/python语法",
+            "section": "posts\/后端\/python\/python初级",
             "lastmod": "2025-08-06",
             "content": " div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 装饰器 \/span \/div div class=\u0026#34;collapse-content\u0026#34; ol li 装饰器就是一个闭包. \/li li 在函数中再嵌套一个函数，并且引用外部函数的变量，就是一个闭包. \/li \/ol div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-python\u0026#34; data-lang=\u0026#34;python\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;k\u0026#34; def \/span span class=\u0026#34;nf\u0026#34; outer \/span span class=\u0026#34;p\u0026#34; ( \/span span class=\u0026#34;n\u0026#34; x \/span span class=\u0026#34;p\u0026#34; ): \/span \/span …"
           },{
@@ -2806,7 +2864,7 @@
             "filename": "Git记录.md",
             "section": "posts\/git",
             "lastmod": "2023-05-25",
-            "content": " h2 id=\u0026#34;取消文件追踪\u0026#34; 取消文件追踪 \/h2 div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; git rm --cached 文件名 \/span \/span \/code \/pre \/div blockquote p [1] .gitignore 只对未跟踪的文件起作用.如果文件已被版本库控制,再在 .gitignore 添加忽略文件会不起作用. \/p \/blockquote blockquote p [2] 已跟踪的文件是指那些被纳入了版本控制的文件，在上一次提交中有它们的记录。未跟踪文件就是指那些从没提交过的文件. \/p \/blockquote "
+            "content": ""
           },{
             "title": "Git合并",
             "url": "\/posts\/git\/git%E5%90%88%E5%B9%B6\/",
