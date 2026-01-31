@@ -115,8 +115,12 @@ export const ExplorerUI = (() => {
      */
     function updateAddressBar(path) {
         const addressBar = document.querySelector(selectors.addressBar);
+        console.log('[ExplorerUI] updateAddressBar called with path:', path, 'addressBar found:', !!addressBar);
         if (addressBar) {
-            addressBar.textContent = '地址: ' + (path || '计算机');
+            const displayText = '地址: ' + (path || '计算机');
+            console.log('[ExplorerUI] Setting address bar text to:', displayText);
+            addressBar.textContent = displayText;
+            console.log('[ExplorerUI] Address bar text is now:', addressBar.textContent);
         }
     }
 

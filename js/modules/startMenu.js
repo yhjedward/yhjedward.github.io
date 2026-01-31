@@ -8,7 +8,8 @@ export const StartMenu = (() => {
         explorer: () => globalThis.startOpenExplorer?.(),
         drawing: () => globalThis.startOpenDrawing?.(),
         markdown: () => globalThis.startOpenMd?.(),
-        todo: () => globalThis.startOpenTodo?.()
+        todo: () => globalThis.startOpenTodo?.(),
+        tts: () => globalThis.startOpenTTS?.()
     };
 
     let startButton = null;

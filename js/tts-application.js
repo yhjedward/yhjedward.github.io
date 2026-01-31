@@ -26,8 +26,13 @@ class TTSApplication {
     this.isMaximized = false;
     this.isDragging = false;
     this.dragOffset = { x: 0, y: 0 };
-    
-    this.apiBase = 'http://localhost:3001/api/tts';
+
+    // 自动检测API基础URL
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      this.apiBase = 'http://localhost:3001/api/tts';
+    } else {
+      this.apiBase = '/api/tts';
+    }
     
     this.init();
   }
@@ -223,44 +228,54 @@ class TTSApplication {
   
   async generate() {
     let text = this.textInput?.value.trim();
-    
+
     // 规范化文本：将换行符和多余空格替换为单个空格
     text = text.replace(/\r\n|\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
-    
+
     if (!text) {
       this.updateStatus('请输入文本', 'error');
       return;
     }
-    
+
     if (this.isGenerating) {
       this.updateStatus('正在生成中...', 'warning');
       return;
     }
-    
+
     this.isGenerating = true;
     this.generateBtn.disabled = true;
     this.updateStatus('正在生成音频...', 'info');
-    
+
     try {
       const language = this.languageSelect?.value || 'zh-CN';
       const voice = this.voiceSelect?.value || undefined;
-      
+
       const response = await fetch(`${this.apiBase}/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text, language, voice })
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
-      
+
       const blob = await response.blob();
       this.currentAudio = new Audio(URL.createObjectURL(blob));
-      
+
+      // 获取缓存ID - 生成格式: tts_${timestamp}
+      let cacheId = response.headers.get('X-Cache-ID');
+      console.log('[TTS] Received X-Cache-ID:', cacheId);
+
+      // 如果无法从头部获取，生成一个本地ID
+      if (!cacheId) {
+        cacheId = `tts_${Date.now()}`;
+        console.warn('[TTS] X-Cache-ID header not available, using generated ID:', cacheId);
+      }
+
       this.updateStatus('生成成功', 'success');
-      this.addToHistory(text, language, voice);
-      
+      this.addToHistory(text, language, voice, cacheId);
+
       // 自动播放
       this.play();
     } catch (err) {
@@ -311,38 +326,37 @@ class TTSApplication {
     }
   }
   
-  addToHistory(text, language, voice) {
+  addToHistory(text, language, voice, cacheId) {
     if (!this.historyList) return;
-    
+
     // 规范化文本
     const normalizedText = text.replace(/\r\n|\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
-    const cacheKey = this.generateCacheKey(normalizedText, language || 'zh-CN', voice);
-    
+
     const item = document.createElement('div');
     item.className = 'tts-history-item';
     item.dataset.text = normalizedText;
     item.dataset.language = language || 'zh-CN';
     item.dataset.voice = voice || '';
-    item.dataset.cacheKey = cacheKey;
+    item.dataset.cacheId = cacheId || '';
     item.innerHTML = `
       <span class="history-text">${normalizedText.substring(0, 50)}${normalizedText.length > 50 ? '...' : ''}</span>
       <span class="history-lang">${language || 'zh-CN'}</span>
       <button class="history-delete" title="删除">✕</button>
     `;
-    
+
     // 点击文本部分播放音频
     item.querySelector('.history-text')?.addEventListener('click', async (e) => {
       e.stopPropagation();
-      await this.playFromHistory(normalizedText, language, voice);
+      await this.playFromHistory(normalizedText, language, voice, cacheId);
     });
-    
+
     // 删除按钮
     item.querySelector('.history-delete')?.addEventListener('click', async (e) => {
       e.stopPropagation();
- 
+
       // 调用后端删除历史记录及缓存
       try {
-        await fetch(`${this.apiBase}/history/${cacheKey}`, {
+        await fetch(`${this.apiBase}/history/${cacheId}`, {
           method: 'DELETE'
         });
         item.remove();
@@ -351,24 +365,24 @@ class TTSApplication {
         this.updateStatus('删除失败', 'error');
       }
     });
-    
+
     // 整个项目作为副按钮也可以播放
     item.addEventListener('click', async (e) => {
       if (!e.target.closest('.history-delete')) {
-        await this.playFromHistory(normalizedText, language, voice);
+        await this.playFromHistory(normalizedText, language, voice, cacheId);
       }
     });
-    
+
     this.historyList.insertBefore(item, this.historyList.firstChild);
-    
+
     // 保持历史记录数量
     while (this.historyList.children.length > 10) {
       const lastChild = this.historyList.lastChild;
       this.historyList.removeChild(lastChild);
     }
-    
+
     // 保存到后端
-    this.saveHistoryItem(normalizedText, language, voice, cacheKey);
+    this.saveHistoryItem(normalizedText, language, voice, cacheId);
   }
   
   generateCacheKey(text, lang, voice) {
@@ -409,26 +423,26 @@ class TTSApplication {
     try {
       console.log('[TTS] Loading history...');
       this.updateStatus('正在加载历史记录...', 'info');
-      
+
       const response = await fetch(`${this.apiBase}/state`);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
-      
+
       const state = await response.json();
       console.log('[TTS] Full state loaded:', state);
-      
+
       if (!this.historyList || !Array.isArray(state.history)) {
         console.log('[TTS] No history data or historyList not found');
         this.updateStatus('就绪', 'info');
         return;
       }
-      
+
       console.log(`[TTS] Found ${state.history.length} history items`);
-      
+
       // 清空现有历史记录
       this.historyList.innerHTML = '';
-      
+
       if (state.history.length === 0) {
         console.log('[TTS] History is empty');
         this.updateStatus('历史记录为空', 'info');
@@ -437,7 +451,7 @@ class TTSApplication {
         }, 2000);
         return;
       }
-      
+
       // 加载历史记录
       for (const item of state.history) {
         const historyItem = document.createElement('div');
@@ -445,23 +459,23 @@ class TTSApplication {
         historyItem.dataset.text = item.text;
         historyItem.dataset.language = item.language;
         historyItem.dataset.voice = item.voice || '';
-        historyItem.dataset.cacheKey = item.cacheKey || item.id;
+        historyItem.dataset.cacheId = item.id || '';
         historyItem.innerHTML = `
           <span class="history-text">${item.text.substring(0, 50)}${item.text.length > 50 ? '...' : ''}</span>
           <span class="history-lang">${item.language}</span>
           <button class="history-delete" title="删除">✕</button>
         `;
-        
+
         // 添加事件监听
         historyItem.querySelector('.history-text')?.addEventListener('click', async (e) => {
           e.stopPropagation();
-          await this.playFromHistory(item.text, item.language, item.voice);
+          await this.playFromHistory(item.text, item.language, item.voice, item.id);
         });
-        
+
         historyItem.querySelector('.history-delete')?.addEventListener('click', async (e) => {
           e.stopPropagation();
           try {
-            await fetch(`${this.apiBase}/history/${item.cacheKey || item.id}`, {
+            await fetch(`${this.apiBase}/history/${item.id}`, {
               method: 'DELETE'
             });
             historyItem.remove();
@@ -471,54 +485,96 @@ class TTSApplication {
             this.updateStatus('删除失败', 'error');
           }
         });
-        
+
         historyItem.addEventListener('click', async (e) => {
           if (!e.target.closest('.history-delete')) {
-            await this.playFromHistory(item.text, item.language, item.voice);
+            await this.playFromHistory(item.text, item.language, item.voice, item.id);
           }
         });
-        
+
         this.historyList.appendChild(historyItem);
       }
-      
+
       console.log('[TTS] History loaded successfully');
       this.updateStatus(`已加载 ${state.history.length} 条历史记录`, 'success');
-      
+
       setTimeout(() => {
         this.updateStatus('就绪', 'info');
       }, 2000);
     } catch (err) {
       console.error('[TTS] Failed to load history:', err);
       this.updateStatus('历史记录加载失败', 'error');
-      
+
       setTimeout(() => {
         this.updateStatus('就绪', 'info');
       }, 5000);
     }
   }
   
-  async playFromHistory(text, language, voice) {
+  async playFromHistory(text, language, voice, cacheId) {
     if (!text) return;
-    
-    this.updateStatus('正在加载缓存音频...', 'info');
-    
+
+    console.log('[TTS] playFromHistory called with cacheId:', cacheId);
+
+    // 如果有缓存ID，直接从缓存读取，不重新生成
+    if (cacheId) {
+      this.updateStatus('正在加载缓存音频...', 'info');
+
+      try {
+        console.log('[TTS] Fetching from cache endpoint:', `${this.apiBase}/history/${cacheId}/audio`);
+        const response = await fetch(`${this.apiBase}/history/${cacheId}/audio`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const blob = await response.blob();
+        this.currentAudio = new Audio(URL.createObjectURL(blob));
+        this.updateStatus('准备播放', 'success');
+        this.play();
+        console.log('[TTS] Playing from cache:', cacheId);
+      } catch (err) {
+        console.error('[TTS] Play from cache error:', err);
+        this.updateStatus(`缓存加载失败: ${err.message}，重新生成中...`, 'warning');
+
+        // 备选方案：缓存不存在时，重新生成
+        await this.regenerateFromHistory(text, language, voice, cacheId);
+      }
+    } else {
+      // 如果没有缓存ID，则重新生成（兼容旧版本）
+      console.warn('[TTS] No cacheId provided, regenerating audio');
+      await this.regenerateFromHistory(text, language, voice, cacheId);
+    }
+  }
+
+  async regenerateFromHistory(text, language, voice, oldCacheId) {
+    this.updateStatus('正在生成音频...', 'info');
+
     try {
       const response = await fetch(`${this.apiBase}/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text, language, voice: voice || undefined })
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
-      
+
       const blob = await response.blob();
       this.currentAudio = new Audio(URL.createObjectURL(blob));
+
+      // 获取新的缓存ID
+      let newCacheId = response.headers.get('X-Cache-ID');
+      if (!newCacheId) {
+        newCacheId = `tts_${Date.now()}`;
+      }
+
+      console.log('[TTS] Regenerated audio with cacheId:', newCacheId);
       this.updateStatus('准备播放', 'success');
       this.play();
     } catch (err) {
-      console.error('Play from history error:', err);
+      console.error('[TTS] Play from history error:', err);
       this.updateStatus(`加载失败: ${err.message}`, 'error');
     }
   }
@@ -564,4 +620,16 @@ class TTSApplication {
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
   globalThis.ttsApp = new TTSApplication();
+  
+  // 为开始菜单提供全局访问
+  globalThis.startOpenTTS = () => {
+    const ttsWindow = document.getElementById('tts-window');
+    if (ttsWindow) {
+      ttsWindow.style.display = 'block';
+      const taskbarBtn = document.querySelector('[data-taskbar-action="tts"]');
+      if (taskbarBtn) {
+        taskbarBtn.classList.remove('active');
+      }
+    }
+  };
 });

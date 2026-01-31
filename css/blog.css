@@ -27,3 +27,16 @@
     /* 初始透明度为0 */
     opacity: 0;
 }
+
+.blog-window.maximized {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: calc(100% - 40px) !important;
+    transform: none !important;
+}
+
+.blog-window.minimized {
+    display: none !important;
+}

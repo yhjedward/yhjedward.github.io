@@ -64,8 +64,20 @@ export const ExplorerData = (() => {
      * 获取指定路径下的项目（层级展开形式）
      */
     function getItemsForPath(path) {
-        if (!path || path === 'Computer') {
-            return [];
+        if (!path) {
+            path = 'Computer';
+        }
+
+        // 规范化路径：转换为正斜杠
+        path = path.replace(/\\/g, '/');
+
+        // 返回Computer中的所有根文件夹
+        if (path === 'Computer') {
+            return Object.keys(rootPaths).map(name => ({
+                name: name,
+                isDir: true,
+                path: name
+            }));
         }
 
         const parts = path.split('/').filter(p => p);
@@ -170,7 +182,8 @@ export const ExplorerData = (() => {
             path = 'Documents';
         }
 
-        path = path.trim();
+        // 规范化路径：转换为正斜杠
+        path = path.trim().replace(/\\/g, '/');
 
         if (path === state.currentPath) {
             return false; // 路径未变化
@@ -195,7 +208,8 @@ export const ExplorerData = (() => {
     function goBack() {
         if (state.historyIndex > 0) {
             state.historyIndex--;
-            state.currentPath = state.history[state.historyIndex];
+            // 规范化从历史中恢复的路径
+            state.currentPath = state.history[state.historyIndex].replace(/\\/g, '/');
             return true;
         }
         return false;
@@ -205,17 +219,43 @@ export const ExplorerData = (() => {
      * 导航上级目录
      */
     function goUp() {
+        // 检查是否已在根目录
         if (state.currentPath === 'Computer') return false;
 
-        if (state.currentPath.includes('/')) {
-            const parts = state.currentPath.split('/');
-            parts.pop();
-            navigateTo(parts.join('/'));
-            return true;
-        } else {
-            navigateTo('Computer');
-            return true;
+        // 规范化当前路径，确保使用正斜杠
+        const normalizedPath = state.currentPath.replace(/\\/g, '/');
+
+        // 计算路径中 / 的个数，判断层级深度
+        const slashCount = (normalizedPath.match(/\//g) || []).length;
+        
+        // 如果只有0个或1个 /，说明在根目录或根目录下的一级目录，禁止往上
+        // if (slashCount <= 1) {
+        //     console.log('[ExplorerData] Already at or near root level:', normalizedPath, '(slashCount:', slashCount, ') - goUp() disabled');
+        //     return false;
+        // }
+
+        let parentPath;
+        // 有足够的层级深度，返回上一级
+        const parts = normalizedPath.split('/');
+        parts.pop();
+        parentPath = parts.join('/');
+        
+        // 检查是否真的改变了路径
+        // if (parentPath === normalizedPath) {
+        //     // 路径没有改变（不应该发生，但以防万一）
+        //     return false;
+        // }
+
+        // 清除当前位置之后的历史（处理在历史中间时返回再上级的情况）
+        if (state.historyIndex < state.history.length - 1) {
+            state.history = state.history.slice(0, state.historyIndex + 1);
         }
+        // 添加新的父路径到历史
+        state.history.push(parentPath);
+        state.historyIndex = state.history.length - 1;
+        state.currentPath = parentPath;
+        console.log('[ExplorerData] Navigated up to:', parentPath, 'from:', normalizedPath);
+        return true;
     }
 
     /**

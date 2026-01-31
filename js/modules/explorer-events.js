@@ -1,6 +1,6 @@
 /**
- * Explorer Events Module
- * 负责资源管理器的事件处理
+ * Explorer Events Module (Refactored)
+ * 使用全局事件委托机制，避免重复绑定
  */
 
 export const ExplorerEvents = (() => {
@@ -13,7 +13,10 @@ export const ExplorerEvents = (() => {
         maximize: '.explorer-maximize',
         close: '.explorer-close',
         viewGrid: '.grid-view-btn',
-        viewList: '.list-view-btn'
+        viewList: '.list-view-btn',
+        toolbarBack: '.toolbar-back',
+        toolbarUp: '.toolbar-up',
+        toolbarRefresh: '.toolbar-refresh'
     };
 
     let callbacks = {
@@ -28,6 +31,8 @@ export const ExplorerEvents = (() => {
         onClose: null
     };
 
+    let eventsInitialized = false;
+
     /**
      * 设置回调函数
      */
@@ -36,324 +41,176 @@ export const ExplorerEvents = (() => {
     }
 
     /**
-     * 绑定文件/文件夹点击事件
+     * 初始化全局事件委托（仅一次）
      */
-    function bindContentEvents(container) {
-        if (!container) {
-            console.warn('[ExplorerEvents] Container not found');
+    function initGlobalDelegation() {
+        if (eventsInitialized) {
+            console.log('[ExplorerEvents] Global events already initialized');
             return;
         }
 
-        // 防止重复绑定 - 使用 _bound 属性而不是 dataset
-        if (container._contentEventsBound) {
-            console.log('[ExplorerEvents] Content events already bound');
-            return;
-        }
-        container._contentEventsBound = true;
+        console.log('[ExplorerEvents] Initializing global event delegation');
 
-        // 委托点击事件
-        container.addEventListener('click', (e) => {
+        // 1. 文件/文件夹容器的委托事件
+        document.addEventListener('click', (e) => {
             const fileItem = e.target.closest('.file-item');
-            if (!fileItem) return;
+            if (fileItem) {
+                e.preventDefault();
+                e.stopPropagation();
 
-            e.preventDefault();
-            e.stopPropagation();
-
-            const itemData = fileItem.dataset.itemData;
-            if (!itemData) {
-                console.warn('[ExplorerEvents] No item data found');
-                return;
-            }
-
-            try {
-                const item = JSON.parse(itemData);
-                if (item.isDir) {
-                    if (callbacks.onFolderSelect) {
-                        callbacks.onFolderSelect(item);
-                    }
-                } else {
-                    if (callbacks.onFileSelect) {
-                        callbacks.onFileSelect(item);
-                    }
+                const itemData = fileItem.dataset.itemData;
+                if (!itemData) {
+                    console.warn('[ExplorerEvents] No item data found');
+                    return;
                 }
-            } catch (err) {
-                console.error('[ExplorerEvents] Failed to parse item data:', err);
-            }
-        });
 
-        // 双击事件（如需要）
-        container.addEventListener('dblclick', (e) => {
-            const fileItem = e.target.closest('.file-item');
-            if (!fileItem) return;
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            const itemData = fileItem.dataset.itemData;
-            if (!itemData) return;
-
-            try {
-                const item = JSON.parse(itemData);
-                if (item.isDir && callbacks.onFolderSelect) {
-                    callbacks.onFolderSelect(item);
-                } else if (!item.isDir && callbacks.onFileSelect) {
-                    callbacks.onFileSelect(item);
+                try {
+                    const item = JSON.parse(itemData);
+                    if (item.isDir) {
+                        if (callbacks.onFolderSelect) {
+                            console.log('[ExplorerEvents] Folder selected:', item.name);
+                            callbacks.onFolderSelect(item);
+                        }
+                    } else {
+                        if (callbacks.onFileSelect) {
+                            console.log('[ExplorerEvents] File selected:', item.name);
+                            callbacks.onFileSelect(item);
+                        }
+                    }
+                } catch (err) {
+                    console.error('[ExplorerEvents] Failed to parse item data:', err);
                 }
-            } catch (err) {
-                console.error('[ExplorerEvents] Failed to parse item data:', err);
             }
-        });
-    }
+        }, true); // 使用捕获阶段
 
-    /**
-     * 绑定侧边栏事件
-     */
-    function bindSidebarEvents(sidebar) {
-        if (!sidebar) return;
-
-        // 防止重复绑定
-        if (sidebar._sidebarEventsBound) {
-            return;
-        }
-        sidebar._sidebarEventsBound = true;
-
-        sidebar.addEventListener('click', (e) => {
+        // 2. 侧边栏文件夹点击事件
+        document.addEventListener('click', (e) => {
             const folderItem = e.target.closest('.folder-item');
             if (folderItem) {
-                const path = folderItem.dataset.path;
+                let path = folderItem.dataset.path;
+                if (path) {
+                    path = path.replace(/\\/g, '/');
+                }
                 if (callbacks.onFolderSelect) {
+                    console.log('[ExplorerEvents] Sidebar folder selected:', path);
                     callbacks.onFolderSelect({ name: path, isDir: true, path });
                 }
             }
-        });
-    }
+        }, true);
 
-    /**
-     * 绑定工具栏事件
-     */
-    function bindToolbarEvents() {
-        // 返回按钮
-        const backBtn = document.querySelector('.toolbar-back');
-        if (backBtn && !backBtn._backBound) {
-            backBtn._backBound = true;
-            backBtn.addEventListener('click', () => {
+        // 3. 工具栏按钮事件
+        document.addEventListener('click', (e) => {
+            const backBtn = e.target.closest(selectors.toolbarBack);
+            if (backBtn) {
+                console.log('[ExplorerEvents] Back button clicked');
                 if (callbacks.onNavigateBack) {
                     callbacks.onNavigateBack();
                 }
-            });
-        }
+                return;
+            }
 
-        // 上一级按钮
-        const upBtn = document.querySelector('.toolbar-up');
-        if (upBtn && !upBtn._upBound) {
-            upBtn._upBound = true;
-            upBtn.addEventListener('click', () => {
+            const upBtn = e.target.closest(selectors.toolbarUp);
+            if (upBtn) {
+                console.log('[ExplorerEvents] Up button clicked');
                 if (callbacks.onNavigateUp) {
                     callbacks.onNavigateUp();
                 }
-            });
-        }
+                return;
+            }
 
-        // 刷新按钮
-        const refreshBtn = document.querySelector('.toolbar-refresh');
-        if (refreshBtn && !refreshBtn._refreshBound) {
-            refreshBtn._refreshBound = true;
-            refreshBtn.addEventListener('click', () => {
+            const refreshBtn = e.target.closest(selectors.toolbarRefresh);
+            if (refreshBtn) {
+                console.log('[ExplorerEvents] Refresh button clicked');
                 if (callbacks.onRefresh) {
                     callbacks.onRefresh();
                 }
-            });
-        }
-    }
+                return;
+            }
+        }, true);
 
-    /**
-     * 绑定视图切换事件
-     */
-    function bindViewToggleEvents() {
-        const gridBtn = document.querySelector(selectors.viewGrid);
-        const listBtn = document.querySelector(selectors.viewList);
-
-        // 防止重复绑定
-        if ((gridBtn && gridBtn._gridBound) && (listBtn && listBtn._listBound)) {
-            return;
-        }
-
-        if (gridBtn && !gridBtn._gridBound) {
-            gridBtn._gridBound = true;
-            gridBtn.addEventListener('click', () => {
+        // 4. 视图切换按钮
+        document.addEventListener('click', (e) => {
+            const gridBtn = e.target.closest(selectors.viewGrid);
+            if (gridBtn) {
+                console.log('[ExplorerEvents] Grid view button clicked');
                 if (callbacks.onViewModeChange) {
                     callbacks.onViewModeChange('grid');
                 }
-            });
-        }
+                return;
+            }
 
-        if (listBtn && !listBtn._listBound) {
-            listBtn._listBound = true;
-            listBtn.addEventListener('click', () => {
+            const listBtn = e.target.closest(selectors.viewList);
+            if (listBtn) {
+                console.log('[ExplorerEvents] List view button clicked');
                 if (callbacks.onViewModeChange) {
                     callbacks.onViewModeChange('list');
                 }
-            });
-        }
-    }
-
-    /**
-     * 绑定窗口控制事件
-     */
-    function bindWindowControlEvents() {
-        const minimizeBtn = document.querySelector(selectors.minimize);
-        const maximizeBtn = document.querySelector(selectors.maximize);
-        const closeBtn = document.querySelector(selectors.close);
-        const window = document.querySelector(selectors.window);
-
-        // 防止重复绑定 - 检查是否已绑定
-        if (minimizeBtn && !minimizeBtn._minimizeBound) {
-            minimizeBtn._minimizeBound = true;
-            minimizeBtn.addEventListener('click', () => {
-                window.classList.add('minimized');
-                if (callbacks.onMinimize) callbacks.onMinimize();
-            });
-        }
-
-        if (maximizeBtn && !maximizeBtn._maximizeBound) {
-            maximizeBtn._maximizeBound = true;
-            maximizeBtn.addEventListener('click', () => {
-                window.classList.toggle('maximized');
-                if (callbacks.onMaximize) callbacks.onMaximize();
-            });
-        }
-
-        if (closeBtn && !closeBtn._closeBound) {
-            closeBtn._closeBound = true;
-            closeBtn.addEventListener('click', () => {
-                window.style.display = 'none';
-                if (callbacks.onClose) callbacks.onClose();
-            });
-        }
-    }
-
-    /**
-     * 绑定桌面图标事件
-     */
-    function bindIconEvents() {
-        const icon = document.querySelector(selectors.icon);
-        if (!icon || icon._iconBound) {
-            console.log('[ExplorerEvents] Icon already bound or not found');
-            return;
-        }
-        
-        icon._iconBound = true;
-        console.log('[ExplorerEvents] Binding icon events');
-
-        icon.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('[ExplorerEvents] Icon clicked');
-            // 调用全局的打开函数以确保正确初始化
-            if (typeof globalThis.startOpenExplorer === 'function') {
-                globalThis.startOpenExplorer();
-            } else {
-                // 降级处理：直接显示窗口
-                const window = document.querySelector(selectors.window);
-                if (window) window.style.display = 'flex';
+                return;
             }
-        });
+        }, true);
 
-        icon.addEventListener('dblclick', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('[ExplorerEvents] Icon double-clicked');
-            // 调用全局的打开函数以确保正确初始化
-            if (typeof globalThis.startOpenExplorer === 'function') {
-                globalThis.startOpenExplorer();
-            } else {
-                // 降级处理：直接显示窗口
-                const window = document.querySelector(selectors.window);
-                if (window) window.style.display = 'flex';
+        // 5. 桌面图标事件
+        document.addEventListener('click', (e) => {
+            const icon = e.target.closest(selectors.icon);
+            if (icon) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('[ExplorerEvents] Icon clicked');
+                if (typeof globalThis.startOpenExplorer === 'function') {
+                    globalThis.startOpenExplorer();
+                } else {
+                    const window = document.querySelector(selectors.window);
+                    if (window) window.style.display = 'flex';
+                }
             }
-        });
+        }, true);
+
+        // 6. 双击图标
+        document.addEventListener('dblclick', (e) => {
+            const icon = e.target.closest(selectors.icon);
+            if (icon) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('[ExplorerEvents] Icon double-clicked');
+                if (typeof globalThis.startOpenExplorer === 'function') {
+                    globalThis.startOpenExplorer();
+                } else {
+                    const window = document.querySelector(selectors.window);
+                    if (window) window.style.display = 'flex';
+                }
+            }
+        }, true);
+
+        eventsInitialized = true;
+        console.log('[ExplorerEvents] Global event delegation initialized');
     }
 
     /**
-     * 初始化所有事件绑定
+     * 初始化事件（首次调用）
      */
     function init() {
         console.log('[ExplorerEvents] Initializing events');
-
-        const container = document.querySelector(selectors.container);
-        const sidebar = document.querySelector(selectors.sidebar);
-
-        bindContentEvents(container);
-        bindSidebarEvents(sidebar);
-        bindToolbarEvents();
-        bindViewToggleEvents();
-        bindWindowControlEvents();
-        bindIconEvents();
-
+        initGlobalDelegation();
         console.log('[ExplorerEvents] Events initialized');
     }
 
     /**
-     * 重新初始化事件（当窗口重新打开时调用）
+     * 重新初始化（无需做任何事，全局委托已初始化）
      */
     function reinitialize() {
-        console.log('[ExplorerEvents] Re-initializing events');
-        
-        // 重置容器的绑定标志，以便重新绑定
-        const container = document.querySelector(selectors.container);
-        if (container) {
-            container._contentEventsBound = false;
-        }
-        
-        const sidebar = document.querySelector(selectors.sidebar);
-        if (sidebar) {
-            sidebar._sidebarEventsBound = false;
-        }
-        
-        // 重置工具栏按钮的绑定标志
-        const backBtn = document.querySelector('.toolbar-back');
-        const upBtn = document.querySelector('.toolbar-up');
-        const refreshBtn = document.querySelector('.toolbar-refresh');
-        if (backBtn) backBtn._backBound = false;
-        if (upBtn) upBtn._upBound = false;
-        if (refreshBtn) refreshBtn._refreshBound = false;
-        
-        // 重置视图切换按钮的绑定标志
-        const gridBtn = document.querySelector(selectors.viewGrid);
-        const listBtn = document.querySelector(selectors.viewList);
-        if (gridBtn) gridBtn._gridBound = false;
-        if (listBtn) listBtn._listBound = false;
-        
-        // 重置窗口控制按钮的绑定标志
-        const minimizeBtn = document.querySelector(selectors.minimize);
-        const maximizeBtn = document.querySelector(selectors.maximize);
-        const closeBtn = document.querySelector(selectors.close);
-        if (minimizeBtn) minimizeBtn._minimizeBound = false;
-        if (maximizeBtn) maximizeBtn._maximizeBound = false;
-        if (closeBtn) closeBtn._closeBound = false;
-        
-        // 重置图标的绑定标志
-        const icon = document.querySelector(selectors.icon);
-        if (icon) icon._iconBound = false;
-
-        // 重新绑定所有事件
-        bindContentEvents(container);
-        bindSidebarEvents(sidebar);
-        bindToolbarEvents();
-        bindViewToggleEvents();
-        bindWindowControlEvents();
-        bindIconEvents();
+        console.log('[ExplorerEvents] Re-initializing events (no-op - using global delegation)');
     }
 
     return {
         init,
         reinitialize,
         setCallbacks,
-        bindContentEvents,
-        bindSidebarEvents,
-        bindToolbarEvents,
-        bindViewToggleEvents,
-        bindWindowControlEvents,
-        bindIconEvents
+        // 保留这些以兼容旧代码（但不再使用）
+        bindContentEvents: () => {},
+        bindSidebarEvents: () => {},
+        bindToolbarEvents: () => {},
+        bindViewToggleEvents: () => {},
+        bindWindowControlEvents: () => {},
+        bindIconEvents: () => {}
     };
 })();

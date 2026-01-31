@@ -31,25 +31,6 @@
       });
     }
 
-    // 开始菜单打开
-    if (startMenuBtn) {
-      startMenuBtn.addEventListener('click', () => {
-        ttsWindow.style.display = 'block';
-        if (taskbarBtn) {
-          taskbarBtn.classList.remove('active');
-        }
-        // 关闭开始菜单
-        const startMenu = document.getElementById('start-menu');
-        if (startMenu) {
-          startMenu.style.display = 'none';
-          const startButton = document.getElementById('start-button');
-          if (startButton) {
-            startButton.setAttribute('aria-expanded', 'false');
-          }
-        }
-      });
-    }
-
     // 最小化按钮
     const minimizeBtn = document.querySelector('.tts-minimize');
     if (minimizeBtn) {

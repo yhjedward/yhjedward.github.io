@@ -24,6 +24,18 @@
   display: none !important;
 }
 
+.window.todo-window.maximized {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: calc(100% - 40px) !important;
+  transform: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
 .todo-window .window-titlebar {
   background: linear-gradient(to right, #000080, #1084d7);
   color: white;

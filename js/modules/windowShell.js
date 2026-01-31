@@ -137,8 +137,13 @@ export const WindowShell = (() => {
             return;
         }
 
+        // 如果窗口处于最小化状态，先恢复再最大化
+        if (win.classList.contains('minimized')) {
+            win.classList.remove('minimized');
+        }
+
         saveRestoreStyles(win);
-        win.classList.add('maximized');
+        win.classList.add('maximized', 'restored');
         win.style.left = '0';
         win.style.top = '0';
         win.style.right = '';
@@ -150,7 +155,17 @@ export const WindowShell = (() => {
 
     function minimizeWindow(app, win) {
         if (!win) return;
+
+        // 确保初始样式已保存，以便恢复时使用
+        saveRestoreStyles(win);
+
         bringToFront(win);
+
+        // 如果窗口处于最大化状态，先恢复到正常大小再最小化
+        if (win.classList.contains('maximized')) {
+            win.classList.remove('maximized');
+            restoreStyles(win);
+        }
 
         win.classList.add('minimized');
         win.classList.remove('restored');
@@ -187,10 +202,19 @@ export const WindowShell = (() => {
         if (!win) return;
 
         if (win.classList.contains('minimized') || !isWindowVisible(win)) {
+            // 恢复窗口：显示、移除最小化和最大化状态、恢复原始样式
             appConfig.show?.();
             bringToFront(win);
             setActiveTaskbarApp(appConfig.app);
+
+            // 清除最小化和最大化状态
+            win.classList.remove('minimized', 'maximized');
+            win.classList.add('restored');
+
+            // 恢复原始样式
+            saveRestoreStyles(win);
         } else {
+            // 最小化窗口
             minimizeWindow(appConfig.app, win);
         }
     }
@@ -201,6 +225,11 @@ export const WindowShell = (() => {
 
         if (!('win7ShellInit' in win.dataset)) {
             win.dataset.win7ShellInit = 'true';
+
+            // 保存初始样式以支持最小化/恢复功能
+            if (isWindowVisible(win)) {
+                saveRestoreStyles(win);
+            }
 
             win.addEventListener('mousedown', () => {
                 bringToFront(win);
@@ -258,6 +287,7 @@ export const WindowShell = (() => {
                 blogWindow.style.display = 'none';
                 blogWindow.style.opacity = '0';
                 blogWindow.classList.remove('minimized', 'restored', 'active', 'maximized');
+                restoreStyles(blogWindow);
 
                 const currentIcon = globalThis.articleReader?.getCurrentArticleIcon?.();
                 if (currentIcon) {
@@ -272,6 +302,16 @@ export const WindowShell = (() => {
             minimizeBtn.dataset.win7ShellInit = 'true';
             minimizeBtn.addEventListener('click', (e) => {
                 e.preventDefault();
+
+                // 确保初始样式已保存
+                saveRestoreStyles(blogWindow);
+
+                // 如果窗口处于最大化状态，先恢复到正常大小再最小化
+                if (blogWindow.classList.contains('maximized')) {
+                    blogWindow.classList.remove('maximized');
+                    restoreStyles(blogWindow);
+                }
+
                 blogWindow.classList.add('minimized');
                 blogWindow.classList.remove('restored');
             });
@@ -283,13 +323,40 @@ export const WindowShell = (() => {
             maximizeBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 bringToFront(blogWindow);
-                maximizeWindow(blogWindow);
+
+                // 如果已经最大化，则恢复原始大小
+                if (blogWindow.classList.contains('maximized')) {
+                    blogWindow.classList.remove('maximized');
+                    restoreStyles(blogWindow);
+                    return;
+                }
+
+                // 如果窗口处于最小化状态，先清除最小化状态再最大化
+                if (blogWindow.classList.contains('minimized')) {
+                    blogWindow.classList.remove('minimized');
+                }
+
+                saveRestoreStyles(blogWindow);
+                blogWindow.classList.add('maximized', 'restored');
+                blogWindow.style.left = '0';
+                blogWindow.style.top = '0';
+                blogWindow.style.right = '';
+                blogWindow.style.bottom = '40px';
+                blogWindow.style.transform = 'none';
+                blogWindow.style.width = '100%';
+                blogWindow.style.height = 'calc(100% - 40px)';
             });
         }
 
         if (!('win7ShellInit' in blogWindow.dataset)) {
             blogWindow.dataset.win7ShellInit = 'true';
             blogWindow.addEventListener('mousedown', () => bringToFront(blogWindow));
+
+            // 初始化时为可见的窗口保存样式
+            if (isWindowVisible(blogWindow)) {
+                saveRestoreStyles(blogWindow);
+                blogWindow.classList.add('restored');
+            }
         }
     }
 
@@ -309,13 +376,17 @@ export const WindowShell = (() => {
         APPS.forEach(bindAppWindow);
         bindBlogWindow();
 
-        // 如果窗口初始可见（例如某些页面默认打开），确保任务栏图标同步
+        // 如果窗口初始可见（例如某些页面默认打开），确保任务栏图标同步并标记为 restored
         APPS.forEach((appConfig) => {
             const win = document.getElementById(appConfig.windowId);
             if (!win) return;
             if (isWindowVisible(win)) {
                 const icon = ensureAppTaskbarIcon(appConfig);
                 if (icon) icon.style.display = 'flex';
+                // 为初始可见的窗口添加 'restored' 类以确保动画正确
+                win.classList.add('restored');
+                // 保存初始样式
+                saveRestoreStyles(win);
             }
         });
     }

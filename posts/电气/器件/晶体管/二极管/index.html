@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="/css/todo.css">
   <link rel="stylesheet" href="/css/tts.css">
   <link rel="stylesheet" href="/css/aiSlideout.css">
+  <link rel="stylesheet" href="/css/im.css">
   <link rel="stylesheet" href="/css/android.css" media="screen and (max-width: 1024px)">
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
@@ -57,6 +58,7 @@
   <script src="/js/tts-application.js"></script>
   <script src="/js/notification-manager.js"></script>
   <script src="/js/aiSlideout.js"></script>
+  <script src="/js/im-widget.js"></script>
   <script type="module" src="/js/modules/win7-loader.js"></script>
   <script type="module" src="/js/modules/core-init.js"></script>
   
@@ -80,6 +82,10 @@
     <div class="desktop-icon todo-icon" id="todo-manager">
       <div class="icon"></div>
       <div class="label">待办事项</div>
+    </div>
+    <div class="desktop-icon fileupload-icon" id="file-uploader">
+      <div class="icon"></div>
+      <div class="label">文件上传</div>
     </div>
     <div class="desktop-icon tts-icon" id="tts-app">
       <div class="icon"></div>
@@ -571,7 +577,8 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
     </div>
   </div>
   
-  <div class="window md-window" id="md-window" style="display: none;">
+  <div class="window md-window" id="md-window"
+    style="display: none; left: 120px; top: 80px; width: 900px; height: 620px;">
     <div class="window-titlebar">
       <div class="title-left">
         <div class="window-title">Markdown 编辑器</div>
@@ -590,6 +597,11 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
       <button class="md-btn" data-cmd="italic" title="斜体 Ctrl+I"><i>I</i></button>
       <button class="md-btn" data-cmd="code" title="行内代码 Ctrl+`">{;}</button>
       <button class="md-btn" data-cmd="h2" title="二级标题 Ctrl+H">H2</button>
+      <button class="md-btn" data-cmd="h3" title="三级标题 Ctrl+Shift+H">H3</button>
+      <button class="md-btn" data-cmd="blockquote" title="引用 Ctrl+Q">❝ ❞</button>
+      <button class="md-btn" data-cmd="hr" title="水平线 Ctrl+Shift+L">―</button>
+      <button class="md-btn" data-cmd="code-block" title="代码块 Ctrl+Shift+`">[;]</button>
+      <button class="md-btn" data-cmd="table" title="表格 Ctrl+T">▦</button>
       <button class="md-btn" data-cmd="ul" title="无序列表 Ctrl+U">• List</button>
       <button class="md-btn" data-cmd="ol" title="有序列表 Ctrl+Shift+O">1. List</button>
       <button class="md-btn" data-cmd="link" title="链接 Ctrl+L">🔗</button>
@@ -780,6 +792,46 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
   <script id="blog-data" type="application/json">
       {
         "posts": [{
+            "title": "Ue基础",
+            "url": "\/posts\/%E6%B8%B8%E6%88%8F\/ue\/ue%E5%9F%BA%E7%A1%80\/",
+            "date": "2026-01-27",
+            "filename": "Ue基础.md",
+            "section": "posts\/游戏\/ue",
+            "lastmod": "2026-01-27",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 h3 id=\u0026#34;ue-编辑器\u0026#34; UE 编辑器 \/h3 ol li p 动画编辑器 \/p \/li li p 物理资源编辑器 \/p \/li li p Contro Rig编辑器 \/p \/li li p 字体编辑器 \/p \/li li p DMX 库编辑器 \/p \/li li p Sound Cue编辑器 \/p \/li li p 行为树编辑器 \/p \/li li p 媒体编辑器 \/p \/li li p Sequencer 编辑器 \/p \/li li p 关卡编辑器 \/p \/li li p 材质编辑器 \/p \/li li p 蓝图编辑器 \/p \/li \/ol "
+          },{
+            "title": "Python上下文管理器语法",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/python\/python%E5%88%9D%E7%BA%A7\/python%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8%E8%AF%AD%E6%B3%95\/",
+            "date": "2026-01-22",
+            "filename": "Python上下文管理器语法.md",
+            "section": "posts\/后端\/python\/python初级",
+            "lastmod": "2026-01-22",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ul li 使用 with \u0026amp;hellip; as \u0026amp;hellip; \/li li 自动处理资源的进入和退出, 让代码更简洁、更安全 \/li li 常用于文件、网络连接、锁、数据库、Playwright 等场景. \/li \/ul h3 id=\u0026#34;工作原理\u0026#34; 工作原理 \/h3 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 工作原理 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 自定义 \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div class=\u0026#34;tabpanel-content active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code …"
+          },{
+            "title": "Gotdot中csharp的export特性",
+            "url": "\/posts\/%E6%B8%B8%E6%88%8F\/gotdot\/gotdot%E5%9F%BA%E7%A1%80\/gotdot%E4%B8%ADcsharp%E7%9A%84export%E7%89%B9%E6%80%A7\/",
+            "date": "2026-01-17",
+            "filename": "Gotdot中csharp的export特性.md",
+            "section": "posts\/游戏\/gotdot\/gotdot基础",
+            "lastmod": "2026-01-17",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 "
+          },{
+            "title": "Gotdot基础",
+            "url": "\/posts\/%E6%B8%B8%E6%88%8F\/gotdot\/gotdot%E5%9F%BA%E7%A1%80\/",
+            "date": "2026-01-16",
+            "filename": "Gotdot基础.md",
+            "section": "posts\/游戏\/gotdot",
+            "lastmod": "2026-01-16",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 在 Godot 引擎的 C# 脚本里, code [Export] \/code 是一个特性(attribute), 用来把字段暴露到 code Inspector \/code 面板, 让你在编辑器里直接调整参数, 而不用改代码. \/li \/ol h2 id=\u0026#34;参考链接\u0026#34; 参考链接 \/h2 ol li a href=\u0026#34;https:\/\/docs.godotengine.org\/zh-cn\/4.3\/about\/introduction.html\u0026#34; Godot Engine 4.3 简体中文文档 \/a \/li \/ol "
+          },{
+            "title": "Excel表格添加甘特图",
+            "url": "\/posts\/%E9%9A%8F%E7%AC%94\/%E7%94%9F%E6%B4%BB\/excel%E8%A1%A8%E6%A0%BC%E6%B7%BB%E5%8A%A0%E7%94%98%E7%89%B9%E5%9B%BE\/",
+            "date": "2026-01-14",
+            "filename": "Excel表格添加甘特图.md",
+            "section": "posts\/随笔\/生活",
+            "lastmod": "2026-01-14",
+            "content": ""
+          },{
             "title": "React的hooks",
             "url": "\/posts\/%E5%89%8D%E7%AB%AF\/react\/react%E5%88%9D%E7%BA%A7\/react%E7%9A%84hooks\/",
             "date": "2026-01-13",
@@ -809,6 +861,14 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "date": "2026-01-12",
             "filename": "Python类与方法.md",
             "section": "posts\/后端\/python\/python初级",
+            "lastmod": "2026-01-12",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 对于函数方法, python有一种约定俗成的写法. ol li 单下划线前缀 _method: 表示这是一个内部方法，不建议在类外部直接调用.这只是约定, 外部依然可以调用 code obj._method() \/code , 不会报错. \/li li 双下划线前缀 __method: __method 会触发名称改写, Python会把方法名改成 code _类名__方法名 \/code , 避免子类或外部直接访问.外部使用 code obj.__secret() \/code 会报错, 使用 code obj._MyClass__secret() \/code 可以访问. \/li li 普通方法(没有下划线)就是公开方法, 推荐给外部使用. \/li \/ol \/li \/ol "
+          },{
+            "title": "Python类与方法",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/python\/python%E8%AF%AD%E6%B3%95\/python%E7%B1%BB%E4%B8%8E%E6%96%B9%E6%B3%95\/",
+            "date": "2026-01-12",
+            "filename": "Python类与方法.md",
+            "section": "posts\/后端\/python\/python语法",
             "lastmod": "2026-01-12",
             "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 对于函数方法, python有一种约定俗成的写法. ol li 单下划线前缀 _method: 表示这是一个内部方法，不建议在类外部直接调用.这只是约定, 外部依然可以调用 code obj._method() \/code , 不会报错. \/li li 双下划线前缀 __method: __method 会触发名称改写, Python会把方法名改成 code _类名__方法名 \/code , 避免子类或外部直接访问.外部使用 code obj.__secret() \/code 会报错, 使用 code obj._MyClass__secret() \/code 可以访问. \/li li 普通方法(没有下划线)就是公开方法, 推荐给外部使用. \/li \/ol \/li \/ol "
           },{
@@ -1202,7 +1262,7 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "filename": "Csharp基础.md",
             "section": "posts\/后端\/csharp",
             "lastmod": "2025-11-10",
-            "content": " h4 id=\u0026#34;安装库\u0026#34; 安装库 \/h4 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; \/div \/div h4 id=\u0026#34;运行\u0026#34; 运行 \/h4 div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; dotnet build -v minimal \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; \/\/ \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; \/\/ dotnet build span class=\u0026#34;s2\u0026#34; …"
+            "content": " h4 id=\u0026#34;安装库\u0026#34; 安装库 \/h4 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; \/div \/div h4 id=\u0026#34;dotnet-编译运行-console-程序\u0026#34; dotnet 编译运行 console 程序 \/h4 div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; dotnet new console -o TestApp \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; \/span \/span span class=\u0026#34;line\u0026#34; span …"
           },{
             "title": "Wpf绑定",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/wpf\/wpf%E7%BB%91%E5%AE%9A\/",
@@ -1410,7 +1470,7 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "filename": "githubActions基础.md",
             "section": "posts\/git\/githubActions",
             "lastmod": "2025-09-27",
-            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 h4 id=\u0026#34;基本术语\u0026#34; 基本术语 \/h4 ol li workflow(工作流程)：持续集成一次运行的过程，就是一个 workflow. \/li li job(任务): 一个 workflow 由一个或多个 jobs 构成，含义是一次持续集成的运行，可以完成多个任务。 \/li li step(步骤): 每个 job 由多个 step 构成，一步步完成。 \/li li action(动作): 每个 step 可以依次执行一个或多个命令(action). \/li \/ol h2 id=\u0026#34;参考链接\u0026#34; 参考链接 \/h2 ol li a href=\u0026#34;https:\/\/docs.github.com\/en\/actions\/reference\/workflows-and-actions\/workflow-syntax\u0026#34; Workflow syntax for GitHub Actions \/a . \/li \/ol "
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 h3 id=\u0026#34;githubactions核心术语\u0026#34; githubActions核心术语 \/h3 h4 id=\u0026#34;触发条件-on\u0026#34; 触发条件 code on \/code \/h4 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 触发条件示例 \/span \/div div class=\u0026#34;collapse-content\u0026#34; div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-yaml\u0026#34; data-lang=\u0026#34;yaml\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;nt\u0026#34; on \/span span class=\u0026#34;p\u0026#34; : \/span span class=\u0026#34;w\u0026#34; \/span \/span \/span span …"
           },{
             "title": "基于githubAction构建hugo博客",
             "url": "\/posts\/%E6%B5%8B%E8%AF%95\/%E5%9F%BA%E4%BA%8Egithubaction%E6%9E%84%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2\/",
@@ -1844,6 +1904,14 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "lastmod": "2025-08-06",
             "content": " div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 装饰器 \/span \/div div class=\u0026#34;collapse-content\u0026#34; ol li 装饰器就是一个闭包. \/li li 在函数中再嵌套一个函数，并且引用外部函数的变量，就是一个闭包. \/li \/ol div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-python\u0026#34; data-lang=\u0026#34;python\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;k\u0026#34; def \/span span class=\u0026#34;nf\u0026#34; outer \/span span class=\u0026#34;p\u0026#34; ( \/span span class=\u0026#34;n\u0026#34; x \/span span class=\u0026#34;p\u0026#34; ): \/span \/span …"
           },{
+            "title": "python装饰器",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/python\/python%E8%AF%AD%E6%B3%95\/python%E8%A3%85%E9%A5%B0%E5%99%A8\/",
+            "date": "2025-08-06",
+            "filename": "python装饰器.md",
+            "section": "posts\/后端\/python\/python语法",
+            "lastmod": "2025-08-06",
+            "content": " div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 装饰器 \/span \/div div class=\u0026#34;collapse-content\u0026#34; ol li 装饰器就是一个闭包. \/li li 在函数中再嵌套一个函数，并且引用外部函数的变量，就是一个闭包. \/li \/ol div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-python\u0026#34; data-lang=\u0026#34;python\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;k\u0026#34; def \/span span class=\u0026#34;nf\u0026#34; outer \/span span class=\u0026#34;p\u0026#34; ( \/span span class=\u0026#34;n\u0026#34; x \/span span class=\u0026#34;p\u0026#34; ): \/span \/span …"
+          },{
             "title": "Import与export",
             "url": "\/posts\/%E5%89%8D%E7%AB%AF\/javascript\/import%E4%B8%8Eexport\/",
             "date": "2025-08-04",
@@ -2084,6 +2152,14 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "lastmod": "2024-08-28",
             "content": " h2 id=\u0026#34;参考链接\u0026#34; 参考链接 \/h2 p 1. a href=\u0026#34;https:\/\/juejin.cn\/post\/6844904008490942478\u0026#34; C#反射 \/a \/p "
           },{
+            "title": "Csharp反射与特性",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E5%88%9D%E7%BA%A7\/csharp%E5%8F%8D%E5%B0%84%E4%B8%8E%E7%89%B9%E6%80%A7\/",
+            "date": "2024-08-28",
+            "filename": "Csharp反射与特性.md",
+            "section": "posts\/后端\/csharp\/csharp初级",
+            "lastmod": "2024-08-28",
+            "content": " h2 id=\u0026#34;csharp-反射\u0026#34; csharp 反射 \/h2 ol li \/li \/ol h2 id=\u0026#34;csharp-特性\u0026#34; csharp 特性 \/h2 ol li 特性语法就是用 code 方括号 [ ] \/code 给代码添加元数据，让编译器或框架根据这些标签执行额外行为. \/li \/ol div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-c#\u0026#34; data-lang=\u0026#34;c#\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;k\u0026#34; using \/span span class=\u0026#34;nn\u0026#34; System \/span span class=\u0026#34;p\u0026#34; ; \/span \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;k\u0026#34; using \/span span class=\u0026#34;nn\u0026#34; System.Reflection \/span span class=\u0026#34;p\u0026#34; ; \/span \/span …"
+          },{
             "title": "责任链模式",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F\/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F\/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F\/",
             "date": "2024-08-23",
@@ -2221,6 +2297,14 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "content": " h2 id=\u0026#34;题目描述\u0026#34; 题目描述 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h2 h2 id=\u0026#34;代码\u0026#34; 代码 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; c\u0026amp;#43;\u0026amp;#43; \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; java \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;2\u0026#34; python \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div class=\u0026#34;tabpanel-content active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; …"
           },{
             "title": "Csharp运算符",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E5%88%9D%E7%BA%A7\/csharp%E8%BF%90%E7%AE%97%E7%AC%A6\/",
+            "date": "2024-05-04",
+            "filename": "Csharp运算符.md",
+            "section": "posts\/后端\/csharp\/csharp初级",
+            "lastmod": "2024-05-04",
+            "content": " h2 id=\u0026#34;as-与-is-运算符\u0026#34; as 与 is 运算符 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; as与is运算符 \/span \/div div class=\u0026#34;collapse-content\u0026#34; ol li is:检查一个对象是否兼容于其他指定的类型,并返回一个 Bool 值,不会抛出异常. \/li li as: 与强制类型转换是一样的,如果转换不成功,会返回null,不会抛出异常. \/li li is 和 as运算符只能用于引用转换以及装箱和拆箱转换,不能用于用户自定义转换. \/li \/ol div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; is运算符 \/div div …"
+          },{
+            "title": "Csharp运算符",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E8%BF%90%E7%AE%97%E7%AC%A6\/",
             "date": "2024-05-04",
             "filename": "Csharp运算符.md",
@@ -2233,6 +2317,14 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "date": "2024-04-30",
             "filename": "Csharp关键字.md",
             "section": "posts\/后端\/csharp",
+            "lastmod": "2024-04-30",
+            "content": " h2 id=\u0026#34;关键字\u0026#34; 关键字 \/h2 h3 id=\u0026#34;out-in-ref-关键字\u0026#34; out, in, ref 关键字 \/h3 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; out, in, ref 关键字 \/span \/div div class=\u0026#34;collapse-content\u0026#34; ol li ref 指定引用传递, 修饰的参数变量需要初始化, 参数在方法中可以修改或不修改. \/li li out 指定引用传递, 修饰的参数变量无需初始化, 参数在方法中必须赋值. \/li li in 指定引用传递, 修饰的参数变量需要初始化, 参数在方法中不能修改. \/li \/ol div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-C#\u0026#34; data-lang=\u0026#34;C#\u0026#34; span class=\u0026#34;line\u0026#34; …"
+          },{
+            "title": "Csharp关键字",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E5%88%9D%E7%BA%A7\/csharp%E5%85%B3%E9%94%AE%E5%AD%97\/",
+            "date": "2024-04-30",
+            "filename": "Csharp关键字.md",
+            "section": "posts\/后端\/csharp\/csharp初级",
             "lastmod": "2024-04-30",
             "content": " h2 id=\u0026#34;关键字\u0026#34; 关键字 \/h2 h3 id=\u0026#34;out-in-ref-关键字\u0026#34; out, in, ref 关键字 \/h3 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; out, in, ref 关键字 \/span \/div div class=\u0026#34;collapse-content\u0026#34; ol li ref 指定引用传递, 修饰的参数变量需要初始化, 参数在方法中可以修改或不修改. \/li li out 指定引用传递, 修饰的参数变量无需初始化, 参数在方法中必须赋值. \/li li in 指定引用传递, 修饰的参数变量需要初始化, 参数在方法中不能修改. \/li \/ol div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-C#\u0026#34; data-lang=\u0026#34;C#\u0026#34; span class=\u0026#34;line\u0026#34; …"
           },{
@@ -2259,6 +2351,14 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "section": "posts\/后端\/cplusplus\/多线程",
             "lastmod": "2024-04-25",
             "content": " div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-c\u002b\u002b\u0026#34; data-lang=\u0026#34;c\u002b\u002b\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;cp\u0026#34; #include \/span span class=\u0026#34;cpf\u0026#34; \u0026amp;lt;thread\u0026amp;gt; \/span span class=\u0026#34;cp\u0026#34; \/span \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;cp\u0026#34; #include \/span span class=\u0026#34;cpf\u0026#34; \u0026amp;lt;iostream\u0026amp;gt; \/span span class=\u0026#34;cp\u0026#34; \/span \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;cp\u0026#34; #include \/span span class=\u0026#34;cpf\u0026#34; \u0026amp;lt;string\u0026amp;gt; \/span span class=\u0026#34;cp\u0026#34; \/span …"
+          },{
+            "title": "csharp命名空间与程序集",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E5%88%9D%E7%BA%A7\/csharp%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%9B%86\/",
+            "date": "2024-04-24",
+            "filename": "csharp命名空间与程序集.md",
+            "section": "posts\/后端\/csharp\/csharp初级",
+            "lastmod": "2024-04-24",
+            "content": " div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 程序集 \/span \/div div class=\u0026#34;collapse-content\u0026#34; ol li 程序集是 .net 中的概念，程序集可以看作是给一堆相关类打一个包，相当于java中的jar包 \/li \/ol \/div \/div h2 id=\u0026#34;参考链接\u0026#34; 参考链接 \/h2 ol li a href=\u0026#34;https:\/\/zhuanlan.zhihu.com\/p\/386191401\u0026#34; 程序集 \/a \/li \/ol "
           },{
             "title": "命名空间与程序集",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%9B%86\/",
@@ -2291,6 +2391,14 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "section": "posts\/后端\/cplusplus",
             "lastmod": "2024-04-19",
             "content": " h2 id=\u0026#34;函数模板与类模版\u0026#34; 函数模板与类模版 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 概述 \/span \/div div class=\u0026#34;collapse-content\u0026#34; ol li typename 是用来定义模板参数关键字,也可以使用 class. \/li li 用不同类型的参数使用函数模板时, 称为 mark 函数模板的实例化 \/mark . \/li \/ol div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 函数模版 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 类模版 \/div \/div div …"
+          },{
+            "title": "csharp扩展方法",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E5%88%9D%E7%BA%A7\/csharp%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95\/",
+            "date": "2024-04-19",
+            "filename": "csharp扩展方法.md",
+            "section": "posts\/后端\/csharp\/csharp初级",
+            "lastmod": "2024-04-19",
+            "content": ""
           },{
             "title": "扩展方法",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95\/",
@@ -2556,6 +2664,14 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "lastmod": "2023-12-20",
             "content": " h2 id=\u0026#34;中间继电器\u0026#34; 中间继电器 \/h2 h4 id=\u0026#34;直流中间继电器结构\u0026#34; 直流中间继电器结构 \/h4 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 直流中间继电器 \/span \/div div class=\u0026#34;collapse-content\u0026#34; div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 继电器结构 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 直流继电器接线1 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;2\u0026#34; 直流继电器接线2 \/div \/div div …"
           },{
+            "title": "csharp协变与逆变",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E5%88%9D%E7%BA%A7\/csharp%E5%8D%8F%E5%8F%98%E4%B8%8E%E9%80%86%E5%8F%98\/",
+            "date": "2023-12-19",
+            "filename": "csharp协变与逆变.md",
+            "section": "posts\/后端\/csharp\/csharp初级",
+            "lastmod": "2023-12-19",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ul li 协变性: 子类到父类的转换(如：string-\u0026amp;gt;object). \/li li 逆变性: 父类到子类的转换(如：object-\u0026amp;gt;string). \/li li 协变性指定返回类型的兼容性，而逆变性指定参数的兼容性. \/li \/ul h2 \/h2 h2 id=\u0026#34;委托的协变与逆变\u0026#34; 委托的协变与逆变 \/h2 h4 id=\u0026#34;代码示例\u0026#34; 代码示例 \/h4 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 协变 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 逆变 \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div class=\u0026#34;tabpanel-content active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; div class=\u0026#34;highlight\u0026#34; pre …"
+          },{
             "title": "协变与逆变",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/%E5%8D%8F%E5%8F%98%E4%B8%8E%E9%80%86%E5%8F%98\/",
             "date": "2023-12-19",
@@ -2604,6 +2720,14 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "lastmod": "2023-12-01",
             "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 同相输入电路 \/span \/div div class=\u0026#34;collapse-content\u0026#34; img src=\u0026#34;\/img\/电子电路\/同相向输入端(共集电极).png\u0026#34; \/br \/div \/div h2 id=\u0026#34;视频链接\u0026#34; 视频链接 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 共集电极同相放大电路 \/span \/div div class=\u0026#34;collapse-content\u0026#34; a href=\u0026#34;https:\/\/www.youtube.com\/watch?v=KOXoCWulIos\u0026#34; 运算放大器 \/a \/br …"
           },{
+            "title": "csharp泛型",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E5%88%9D%E7%BA%A7\/csharp%E6%B3%9B%E5%9E%8B\/",
+            "date": "2023-12-01",
+            "filename": "csharp泛型.md",
+            "section": "posts\/后端\/csharp\/csharp初级",
+            "lastmod": "2023-12-01",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 概述 \/span \/div div class=\u0026#34;collapse-content\u0026#34; ol li 泛型(generic) 特性可以让多个类型共享一组代码。泛型允许我们声明类型参数化(type-parameterized)的代码,用不同的类型进行实例化.即我们可以用“类型占位符”来写代码, 然后在创建类的实例时指明真实的类型. \/li li C# 提供了 5 种泛型：类、结构、接口、委托和方法。类, 结构, 接口, 委托是类型, 而方法是成员. \/li \/ol \/div \/div h2 id=\u0026#34;泛型类\u0026#34; 泛型类 \/h2 h4 id=\u0026#34;概述-1\u0026#34; 概述 \/h4 h4 id=\u0026#34;泛型类示例\u0026#34; 泛型类示例 \/h4 div class=\u0026#34;collapse-container\u0026#34; div …"
+          },{
             "title": "泛型",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/%E6%B3%9B%E5%9E%8B\/",
             "date": "2023-12-01",
@@ -2619,6 +2743,22 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "section": "posts\/电气\/运放电路",
             "lastmod": "2023-11-28",
             "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 运放之反相输入端 \/span \/div div class=\u0026#34;collapse-content\u0026#34; img src=\u0026#34;\/img\/电子电路\/反向输入端(共发射极).png\u0026#34; data-fancybox=\u0026#34;gallery\u0026#34; data-width=\u0026#34;2000\u0026#34; data-height=\u0026#34;1000\u0026#34; \/br \/div \/div h2 id=\u0026#34;共发射电路静态工作点分析\u0026#34; 共发射电路静态工作点分析 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 静态工作点 \/span \/div div …"
+          },{
+            "title": "csharp类",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E5%88%9D%E7%BA%A7\/csharp%E7%B1%BB\/",
+            "date": "2023-11-23",
+            "filename": "csharp类.md",
+            "section": "posts\/后端\/csharp\/csharp初级",
+            "lastmod": "2023-11-23",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 h3 id=\u0026#34;部分类\u0026#34; 部分类 \/h3 ul li C# 的部分类(partial class)允许把同一个类拆分到多个文件中定义, 这些文件在编译时会被合并成一个完整的类. \/li \/ul h4 id=\u0026#34;继承示例\u0026#34; 继承示例 \/h4 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 使用基类的引用 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 虚方法与覆写方法 \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div class=\u0026#34;tabpanel-content active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-C#\u0026#34; …"
+          },{
+            "title": "csharp继承",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E5%88%9D%E7%BA%A7\/csharp%E7%BB%A7%E6%89%BF\/",
+            "date": "2023-11-23",
+            "filename": "csharp继承.md",
+            "section": "posts\/后端\/csharp\/csharp初级",
+            "lastmod": "2023-11-23",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 h4 id=\u0026#34;继承示例\u0026#34; 继承示例 \/h4 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 使用基类的引用 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 虚方法与覆写方法 \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div class=\u0026#34;tabpanel-content active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-C#\u0026#34; data-lang=\u0026#34;C#\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;k\u0026#34; class \/span span class=\u0026#34;nc\u0026#34; …"
           },{
             "title": "继承",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/%E7%BB%A7%E6%89%BF\/",
@@ -2668,6 +2808,14 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "lastmod": "2023-11-20",
             "content": " h2 id=\u0026#34;查看分支\u0026#34; 查看分支 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 查看本地分支 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 查看远程分支 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;2\u0026#34; 查看所有分支 \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div class=\u0026#34;tabpanel-content active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; git branch …"
           },{
+            "title": "csharp接口",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E5%88%9D%E7%BA%A7\/csharp%E6%8E%A5%E5%8F%A3\/",
+            "date": "2023-11-18",
+            "filename": "csharp接口.md",
+            "section": "posts\/后端\/csharp\/csharp初级",
+            "lastmod": "2023-11-18",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 接口是指定一组函数成员而不实现它们的引用类型,只能使用类和结构来实现接口. \/li li 接口可以有访问修饰符,接口成员不能有访问修饰符. \/li li 接口声明不能包含数据成员,静态成员. \/li li 只有类和结构才能实现接口. \/li \/ol div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 接口声明 \/span \/div div class=\u0026#34;collapse-content\u0026#34; ol li 接口声明可以有任何的访问修饰符.接口成员不允许有任何访问修饰符,且默认是隐式 public 的. \/li \/ol div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-C#\u0026#34; data-lang=\u0026#34;C#\u0026#34; span class=\u0026#34;line\u0026#34; span …"
+          },{
             "title": "接口",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/%E6%8E%A5%E5%8F%A3\/",
             "date": "2023-11-18",
@@ -2675,6 +2823,14 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
             "section": "posts\/后端\/csharp",
             "lastmod": "2023-11-18",
             "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 接口是指定一组函数成员而不实现它们的引用类型,只能使用类和结构来实现接口. \/li li 接口可以有访问修饰符,接口成员不能有访问修饰符. \/li li 接口声明不能包含数据成员,静态成员. \/li li 只有类和结构才能实现接口. \/li \/ol div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 接口声明 \/span \/div div class=\u0026#34;collapse-content\u0026#34; ol li 接口声明可以有任何的访问修饰符.接口成员不允许有任何访问修饰符,且默认是隐式 public 的. \/li \/ol div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-C#\u0026#34; data-lang=\u0026#34;C#\u0026#34; span class=\u0026#34;line\u0026#34; span …"
+          },{
+            "title": "csharp委托与事件",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/csharp%E5%88%9D%E7%BA%A7\/csharp%E5%A7%94%E6%89%98%E4%B8%8E%E4%BA%8B%E4%BB%B6\/",
+            "date": "2023-11-18",
+            "filename": "csharp委托与事件.md",
+            "section": "posts\/后端\/csharp\/csharp初级",
+            "lastmod": "2023-11-18",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ul li 委托是引用类型, 委托有引用和对象, 委托类型必须在被用来创建变量以及类型的对象之前声明. \/li li 委托声明与方法声明相似, 只是没有实现块. 委托不需要在类内部声明. \/li li 委托可以看成一个包含有序方法列表的对象, 其包含的方法具有相同的签名和返回类型. \/li \/ul h4 id=\u0026#34;委托示例\u0026#34; 委托示例 \/h4 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 没有参数和返回值的委托类型 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 调用带返回值的委托 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;2\u0026#34; 调用带引用参数的委托 \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div …"
           },{
             "title": "委托与事件",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/csharp\/%E5%A7%94%E6%89%98%E4%B8%8E%E4%BA%8B%E4%BB%B6\/",
@@ -3681,6 +3837,18 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
   <script id="project-data" type="application/json">
       {
         "entries": [{
+                  "name": "python项目",
+                  "path": "/myProject/python项目",
+                  "size": "4096 bytes",
+                  "isDir":  true ,
+                  "dir": "myProject"
+                },{
+                  "name": "python生成带甘特图的excel表.py",
+                  "path": "/myProject\/python项目/python生成带甘特图的excel表.py",
+                  "size": "4985 bytes",
+                  "isDir":  false ,
+                  "dir": "myProject\/python项目"
+                },{
                   "name": "springboot项目",
                   "path": "/myProject/springboot项目",
                   "size": "4096 bytes",
@@ -3777,6 +3945,38 @@ data-fancybox data-type="iframe" data-width="1000" data-height="1000">
     </script>
   
   
+
+  
+  <div class="im-widget" id="im-widget">
+    
+    <button class="im-button" id="im-button" title="打开在线客服">
+      💬
+    </button>
+
+    
+    <div class="im-chat-window hidden" id="im-chat-window">
+      
+      <div class="im-header">
+        <div class="im-avatar" id="im-avatar"></div>
+        <div class="im-header-info">
+          <p class="im-header-name" id="im-display-name">在线客服</p>
+          <p class="im-header-status">实时响应</p>
+        </div>
+        <button class="im-close-btn" id="im-close-btn">×</button>
+      </div>
+
+      
+      <div class="im-messages" id="im-messages"></div>
+
+      
+      <div class="im-input-container">
+        <textarea class="im-input-field" id="im-input-field" placeholder="输入消息..." rows="1"></textarea>
+        <button class="im-send-btn" id="im-send-btn">发送</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/im-widget.js"></script>
 </body>
 
 </html>

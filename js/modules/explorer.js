@@ -100,10 +100,10 @@ export const Explorer = (() => {
 
         if (path.match(/\.(mp3|wav|ogg|flac|m4a)$/i)) {
             // 音频
-            globalThis.mediaPlayer?.playAudio?.(item.path, item.name) || window.open(item.path, '_blank');
+            globalThis.mediaPlayer?.playAudio?.(item.path, item.name);
         } else if (path.match(/\.(mp4|webm|avi|mov|mkv)$/i)) {
             // 视频
-            globalThis.mediaPlayer?.playVideo?.(item.path, item.name) || window.open(item.path, '_blank');
+            globalThis.mediaPlayer?.playVideo?.(item.path, item.name);
         } else if (path.match(/\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i)) {
             // 图片 - 不打开新标签页
             globalThis.mediaPlayer?.previewImage?.(item.path, item.name);
@@ -153,8 +153,14 @@ export const Explorer = (() => {
      * 上一级
      */
     function _goUp() {
-        if (ExplorerData.goUp()) {
+        console.log('[Explorer] Executing goUp()');
+        const result = ExplorerData.goUp();
+        console.log('[Explorer] goUp() returned:', result);
+        if (result) {
+            console.log('[Explorer] Current path after goUp:', ExplorerData.getState().currentPath);
             _render();
+        } else {
+            console.log('[Explorer] goUp() returned false, not rendering');
         }
     }
 
@@ -174,8 +180,11 @@ export const Explorer = (() => {
         const items = ExplorerData.getItemsForPath(state.currentPath);
         const viewMode = ExplorerData.getViewMode();
 
+        console.log('[Explorer] _render() called, currentPath:', state.currentPath);
+        
         ExplorerUI.renderFiles(items, viewMode);
         ExplorerUI.updateAddressBar(state.currentPath);
+        console.log('[Explorer] Address bar updated to:', state.currentPath);
         ExplorerUI.updateViewToggles(viewMode);
     }
 
@@ -186,11 +195,34 @@ export const Explorer = (() => {
         },
         open: () => {
             const win = document.querySelector(selectors.window);
-            if (win) win.style.display = 'flex';
+            if (win) {
+                // 清除最小化和最大化状态，恢复到初始状态
+                win.classList.remove('minimized', 'maximized');
+                win.classList.add('active', 'restored');
+                // 清除内联样式，恢复初始大小和位置
+                win.style.display = 'flex';
+                win.style.width = '';
+                win.style.height = '';
+                win.style.left = '';
+                win.style.top = '';
+                win.style.transform = '';
+
+                // 保存初始样式供后续最大化/最小化使用
+                if (!win.dataset.win7OrigWidth) {
+                    win.dataset.win7OrigWidth = window.getComputedStyle(win).width;
+                    win.dataset.win7OrigHeight = window.getComputedStyle(win).height;
+                    win.dataset.win7OrigLeft = window.getComputedStyle(win).left;
+                    win.dataset.win7OrigTop = window.getComputedStyle(win).top;
+                    win.dataset.win7OrigTransform = window.getComputedStyle(win).transform;
+                }
+            }
         },
         close: () => {
             const win = document.querySelector(selectors.window);
-            if (win) win.style.display = 'none';
+            if (win) {
+                win.style.display = 'none';
+                win.classList.remove('active', 'minimized', 'maximized', 'restored');
+            }
         }
     };
 })();

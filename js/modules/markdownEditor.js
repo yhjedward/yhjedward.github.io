@@ -52,6 +52,9 @@ export const MarkdownEditor = (() => {
         // 初始状态
         updateState();
 
+        // 加载最新保存的内容
+        _loadLatestContent();
+
         // 绑定桌面图标点击事件
         const icon = document.querySelector(selectors.icon);
         if (icon) {
@@ -86,6 +89,54 @@ export const MarkdownEditor = (() => {
 
         // 绑定分割条拖动事件
         _bindResizerEvents();
+
+        // 绑定页面关闭事件 - 自动保存
+        window.addEventListener('beforeunload', () => {
+            const content = getContent();
+            if (content.trim()) {
+                _autoSaveToCache(content);
+            }
+        });
+
+        // 监听markdown窗口关闭 - 自动保存（使用capture phase优先于WindowShell）
+        const windowElement = document.querySelector(selectors.window);
+        if (windowElement) {
+            // 在capture phase拦截close button点击
+            const handleMdCloseClick = (e) => {
+                const closeBtn = e.target.closest('.md-close');
+                if (!closeBtn || !closeBtn.closest('#md-window')) return;
+
+                console.log('[MarkdownEditor] Close button clicked (capture phase)');
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                const content = getContent();
+                if (content.trim()) {
+                    console.log('[MarkdownEditor] Auto-saving before close...');
+                    _autoSaveToCache(content).then(() => {
+                        console.log('[MarkdownEditor] Auto-save completed, hiding window');
+                        const w = document.querySelector(selectors.window);
+                        if (w) {
+                            w.style.display = 'none';
+                            w.style.visibility = 'hidden';
+                            w.style.opacity = '0';
+                        }
+                    });
+                } else {
+                    const w = document.querySelector(selectors.window);
+                    if (w) {
+                        w.style.display = 'none';
+                        w.style.visibility = 'hidden';
+                        w.style.opacity = '0';
+                    }
+                }
+            };
+
+            // 在capture phase添加监听器（优先于WindowShell的bubble phase）
+            document.addEventListener('click', handleMdCloseClick, true);
+            console.log('[MarkdownEditor] Close button listener installed in capture phase');
+        }
     }
 
     /**
@@ -189,6 +240,21 @@ export const MarkdownEditor = (() => {
             case 'h2':
                 inserted = `## ${selected || '标题'}`;
                 break;
+            case 'h3':
+                inserted = `### ${selected || '标题'}`;
+                break;
+            case 'blockquote':
+                inserted = `> ${selected || '引用内容'}`;
+                break;
+            case 'hr':
+                inserted = `\n---\n`;
+                break;
+            case 'code-block':
+                inserted = `\n\`\`\`\n${selected || '代码内容'}\n\`\`\`\n`;
+                break;
+            case 'table':
+                inserted = `\n| Header 1 | Header 2 |\n| -------- | -------- |\n| Data 1   | Data 2   |\n`;
+                break;
             case 'ul':
                 inserted = `- ${selected || '列表项'}`;
                 break;
@@ -228,6 +294,55 @@ export const MarkdownEditor = (() => {
             case 'ai-generate':
                 _generateWithAI(btn);
                 break;
+        }
+    }
+
+    /**
+     * 加载最新保存的内容
+     */
+    async function _loadLatestContent() {
+        try {
+            console.log('[MarkdownEditor] Loading latest content...');
+            const response = await fetch(`${API_BASE}/api/markdown`);
+            if (response.ok) {
+                const data = await response.json();
+                if (data.content) {
+                    setContent(data.content);
+                    console.log('[MarkdownEditor] Latest content loaded');
+                }
+            }
+        } catch (err) {
+            console.error('[MarkdownEditor] Failed to load latest content:', err);
+        }
+    }
+
+    /**
+     * 自动保存到缓存（在关闭窗口或页面时调用）
+     */
+    async function _autoSaveToCache(content) {
+        try {
+            console.log('[MarkdownEditor] Auto-saving to cache...');
+            const response = await fetch(`${API_BASE}/api/markdown`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ content })
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log('[MarkdownEditor] Auto-saved successfully:', result.id);
+                // 可选：显示保存成功的标记
+                const input = document.querySelector(selectors.input);
+                if (input) {
+                    input.classList.remove('unsaved');
+                }
+            } else {
+                console.warn('[MarkdownEditor] Auto-save failed:', response.status);
+            }
+        } catch (err) {
+            console.error('[MarkdownEditor] Auto-save error:', err);
         }
     }
 
@@ -498,6 +613,10 @@ export const MarkdownEditor = (() => {
      */
     function open() {
         console.log('[MarkdownEditor] Opening');
+
+        // 加载最新保存的内容
+        _loadLatestContent();
+
         if (typeof globalThis.startOpenMd === 'function') {
             globalThis.startOpenMd();
         } else if (typeof globalThis.showMdWindow === 'function') {
@@ -519,6 +638,13 @@ export const MarkdownEditor = (() => {
      */
     function close() {
         console.log('[MarkdownEditor] Closing');
+
+        // 保存当前内容
+        const content = getContent();
+        if (content.trim()) {
+            _autoSaveToCache(content);
+        }
+
         if (typeof globalThis.hideMdWindow === 'function') {
             globalThis.hideMdWindow();
         } else {

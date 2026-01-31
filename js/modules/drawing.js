@@ -4,6 +4,11 @@
  */
 
 export const Drawing = (() => {
+    // API Base URL configuration
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+        ? 'http://localhost:3001'
+        : '';
+
     const selectors = {
         window: '#drawing-window',
         icon: '#drawing-board',
@@ -121,6 +126,43 @@ export const Drawing = (() => {
             }
         });
         observer.observe(win, { attributes: true, attributeFilter: ['style', 'class'] });
+
+        // 绑定页面关闭事件 - 自动保存画板
+        window.addEventListener('beforeunload', () => {
+            console.log('[Drawing] beforeunload event triggered');
+            autoSaveDrawingToServer();
+        });
+
+        // 监听窗口关闭事件 - 需要在WindowShell之前拦截
+        // 我们需要在WindowShell初始化之前绑定，或者用更高优先级
+        if (win) {
+            // 在capture phase拦截close button点击（优先于WindowShell的bubbling listeners）
+            const handleCloseClick = (e) => {
+                const closeBtn = e.target.closest('.drawing-close');
+                if (!closeBtn) return;
+
+                console.log('[Drawing] Close button clicked (capture phase)');
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                // 自动保存，完成后隐藏窗口
+                console.log('[Drawing] Starting auto-save before close...');
+                autoSaveDrawingToServer().then(() => {
+                    console.log('[Drawing] Auto-save completed, hiding window');
+                    const w = document.querySelector(selectors.window);
+                    if (w) {
+                        w.style.display = 'none';
+                        w.style.visibility = 'hidden';
+                        w.style.opacity = '0';
+                    }
+                });
+            };
+
+            // 在capture phase添加监听器（这样能在bubble phase之前执行）
+            document.addEventListener('click', handleCloseClick, true);
+            console.log('[Drawing] Close button listener installed in capture phase');
+        }
     }
 
     function bindDesktopIcon() {
@@ -148,6 +190,9 @@ export const Drawing = (() => {
             const w = document.querySelector(selectors.window);
             if (w) w.style.display = 'flex';
         }
+
+        // 加载最新保存的画板内容
+        loadLatestDrawing();
 
         setTimeout(() => {
             resizeCanvas();
@@ -910,6 +955,122 @@ export const Drawing = (() => {
         state.persistTimer = setTimeout(() => {
             persist();
         }, 250);
+    }
+
+    /**
+     * 加载最新保存的画板内容
+     */
+    async function loadLatestDrawing() {
+        try {
+            console.log('[Drawing] Loading latest drawing from server...');
+            const response = await fetch(`${API_BASE}/api/drawing`);
+
+            if (!response.ok) {
+                console.warn('[Drawing] Failed to load latest drawing:', response.status);
+                return;
+            }
+
+            const data = await response.json();
+            if (!data || !data.data) {
+                console.log('[Drawing] No previous drawing found');
+                return;
+            }
+
+            // 解析base64图片数据并还原到画板
+            await restoreDrawingFromBase64(data.data);
+            console.log('[Drawing] Latest drawing loaded successfully');
+        } catch (err) {
+            console.error('[Drawing] Failed to load latest drawing:', err);
+        }
+    }
+
+    /**
+     * 从base64数据还原画板
+     */
+    async function restoreDrawingFromBase64(base64Data) {
+        return new Promise((resolve) => {
+            if (!canvas || !viewCtx) {
+                resolve();
+                return;
+            }
+
+            const img = new Image();
+            img.onload = () => {
+                try {
+                    // 清除现有的图层
+                    ensureAtLeastOneLayer();
+                    const layer = getActiveLayer();
+
+                    if (layer && layer.ctx) {
+                        layer.ctx.clearRect(0, 0, layer.canvas.width, layer.canvas.height);
+                        layer.ctx.drawImage(img, 0, 0);
+                        commitLayerSnapshot(layer, true);
+                    }
+
+                    renderComposite();
+                    console.log('[Drawing] Drawing restored from base64');
+                } catch (e) {
+                    console.error('[Drawing] Failed to restore drawing:', e);
+                }
+                resolve();
+            };
+
+            img.onerror = () => {
+                console.error('[Drawing] Failed to load image');
+                resolve();
+            };
+
+            img.src = `data:image/png;base64,${base64Data}`;
+        });
+    }
+
+    /**
+     * 自动保存画板到服务器（导出为PNG）
+     */
+    async function autoSaveDrawingToServer() {
+        try {
+            if (!canvas) {
+                console.warn('[Drawing] Canvas not available, cannot auto-save');
+                return;
+            }
+
+            console.log('[Drawing] Auto-saving drawing to server...');
+
+            // 将canvas导出为PNG的base64数据
+            const pngDataUrl = canvas.toDataURL('image/png');
+            const base64Data = pngDataUrl.replace(/^data:image\/png;base64,/, '');
+
+            console.log('[Drawing] Base64 data prepared, size:', base64Data.length);
+
+            const payload = {
+                name: `Drawing ${new Date().toLocaleString()}`,
+                data: base64Data
+            };
+
+            const response = await fetch(`${API_BASE}/api/drawing`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload),
+                keepalive: true  // 确保在页面卸载时请求能完成
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log('[Drawing] Auto-saved successfully:', result.id);
+                return result;
+            } else {
+                console.warn('[Drawing] Auto-save failed:', response.status, response.statusText);
+                const errorText = await response.text();
+                console.warn('[Drawing] Error details:', errorText.substring(0, 200));
+                return null;
+            }
+        } catch (err) {
+            console.error('[Drawing] Auto-save error:', err.message);
+            console.error('[Drawing] Error details:', err);
+            return null;
+        }
     }
 
     function serializeLayers() {
