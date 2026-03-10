@@ -59,6 +59,32 @@ export const WindowShell = (() => {
             },
             show: () => globalThis.startOpenTodo?.(),
             hide: () => globalThis.hideTodoWindow?.()
+        },
+        {
+            app: 'musicManager',
+            windowId: 'music-manager-window',
+            title: '音乐管理器',
+            icon: '🎵',
+            controls: {
+                minimize: '.music-minimize',
+                maximize: '.music-maximize',
+                close: '.music-close'
+            },
+            show: () => globalThis.startOpenMusicManager?.(),
+            hide: () => globalThis.hideMusicManagerWindow?.()
+        },
+        {
+            app: 'videoManager',
+            windowId: 'video-manager-window',
+            title: '视频管理器',
+            icon: '🎬',
+            controls: {
+                minimize: '.video-minimize',
+                maximize: '.video-maximize',
+                close: '.video-close'
+            },
+            show: () => globalThis.startOpenVideoManager?.(),
+            hide: () => globalThis.hideVideoManagerWindow?.()
         }
     ];
 
@@ -372,6 +398,8 @@ export const WindowShell = (() => {
         globalThis.hideDrawingWindow = () => closeWindow('drawing', document.getElementById('drawing-window'));
         globalThis.hideMdWindow = () => closeWindow('markdown', document.getElementById('md-window'));
         globalThis.hideTodoWindow = () => closeWindow('todo', document.getElementById('todo-window'));
+        globalThis.hideMusicManagerWindow = () => closeWindow('musicManager', document.getElementById('music-manager-window'));
+        globalThis.hideVideoManagerWindow = () => closeWindow('videoManager', document.getElementById('video-manager-window'));
 
         APPS.forEach(bindAppWindow);
         bindBlogWindow();

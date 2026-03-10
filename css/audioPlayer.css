@@ -4,8 +4,8 @@
     position: fixed;
     top: 150px;
     left: 150px;
-    width: 400px;
-    height: 200px;
+    width: 450px;
+    height: auto;
     background: white;
     border-radius: 6px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
@@ -43,7 +43,7 @@
 .audio-player .song-title {
     font-weight: bold;
     font-size: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -53,26 +53,37 @@
 .audio-player .song-controls {
     display: flex;
     align-items: center;
+    gap: 10px;
     margin-bottom: 15px;
 }
 
-.audio-player .play-pause {
+.audio-player .play-pause,
+.audio-player .prev-track,
+.audio-player .next-track {
     width: 40px;
     height: 40px;
     border: none;
     background: var(--win7-blue);
     color: white;
     border-radius: 50%;
-    margin-right: 10px;
     cursor: pointer;
     font-size: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
-.audio-player .play-pause:hover {
+.audio-player .play-pause:hover,
+.audio-player .prev-track:hover,
+.audio-player .next-track:hover {
     background: #0068c0;
+}
+
+.audio-player .play-pause:active,
+.audio-player .prev-track:active,
+.audio-player .next-track:active {
+    background: #004a94;
 }
 
 .audio-player .progress-container {
@@ -83,6 +94,13 @@
     overflow: hidden;
     cursor: pointer;
     margin: 0 10px;
+    position: relative;
+}
+
+.audio-player .progress-container:hover {
+    height: 12px;
+    margin-top: -2px;
+    background: #ccc;
 }
 
 .audio-player .progress-bar {
@@ -90,28 +108,77 @@
     background: var(--win7-blue);
     width: 0;
     border-radius: 4px;
+    transition: width 0.1s linear;
 }
 
 .audio-player .time-info {
     font-size: 12px;
     color: #555;
-    min-width: 80px;
+    min-width: 90px;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .audio-player .volume-control {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 15px;
+    gap: 10px;
 }
 
 .audio-player .volume-control span {
-    margin-right: 10px;
+    flex-shrink: 0;
 }
 
 .audio-player .volume-slider {
     flex: 1;
     height: 5px;
+    cursor: pointer;
+}
+
+/* 播放列表面板 */
+.audio-player .playlist-panel {
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+    padding-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.audio-player .playlist-header {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.audio-player .playlist-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.audio-player .playlist-item {
+    padding: 8px 10px;
+    background: #e8e8e8;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.2s ease;
+}
+
+.audio-player .playlist-item:hover {
+    background: #d0d0d0;
+    padding-left: 15px;
+}
+
+.audio-player .playlist-item.playing {
+    background: var(--win7-blue);
+    color: white;
+    font-weight: bold;
 }
 
 /* 音频播放器最大化样式 */
@@ -139,4 +206,20 @@
 
 .audio-player.maximized .window-titlebar {
     cursor: default;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .audio-player {
+        width: 90vw !important;
+        left: 5vw !important;
+    }
+
+    .audio-player .song-controls {
+        flex-wrap: wrap;
+    }
+
+    .audio-player .playlist-panel {
+        max-height: 150px;
+    }
 }

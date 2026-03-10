@@ -150,12 +150,7 @@ export const Drawing = (() => {
                 console.log('[Drawing] Starting auto-save before close...');
                 autoSaveDrawingToServer().then(() => {
                     console.log('[Drawing] Auto-save completed, hiding window');
-                    const w = document.querySelector(selectors.window);
-                    if (w) {
-                        w.style.display = 'none';
-                        w.style.visibility = 'hidden';
-                        w.style.opacity = '0';
-                    }
+                    hideWindowAndTaskbarIcon();
                 });
             };
 
@@ -1070,6 +1065,26 @@ export const Drawing = (() => {
             console.error('[Drawing] Auto-save error:', err.message);
             console.error('[Drawing] Error details:', err);
             return null;
+        }
+    }
+
+    /**
+     * 隐藏窗口和任务栏图标
+     */
+    function hideWindowAndTaskbarIcon() {
+        const w = document.querySelector(selectors.window);
+        if (w) {
+            w.style.display = 'none';
+            w.style.visibility = 'hidden';
+            w.style.opacity = '0';
+            w.classList.remove('minimized', 'restored', 'active', 'maximized');
+        }
+
+        // 隐藏任务栏图标
+        const taskbarIcon = document.querySelector('[data-app="drawing"]');
+        if (taskbarIcon) {
+            taskbarIcon.style.display = 'none';
+            taskbarIcon.classList.remove('active');
         }
     }
 

@@ -1,0 +1,317 @@
+/* 音乐管理器窗口样式 */
+.music-manager-window {
+    display: none;
+    position: fixed;
+    top: 200px;
+    left: 300px;
+    width: 600px;
+    height: 500px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    z-index: 110;
+    flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 标题栏 */
+.music-manager-window .window-titlebar {
+    background: linear-gradient(to bottom, #0078d7, #005fb3);
+    color: white;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    user-select: none;
+}
+
+.music-manager-window .window-title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.music-manager-window .window-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.music-manager-window .window-controls button {
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+}
+
+.music-manager-window .window-controls button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.music-manager-window .window-controls button:active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 工具栏 */
+.music-manager-window .music-toolbar {
+    background: #f0f0f0;
+    border-bottom: 1px solid #d0d0d0;
+    padding: 8px 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.music-manager-window .music-toolbar button {
+    padding: 6px 12px;
+    background: white;
+    border: 1px solid #c0c0c0;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.music-manager-window .music-toolbar button:hover {
+    background: #e8e8e8;
+    border-color: #a0a0a0;
+}
+
+.music-manager-window .music-toolbar button:active {
+    background: #d0d0d0;
+}
+
+/* 主内容区域 */
+.music-manager-window .music-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* 侧边栏 */
+.music-manager-window .music-sidebar {
+    width: 120px;
+    background: #f5f5f5;
+    border-right: 1px solid #d0d0d0;
+    overflow-y: auto;
+    font-size: 12px;
+}
+
+.music-manager-window .music-sidebar-item {
+    padding: 8px 10px;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.music-manager-window .music-sidebar-item:hover {
+    background: #e0e0e0;
+}
+
+.music-manager-window .music-sidebar-item.active {
+    background: #d0d0d0;
+    border-left-color: #0078d7;
+    font-weight: bold;
+}
+
+/* 文件容器 */
+.music-manager-window .music-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.music-files-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    align-content: start;
+}
+
+/* 文件项目 */
+.music-file-item,
+.music-folder-item {
+    padding: 10px;
+    background: #f0f0f0;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    user-select: none;
+    text-align: center;
+}
+
+.music-file-item:hover,
+.music-folder-item:hover {
+    background: #e0e0e0;
+    border-color: #c0c0c0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.music-file-item:active,
+.music-folder-item:active {
+    background: #d0d0d0;
+}
+
+.music-file-item.selected,
+.music-folder-item.selected {
+    background: #0078d7;
+    color: white;
+    border-color: #0078d7;
+}
+
+.music-icon {
+    font-size: 32px;
+}
+
+.music-name {
+    font-size: 12px;
+    white-space: normal;
+    word-break: break-all;
+    max-width: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* 文件夹标题 */
+.music-folder-title {
+    padding: 8px 12px;
+    background: #e8e8e8;
+    border-bottom: 1px solid #d0d0d0;
+    font-weight: bold;
+    font-size: 12px;
+    color: #333;
+    margin-top: 12px;
+    grid-column: 1 / -1;
+}
+
+/* 空文件夹消息 */
+.empty-folder-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+    font-size: 14px;
+}
+
+/* 最大化状态 */
+.music-manager-window.maximized {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100% - 40px) !important;
+    transform: none !important;
+    border-radius: 0;
+    z-index: 9999;
+}
+
+.music-manager-window.maximized .window-titlebar {
+    cursor: default;
+}
+
+/* 最小化状态 */
+.music-manager-window.minimized {
+    display: none !important;
+}
+
+/* 过渡效果 */
+.music-manager-window {
+    transition: all 0.3s ease;
+}
+
+/* 任务栏图标 */
+#music-manager-taskbar-icon {
+    display: none;
+}
+
+#music-manager-taskbar-icon.active {
+    display: flex;
+}
+
+/* 通知 */
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+.music-manager-notification {
+    animation: slideIn 0.3s ease;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .music-manager-window {
+        width: 90vw !important;
+        height: 80vh !important;
+        left: 5vw !important;
+        top: 10vh !important;
+    }
+
+    .music-files-container {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .music-sidebar {
+        width: 100px;
+    }
+}
+
+@media (max-width: 600px) {
+    .music-manager-window {
+        width: 95vw !important;
+        height: 85vh !important;
+        left: 2.5vw !important;
+        top: 7.5vh !important;
+    }
+
+    .music-files-container {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+
+    .music-sidebar {
+        display: none;
+    }
+
+    .music-manager-window .music-layout {
+        flex-direction: column;
+    }
+}

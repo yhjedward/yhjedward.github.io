@@ -116,20 +116,10 @@ export const MarkdownEditor = (() => {
                     console.log('[MarkdownEditor] Auto-saving before close...');
                     _autoSaveToCache(content).then(() => {
                         console.log('[MarkdownEditor] Auto-save completed, hiding window');
-                        const w = document.querySelector(selectors.window);
-                        if (w) {
-                            w.style.display = 'none';
-                            w.style.visibility = 'hidden';
-                            w.style.opacity = '0';
-                        }
+                        _hideWindowAndTaskbarIcon();
                     });
                 } else {
-                    const w = document.querySelector(selectors.window);
-                    if (w) {
-                        w.style.display = 'none';
-                        w.style.visibility = 'hidden';
-                        w.style.opacity = '0';
-                    }
+                    _hideWindowAndTaskbarIcon();
                 }
             };
 
@@ -343,6 +333,26 @@ export const MarkdownEditor = (() => {
             }
         } catch (err) {
             console.error('[MarkdownEditor] Auto-save error:', err);
+        }
+    }
+
+    /**
+     * 隐藏窗口和任务栏图标
+     */
+    function _hideWindowAndTaskbarIcon() {
+        const w = document.querySelector(selectors.window);
+        if (w) {
+            w.style.display = 'none';
+            w.style.visibility = 'hidden';
+            w.style.opacity = '0';
+            w.classList.remove('minimized', 'restored', 'active', 'maximized');
+        }
+
+        // 隐藏任务栏图标
+        const taskbarIcon = document.querySelector(selectors.taskbarIcon);
+        if (taskbarIcon) {
+            taskbarIcon.style.display = 'none';
+            taskbarIcon.classList.remove('active');
         }
     }
 

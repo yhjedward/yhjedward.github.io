@@ -16,6 +16,8 @@ import { WindowManager } from './windowManager.js';
 import { WindowShell } from './windowShell.js';
 import { StartMenu } from './startMenu.js';
 import { Explorer } from './explorer.js';
+import { MusicManager } from './musicManager.js';
+import { VideoManager } from './videoManager.js';
 import { Drawing } from './drawing.js';
 import { MarkdownEditor } from './markdownEditor.js';
 import { TableOfContents } from './toc.js';
@@ -99,6 +101,14 @@ export function initWin7Blog() {
     // 10. 文件浏览器（Explorer）
     console.log('[Win7] Initializing Explorer');
     Explorer.init();
+
+    // 10.5 音乐管理器（Music Manager）
+    console.log('[Win7] Initializing Music Manager');
+    MusicManager.init();
+
+    // 10.6 视频管理器（Video Manager）
+    console.log('[Win7] Initializing Video Manager');
+    VideoManager.init();
 
     // 11. 画板（Drawing）
     console.log('[Win7] Initializing Drawing');
@@ -222,17 +232,77 @@ globalThis.startOpenTodo = function() {
         WindowShell.bringToFront(win);
         win.classList.remove('minimized');
         win.classList.add('restored', 'active');
-        
+
         const taskbarIcon = document.querySelector('[data-app="todo"]');
         if (taskbarIcon) {
             taskbarIcon.style.display = 'flex';
             taskbarIcon.classList.add('active');
         }
-        
+
         // 确保待办事项管理器已初始化
         if (globalThis.todoManager) {
             globalThis.todoManager.renderTodos();
         }
+    }
+};
+
+globalThis.startOpenMusicManager = function() {
+    console.log('[startOpenMusicManager] Called');
+    const win = document.getElementById('music-manager-window');
+    if (win) {
+        console.log('[startOpenMusicManager] Music Manager window found');
+        win.style.display = 'flex';
+        win.style.visibility = 'visible';
+        win.style.opacity = '1';
+        WindowShell.bringToFront(win);
+        win.classList.remove('minimized');
+        win.classList.add('restored', 'active');
+
+        const taskbarIcon = document.querySelector('[data-app="musicManager"]');
+        if (taskbarIcon) {
+            taskbarIcon.style.display = 'flex';
+            taskbarIcon.classList.add('active');
+        }
+
+        // 确保音乐管理器已初始化
+        if (globalThis.musicManager && typeof globalThis.musicManager.open === 'function') {
+            globalThis.musicManager.open();
+        }
+    } else {
+        console.warn('[startOpenMusicManager] Music Manager window not found');
+    }
+};
+
+// 暴露MusicManager为全局变量
+globalThis.musicManager = MusicManager;
+
+// 暴露VideoManager为全局变量
+globalThis.videoManager = VideoManager;
+
+globalThis.startOpenVideoManager = function() {
+    console.log('[startOpenVideoManager] Called');
+    const win = document.getElementById('video-manager-window');
+    if (win) {
+        console.log('[startOpenVideoManager] Video Manager window found');
+        win.style.display = 'flex';
+        win.style.visibility = 'visible';
+        win.style.opacity = '1';
+        WindowShell.bringToFront(win);
+        win.classList.remove('minimized');
+        win.classList.add('restored', 'active');
+
+        const taskbarIcon = document.querySelector('[data-app="videoManager"]');
+        if (taskbarIcon) {
+            taskbarIcon.style.display = 'flex';
+            taskbarIcon.classList.add('active');
+        }
+
+        // 确保视频管理器已初始化
+        if (globalThis.videoManager && typeof globalThis.videoManager.open === 'function') {
+            globalThis.videoManager.open();
+        }
+    } else {
+        console.warn('[startOpenVideoManager] Video Manager window not found');
     }
 };
 
@@ -248,13 +318,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
+    // 为音乐管理器图标绑定点击事件
+    const musicManagerIcon = document.getElementById('music-manager');
+    if (musicManagerIcon) {
+        musicManagerIcon.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof globalThis.startOpenMusicManager === 'function') {
+                globalThis.startOpenMusicManager();
+            }
+        });
+    }
+
+    // 为视频管理器图标绑定点击事件
+    const videoManagerIcon = document.getElementById('video-manager');
+    if (videoManagerIcon) {
+        videoManagerIcon.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof globalThis.startOpenVideoManager === 'function') {
+                globalThis.startOpenVideoManager();
+            }
+        });
+    }
+
     // 在 DOM 加载完成后，重新初始化通知管理器事件处理器
     if (globalThis.notificationManager && typeof globalThis.notificationManager.bindEventHandlers === 'function') {
         console.log('[Win7Loader] Re-initializing notification manager event handlers');
         globalThis.notificationManager.bindEventHandlers();
     }
-    
+
     // 在 DOM 加载完成后，重新初始化 Explorer 事件处理器
     if (globalThis.Win7 && globalThis.Win7.Explorer) {
         console.log('[Win7Loader] Re-initializing Explorer event handlers');
@@ -291,6 +385,8 @@ globalThis.Win7 = {
     WindowShell,
     StartMenu,
     Explorer,
+    MusicManager,
+    VideoManager,
     Drawing,
     MarkdownEditor,
     TableOfContents,

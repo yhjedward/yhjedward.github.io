@@ -22,7 +22,7 @@ export const ExplorerData = (() => {
     const rootPaths = {
         'Documents': { data: 'posts', prefix: 'posts', isPost: true },
         'Pictures': { data: 'images', prefix: 'images' },
-        'Music': { data: 'music', prefix: 'musics' },
+        'Music': { data: 'music', prefix: 'audios' },
         'Videos': { data: 'videos', prefix: 'videos' },
         'MyGame': { data: 'games', prefix: 'myGame' },
         'MyProject': { data: 'projects', prefix: 'myProject' }
