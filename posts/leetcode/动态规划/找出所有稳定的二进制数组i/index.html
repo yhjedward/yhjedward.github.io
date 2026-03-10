@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PLC基础 - Windows 7 Style Blog</title>
+  <title>找出所有稳定的二进制数组I - Windows 7 Style Blog</title>
   
   <link rel="stylesheet" href="/css/win7.css">
   <link rel="stylesheet" href="/css/explore.css">
@@ -341,7 +341,7 @@
   </div>
   <div class="window blog-window" id="blog-window">
     <div class="window-titlebar">
-      <div class="window-title">PLC基础</div>
+      <div class="window-title">找出所有稳定的二进制数组I</div>
       <div class="window-controls">
         <button class="minimize blog-minimize">─</button>
         <button class="maximize blog-maximize">□</button>
@@ -356,13 +356,183 @@
 
 <div class="article-layout">
 	<article class="article-content" id="main-article-content">
-		<h1>PLC基础</h1>
+		<h1>找出所有稳定的二进制数组I</h1>
 		<div class="article-meta">
-			<span class="article-date">2025-09-21</span>
+			<span class="article-date">2026-03-10</span>
 			
 		</div>
 		<div class="article-body">
-			<h2 id="概述">概述</h2>
+			<h2 id="题目描述">题目描述<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></h2>
+<h2 id="题目讲解">题目讲解</h2>
+<h3 id="为什么要用-dp">为什么要用 DP?</h3>
+<p>因为你每一步都要决定:</p>
+<ol>
+<li>放 0 还是放 1 ?</li>
+<li>放了之后会不会超过 limit ?</li>
+<li>还剩多少 0 和 1 ?</li>
+</ol>
+<p>这就是典型的“状态依赖前一步”的问题 → 用 DP。</p>
+<p>我们只关心：</p>
+<ol>
+<li>当前用了多少个 0</li>
+<li>当前用了多少个 1</li>
+<li>最后放的是 0 还是 1</li>
+</ol>
+<p>所以我们定义：</p>
+<pre tabindex="0"><code>dp0[i][j] = 用了 i 个 0、j 个 1，并且最后放的是 0 的方案数
+dp1[i][j] = 用了 i 个 0、j 个 1，并且最后放的是 1 的方案数
+</code></pre><p>假设我们要算: <code>dp0[i][j](最后放 0)</code></p>
+<p>那前一步必须是:</p>
+<ol>
+<li>最后放 1（否则连续 0 会变长）</li>
+<li>并且我们可以连续放 1 个、2 个、…、limit 个 0</li>
+</ol>
+<p>即：</p>
+<pre tabindex="0"><code>dp0[i][j] = dp1[i-1][j] + dp1[i-2][j] + ... + dp1[i-limit][j]
+</code></pre>
+<div class="collapse-container">
+    <div class="collapse-header">
+        <span class="collapse-icon">+</span>
+        <span class="collapse-title">解释 dp0[i][j] = dp1[i-1][j] &#43; dp1[i-2][j] &#43; ... &#43; dp1[i-limit][j] </span>
+    </div>
+    <div class="collapse-content">
+        <p>假设：<code>i = 5, j = 3, limit = 2</code> , 你要算 dp0[5][3](最后是 0)</p>
+<p>最后一段 0 的长度可以是：1 个 0, 2 个 0, 不能超过 limit=2.</p>
+<pre tabindex="0"><code>最后一段是 1 个 0：
+... 1 0
+前面用了 4 个 0
+→ dp1[4][3]
+</code></pre><pre tabindex="0"><code>最后一段是 2 个 0：
+... 1 0 0
+前面用了 3 个 0
+→ dp1[3][3]
+</code></pre><p>所以：<code>dp0[5][3] = dp1[4][3] + dp1[3][3]</code></p>
+</div>
+</div>
+<p>同理:</p>
+<pre tabindex="0"><code>dp1[i][j] = dp0[i][j-1] + dp0[i][j-2] + ... + dp0[i][j-limit]
+</code></pre><h3 id="为什么要前缀和">为什么要前缀和?</h3>
+<p>每次都要加 limit 项, 太慢. 前缀和可以把: <code>dp1[i-1][j] + dp1[i-2][j] + ... + dp1[i-limit][j]</code> 变成 <code>pre1[i-1][j] - pre1[i-limit-1][j]</code> .</p>
+
+<div class="collapse-container">
+    <div class="collapse-header">
+        <span class="collapse-icon">+</span>
+        <span class="collapse-title">解释 dp1[i-1][j] &#43; dp1[i-2][j] &#43; ... &#43; dp1[i-limit][j] 变成 pre1[i-1][j] - pre1[i-limit-1][j] </span>
+    </div>
+    <div class="collapse-content">
+        <p>假设你有一排数字：</p>
+<pre tabindex="0"><code>a[0], a[1], a[2], a[3], a[4], ...
+</code></pre><p>前缀和 pre 定义为:</p>
+<pre tabindex="0"><code>pre[k] = a[0] + a[1] + ... + a[k]
+</code></pre><p>则</p>
+<pre tabindex="0"><code>pre[r] = a[0] + a[1] + ... + a[l-1] + a[l] + ... + a[r]
+pre[l-1] = a[0] + a[1] + ... + a[l-1]
+a[l] + a[l+1] + ... + a[r] = pre[r] - pre[l-1]
+</code></pre><p>即得到前缀和公式</p>
+<pre tabindex="0"><code>区间和 = pre1[右端点] - pre1[左端点 - 1]
+</code></pre></div>
+</div>
+<h2 id="代码">代码</h2>
+
+<div class="tabpanel-container">
+    <div class="tabpanel-tabs"><div class="tabpanel-tab active" data-tab-index="0">python不使用前缀和版 </div><div class="tabpanel-tab" data-tab-index="1"> python使用前缀和版</div></div>
+    <div class="tabpanel-content-container"><div class="tabpanel-content active" data-tab-index="0"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">numberOfStableArrays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zero</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">one</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">MOD</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">9</span> <span class="o">+</span> <span class="mi">7</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># dp0[i][j]：用了 i 个 0、j 个 1，最后一段是 0</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># dp1[i][j]：用了 i 个 0、j 个 1，最后一段是 1</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dp0</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">one</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">zero</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dp1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">one</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">zero</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 初始化：只放 0 或只放 1 的情况</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">zero</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dp0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dp1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">zero</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">one</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1"># 计算 dp0[i][j]：最后一段是 0，长度为 k（1..limit）</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1"># 前面用了 i-k 个 0、j 个 1，且最后一段必须是 1</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">val</span> <span class="o">+=</span> <span class="n">dp1</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dp0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">dp0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">val</span><span class="p">)</span> <span class="o">%</span> <span class="n">MOD</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1"># 计算 dp1[i][j]：最后一段是 1，长度为 k（1..limit）</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1"># 前面用了 i 个 0、j-k 个 1，且最后一段必须是 0</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">val</span> <span class="o">+=</span> <span class="n">dp0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="n">k</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">val</span><span class="p">)</span> <span class="o">%</span> <span class="n">MOD</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="n">dp0</span><span class="p">[</span><span class="n">zero</span><span class="p">][</span><span class="n">one</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp1</span><span class="p">[</span><span class="n">zero</span><span class="p">][</span><span class="n">one</span><span class="p">])</span> <span class="o">%</span> <span class="n">MOD</span>
+</span></span></code></pre></div></div><div class="tabpanel-content" data-tab-index="1"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">numberOfStableArrays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zero</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">one</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">MOD</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">9</span> <span class="o">+</span> <span class="mi">7</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">dp0</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">one</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">zero</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dp1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">one</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">zero</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># pre1[i][j] = dp1[0][j] + ... + dp1[i][j]   （沿着 i 累加）</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># pre0[i][j] = dp0[i][0] + ... + dp0[i][j]   （沿着 j 累加）</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pre1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">one</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">zero</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pre0</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">one</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">zero</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 边界初始化：只有 0 或只有 1 的情况</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">zero</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dp0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dp1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 顺便把前缀和也初始化好</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">zero</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">one</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># 更新 pre1（沿 i 累加）</span>
+</span></span><span class="line"><span class="cl">                <span class="n">pre1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">pre1</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span> <span class="o">%</span> <span class="n">MOD</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># 更新 pre0（沿 j 累加）</span>
+</span></span><span class="line"><span class="cl">                <span class="n">pre0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">pre0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dp0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span> <span class="o">%</span> <span class="n">MOD</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">zero</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">one</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1"># 只在 i&gt;0 且 j&gt;0 时，用转移公式更新</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># 边界（i&gt;0,j=0 或 i=0,j&gt;0）保留初始化结果</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1"># dp0[i][j] = sum_{k=1..limit} dp1[i-k][j]</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">L</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="n">limit</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">R</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dp0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">pre1</span><span class="p">[</span><span class="n">R</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">pre1</span><span class="p">[</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="k">if</span> <span class="n">L</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">))</span> <span class="o">%</span> <span class="n">MOD</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="c1"># dp1[i][j] = sum_{k=1..limit} dp0[i][j-k]</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">L</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="n">limit</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">R</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">pre0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">R</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">pre0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">L</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">))</span> <span class="o">%</span> <span class="n">MOD</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1"># 更新当前格子的前缀和</span>
+</span></span><span class="line"><span class="cl">                <span class="n">pre1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">pre1</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span> <span class="o">%</span> <span class="n">MOD</span>
+</span></span><span class="line"><span class="cl">                <span class="n">pre0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">pre0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">dp0</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span> <span class="o">%</span> <span class="n">MOD</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="n">dp0</span><span class="p">[</span><span class="n">zero</span><span class="p">][</span><span class="n">one</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp1</span><span class="p">[</span><span class="n">zero</span><span class="p">][</span><span class="n">one</span><span class="p">])</span> <span class="o">%</span> <span class="n">MOD</span>
+</span></span></code></pre></div></div></div>
+</div>
+<h2 id="链接">链接</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>找出所有稳定的二进制数组I<a href="https://leetcode.cn/problems/find-all-possible-stable-binary-arrays-i/description/">https://leetcode.cn/problems/find-all-possible-stable-binary-arrays-i/description/</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 
 		</div>
 	</article>
@@ -380,7 +550,15 @@
 					
 						<nav id="TableOfContents">
   <ul>
-    <li><a href="#概述">概述</a></li>
+    <li><a href="#题目描述">题目描述</a></li>
+    <li><a href="#题目讲解">题目讲解</a>
+      <ul>
+        <li><a href="#为什么要用-dp">为什么要用 DP?</a></li>
+        <li><a href="#为什么要前缀和">为什么要前缀和?</a></li>
+      </ul>
+    </li>
+    <li><a href="#代码">代码</a></li>
+    <li><a href="#链接">链接</a></li>
   </ul>
 </nav>
 					

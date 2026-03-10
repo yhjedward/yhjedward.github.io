@@ -701,6 +701,14 @@
   <script id="blog-data" type="application/json">
       {
         "posts": [{
+            "title": "找出所有稳定的二进制数组I",
+            "url": "\/posts\/leetcode\/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92\/%E6%89%BE%E5%87%BA%E6%89%80%E6%9C%89%E7%A8%B3%E5%AE%9A%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E7%BB%84i\/",
+            "date": "2026-03-10",
+            "filename": "找出所有稳定的二进制数组I.md",
+            "section": "posts\/leetcode\/动态规划",
+            "lastmod": "2026-03-10",
+            "content": " h2 id=\u0026#34;题目描述\u0026#34; 题目描述 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h2 h2 id=\u0026#34;题目讲解\u0026#34; 题目讲解 \/h2 h3 id=\u0026#34;为什么要用-dp\u0026#34; 为什么要用 DP? \/h3 p 因为你每一步都要决定: \/p ol li 放 0 还是放 1 ? \/li li 放了之后会不会超过 limit ? \/li li 还剩多少 0 和 1 ? \/li \/ol p 这就是典型的“状态依赖前一步”的问题 → 用 DP。 \/p p 我们只关心： \/p ol li 当前用了多少个 0 \/li li 当前用了多少个 1 \/li li 最后放的是 0 还是 1 \/li \/ol p 所以我们定义： \/p pre tabindex=\u0026#34;0\u0026#34; code dp0[i][j] = 用了 i 个 0、j 个 1，并且最后放的是 0 的方案数 dp1[i][j] = 用了 i 个 0、j 个 1，并且最后放的是 1 的方案数 \/code \/pre p 假设我们要算: code …"
+          },{
             "title": "TCP网络通信",
             "url": "\/posts\/%E7%BD%91%E7%BB%9C\/socket%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B\/tcp%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1\/",
             "date": "2026-02-01",
