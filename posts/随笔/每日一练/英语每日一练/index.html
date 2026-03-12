@@ -753,6 +753,14 @@
   <script id="blog-data" type="application/json">
       {
         "posts": [{
+            "title": "Qt信号槽",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/qt\/qt%E5%88%9D%E7%BA%A7\/qt%E4%BF%A1%E5%8F%B7%E6%A7%BD\/",
+            "date": "2026-03-12",
+            "filename": "Qt信号槽.md",
+            "section": "posts\/后端\/qt\/qt初级",
+            "lastmod": "2026-03-12",
+            "content": " h1 id=\u0026#34;qt-信号槽\u0026#34; Qt 信号槽 \/h1 h2 id=\u0026#34;qt-connect-函数的连接方式\u0026#34; Qt connect 函数的连接方式 \/h2 ol li p Qt::AutoConnection： 默认值，使用这个值则连接类型会在信号发送时决定。如果接收者和发送者在同一个线程，则自动使用Qt::DirectConnection类型。如果接收者和发送者不在一个线程，则自动使用Qt::QueuedConnection类型。 \/p \/li li p Qt::DirectConnection：槽函数会在信号发送的时候直接被调用，槽函数和信号发送者在同一线程。效果看上去就像是直接在信号发送位置调用了槽函数，效果上看起来像函数调用，同步执行。 emit语句后面的代码将在与信号关联的所有槽函数执行完毕后才被执行。 \/p \/li li p Qt::QueuedConnection：信号发出后，信号会暂时被放到一个消息队列中，需等到接收对象所属线程的事件循环取得控制权时才取得该信号，然后执行和信号关联的槽函数，这种方式既可以在同一线程内传递消息也可以跨线程操作。 emit语句后的代码将在发出 …"
+          },{
             "title": "Opencv基础",
             "url": "\/posts\/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86\/opencv\/opencv%E5%9F%BA%E7%A1%80\/",
             "date": "2026-03-11",
@@ -3057,13 +3065,13 @@
             "lastmod": "2023-06-15",
             "content": " h1 id=\u0026#34;日语学习笔记\u0026#34; 日语学习笔记 \/h1 h2 id=\u0026#34;基础五十音图\u0026#34; 基础五十音图 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 平假名表（点击展开） \/span \/div div class=\u0026#34;collapse-content\u0026#34; h3 id=\u0026#34;平假名\u0026#34; 平假名 \/h3 p あ い う え お (a i u e o) br か き く け こ (ka ki ku ke ko) br さ し す せ そ (sa shi su se so) br た ち つ て と (ta chi tsu te to) br な に ぬ ね の (na ni nu ne no) br は ひ ふ へ ほ (ha hi fu he ho) br ま み む め も (ma mi mu me mo) br や 　 ゆ 　 よ (ya yu yo) br ら り る れ ろ (ra ri ru …"
           },{
-            "title": "完美转发",
-            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E9%AB%98%E7%BA%A7\/%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91\/",
+            "title": "cplusplus的完美转发",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E9%AB%98%E7%BA%A7\/cplusplus%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91\/",
             "date": "2023-06-15",
-            "filename": "完美转发.md",
+            "filename": "cplusplus的完美转发.md",
             "section": "posts\/后端\/cplusplus\/cplusplus高级",
             "lastmod": "2023-06-15",
-            "content": " h2 \/h2 "
+            "content": " h1 id=\u0026#34;cplusplus的完美转发\u0026#34; cplusplus的完美转发 \/h1 h2 id=\u0026#34;cplusplus-的左值和右值1\u0026#34; cplusplus 的左值和右值[^1] \/h2 h2 id=\u0026#34;为什么需要完美转发\u0026#34; 为什么需要完美转发？ \/h2 ol li 在模板函数中, 如果你写一个包装函数来调用另一个函数, 参数的值类别(左值\/右值)可能会丢失. \/li \/ol h2 id=\u0026#34;代码示例\u0026#34; 代码示例 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 没有使用完美转发 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 使用完美转发 \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div class=\u0026#34;tabpanel-content active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; div …"
           },{
             "title": "Cplusplus的模版函数",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E9%AB%98%E7%BA%A7\/cplusplus%E7%9A%84%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0\/",
