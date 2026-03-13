@@ -727,6 +727,14 @@
   <script id="blog-data" type="application/json">
       {
         "posts": [{
+            "title": "移山所需的最少秒数",
+            "url": "\/posts\/leetcode\/%E4%BA%8C%E5%88%86%E6%B3%95\/%E7%A7%BB%E5%B1%B1%E6%89%80%E9%9C%80%E7%9A%84%E6%9C%80%E5%B0%91%E7%A7%92%E6%95%B0\/",
+            "date": "2026-03-13",
+            "filename": "移山所需的最少秒数.md",
+            "section": "posts\/leetcode\/二分法",
+            "lastmod": "2026-03-13",
+            "content": " h1 id=\u0026#34;移山所需的最少秒数\u0026#34; 移山所需的最少秒数 \/h1 h2 id=\u0026#34;题目描述\u0026#34; 题目描述 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h2 h2 id=\u0026#34;题目讲解\u0026#34; 题目讲解 \/h2 h3 id=\u0026#34;为什么使用二分法\u0026#34; 为什么使用二分法 \/h3 p 假设你要把一堆石头搬完，你问朋友： \/p p “如果给你 10 分钟，你能搬完吗？” \/p p 他能回答“能”或“不能”。 \/p p 你继续问： \/p p “那 5 分钟呢？” \/p p 你发现： \/p p 时间越长，他越可能搬完 \/p p 一旦某个时间点能搬完，之后的时间都能搬完 \/p p 这就是典型的“单调性 \u002b 判断函数”，二分法的黄金搭档 \/p h3 id=\u0026#34;具体流程\u0026#34; 具体流程 \/h3 ol li 每个工人削第 1 单位高度需要 w 秒，削第 2 单位需要 2w 秒，削第 3 单位需要 3w 秒…… 也就是说，给定时间 T，最多能削多少高度： \/li \/ol div …"
+          },{
             "title": "Qt信号槽",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/qt\/qt%E5%88%9D%E7%BA%A7\/qt%E4%BF%A1%E5%8F%B7%E6%A7%BD\/",
             "date": "2026-03-12",
@@ -2991,13 +2999,13 @@
             "lastmod": "2023-08-16",
             "content": " h2 id=\u0026#34;windows-增量同步到-linux\u0026#34; windows 增量同步到 linux \/h2 p a href=\u0026#34;https:\/\/www.bilibili.com\/video\/BV1qL411A7hr\/\u0026#34; Rsync文件增量同步备份讲解与实操 \/a \/p ol li a href=\u0026#34;https:\/\/blog.csdn.net\/international24\/article\/details\/107498925\u0026#34; 链接 \/a \/li li a href=\u0026#34;https:\/\/wzfou.com\/resilio-sync\/\u0026#34; docker搭建resync \/a \/li \/ol "
           },{
-            "title": "指针与引用",
-            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E5%88%9D%E7%BA%A7\/cplusplus%E6%8C%87%E9%92%88\/",
+            "title": "cplusplus指针与引用",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E5%88%9D%E7%BA%A7\/cplusplus%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8\/",
             "date": "2023-08-15",
-            "filename": "指针与引用.md",
+            "filename": "cplusplus指针与引用.md",
             "section": "posts\/后端\/cplusplus\/cplusplus初级",
             "lastmod": "2023-08-15",
-            "content": " h2 id=\u0026#34;智能指针\u0026#34; 智能指针 \/h2 ol li 智能指针分类: std::unique_ptr, std::shared_ptr, std::weak_ptr.使用它们需要包含头文件 memory \/li li C\u002b\u002b11 新增了 std::make_shared() 方法创建一个 std::shared_ptr 对象，却没有提供相应的 std::make_unique() 方法创建一个 std::unique_ptr 对象，这个方法直到 C\u002b\u002b14 才被添加进来. \/li li std::unique_ptr 是独占所有权的智能指针, 确保同一时间只能有一个 unique_ptr指向对象. 不能进行拷贝操作，但是可以通过移动操作将所有权转移给其它指针. \/li li std::shared_ptr 允许多个指针共享同一个对象的所有权,通过引用计数来管理共享资源,当最后一个指向该对象的指针被销毁时，对象会被自动释放. \/li li std::weak_ptr 是一种弱引用的智能指针, 不拥有对象的所有权, 不会影响对象的生命周期，通常用于解决循环引用问题.配合 …"
+            "content": " h2 id=\u0026#34;智能指针\u0026#34; 智能指针 \/h2 ol li 智能指针分类: std::unique_ptr, std::shared_ptr, std::weak_ptr.使用它们需要包含头文件 code \u0026amp;lt;memory\u0026amp;gt; \/code . \/li li strong std::unique_ptr 是独占所有权的智能指针, 确保同一时间只能有一个 unique_ptr指向对象. 不能进行拷贝操作，但是可以通过移动操作将所有权转移给其它指针. \/strong \/li li strong std::shared_ptr 允许多个指针共享同一个对象的所有权,通过引用计数来管理共享资源,当最后一个指向该对象的指针被销毁时，对象会被自动释放. \/strong \/li li strong std::weak_ptr 是一种弱引用的智能指针, 不拥有对象的所有权, 不会影响对象的生命周期，通常用于解决循环引用问题.配合 std::shared_ptr 的使用，解决循环引用的问题. \/strong \/li li strong std::auto_ptr 是C\u002b\u002b98标准引入的智能指针, 也实 …"
           },{
             "title": "继承",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E5%88%9D%E7%BA%A7\/%E7%BB%A7%E6%89%BF\/",
@@ -3045,7 +3053,7 @@
             "filename": "cplusplus的完美转发.md",
             "section": "posts\/后端\/cplusplus\/cplusplus高级",
             "lastmod": "2023-06-15",
-            "content": " h1 id=\u0026#34;cplusplus的完美转发\u0026#34; cplusplus的完美转发 \/h1 h2 id=\u0026#34;cplusplus-的左值和右值1\u0026#34; cplusplus 的左值和右值[^1] \/h2 h2 id=\u0026#34;为什么需要完美转发\u0026#34; 为什么需要完美转发？ \/h2 ol li 在模板函数中, 如果你写一个包装函数来调用另一个函数, 参数的值类别(左值\/右值)可能会丢失. \/li \/ol h2 id=\u0026#34;代码示例\u0026#34; 代码示例 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 没有使用完美转发 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 使用完美转发 \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div class=\u0026#34;tabpanel-content active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; div …"
+            "content": " h1 id=\u0026#34;cplusplus的完美转发\u0026#34; cplusplus的完美转发 \/h1 ol li 在 C\u002b\u002b 中, 完美转发(perfect forwarding) 用来在函数模板中保持参数的原始类型特性(左值\/右值, const\/非 const、引用等), 并将它们原封不动地传递给另一个函数. \/li \/ol h2 id=\u0026#34;cplusplus-的左值和右值1\u0026#34; cplusplus 的左值和右值[^1] \/h2 h2 id=\u0026#34;为什么需要完美转发\u0026#34; 为什么需要完美转发？ \/h2 ol li 在模板函数中, 如果你写一个包装函数来调用另一个函数, 参数的值类别(左值\/右值)可能会丢失. \/li \/ol h2 id=\u0026#34;代码示例\u0026#34; 代码示例 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 没有使用完美转发 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 使用完美转发 …"
           },{
             "title": "Cplusplus的模版函数",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E9%AB%98%E7%BA%A7\/cplusplus%E7%9A%84%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0\/",

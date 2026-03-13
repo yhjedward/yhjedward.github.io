@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>指针与引用 - Windows 7 Style Blog</title>
+  <title>cplusplus指针与引用 - Windows 7 Style Blog</title>
   
   <link rel="stylesheet" href="/css/win7.css">
   <link rel="stylesheet" href="/css/explore.css">
@@ -399,7 +399,7 @@
   </div>
   <div class="window blog-window" id="blog-window">
     <div class="window-titlebar">
-      <div class="window-title">指针与引用</div>
+      <div class="window-title">cplusplus指针与引用</div>
       <div class="window-controls">
         <button class="minimize blog-minimize">─</button>
         <button class="maximize blog-maximize">□</button>
@@ -414,7 +414,7 @@
 
 <div class="article-layout">
 	<article class="article-content" id="main-article-content">
-		<h1>指针与引用</h1>
+		<h1>cplusplus指针与引用</h1>
 		<div class="article-meta">
 			<span class="article-date">2023-08-15</span>
 			
@@ -422,13 +422,148 @@
 		<div class="article-body">
 			<h2 id="智能指针">智能指针</h2>
 <ol>
-<li>智能指针分类: std::unique_ptr, std::shared_ptr, std::weak_ptr.使用它们需要包含头文件 <memory></li>
+<li>智能指针分类: std::unique_ptr, std::shared_ptr, std::weak_ptr.使用它们需要包含头文件 <code>&lt;memory&gt;</code>.</li>
+<li><strong>std::unique_ptr 是独占所有权的智能指针, 确保同一时间只能有一个 unique_ptr指向对象. 不能进行拷贝操作，但是可以通过移动操作将所有权转移给其它指针.</strong></li>
+<li><strong>std::shared_ptr 允许多个指针共享同一个对象的所有权,通过引用计数来管理共享资源,当最后一个指向该对象的指针被销毁时，对象会被自动释放.</strong></li>
+<li><strong>std::weak_ptr 是一种弱引用的智能指针, 不拥有对象的所有权, 不会影响对象的生命周期，通常用于解决循环引用问题.配合 std::shared_ptr 的使用，解决循环引用的问题.</strong></li>
+<li><strong>std::auto_ptr 是C++98标准引入的智能指针, 也实现了对对象的独占所有权, 但在复制操作时会移动资源.在C++11中被废弃.</strong></li>
 <li>C++11 新增了 std::make_shared() 方法创建一个 std::shared_ptr 对象，却没有提供相应的 std::make_unique() 方法创建一个 std::unique_ptr 对象，这个方法直到 C++14 才被添加进来.</li>
-<li>std::unique_ptr 是独占所有权的智能指针, 确保同一时间只能有一个 unique_ptr指向对象. 不能进行拷贝操作，但是可以通过移动操作将所有权转移给其它指针.</li>
-<li>std::shared_ptr 允许多个指针共享同一个对象的所有权,通过引用计数来管理共享资源,当最后一个指向该对象的指针被销毁时，对象会被自动释放.</li>
-<li>std::weak_ptr 是一种弱引用的智能指针, 不拥有对象的所有权, 不会影响对象的生命周期，通常用于解决循环引用问题.配合 std::shared_ptr 的使用，解决循环引用的问题.</li>
-<li>std::auto_ptr 是C++98标准引入的智能指针, 也实现了对对象的独占所有权, 但在复制操作时会移动资源.在C++11中被废弃.</li>
 </ol>
+
+<div class="tabpanel-container">
+    <div class="tabpanel-tabs"><div class="tabpanel-tab active" data-tab-index="0">std::unique_ptr </div><div class="tabpanel-tab" data-tab-index="1"> std::shared_ptr </div><div class="tabpanel-tab" data-tab-index="2"> std::weak_ptr </div><div class="tabpanel-tab" data-tab-index="3"> std::auto_ptr</div></div>
+    <div class="tabpanel-content-container"><div class="tabpanel-content active" data-tab-index="0"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 一个简单的类，用来观察构造和析构
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">Person</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Person</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span> <span class="o">:</span> <span class="n">name_</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;构造 Person: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">name_</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">Person</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;析构 Person: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">name_</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">sayHello</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Hello, I am &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">name_</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 接受 unique_ptr 的函数（通过移动）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">greet</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span><span class="o">-&gt;</span><span class="n">sayHello</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 1. 创建 unique_ptr
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&#34;Alice&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p1</span><span class="o">-&gt;</span><span class="n">sayHello</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 2. 转移所有权（move）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">p1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;p1 已经失去所有权</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p2</span><span class="o">-&gt;</span><span class="n">sayHello</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 3. 将 unique_ptr 传递给函数（必须使用 std::move）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">greet</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">p2</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;p2 也失去所有权了</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 4. 自定义删除器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">auto</span> <span class="n">deleter</span> <span class="o">=</span> <span class="p">[](</span><span class="n">Person</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;使用自定义删除器释放 Person</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="p">,</span> <span class="k">decltype</span><span class="p">(</span><span class="n">deleter</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">p3</span><span class="p">(</span><span class="k">new</span> <span class="n">Person</span><span class="p">(</span><span class="s">&#34;Bob&#34;</span><span class="p">),</span> <span class="n">deleter</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">p3</span><span class="o">-&gt;</span><span class="n">sayHello</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// main 结束时，p3 会自动调用自定义删除器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">Output:
+</span></span></span><span class="line"><span class="cl"><span class="cm">构造 Person: Alice
+</span></span></span><span class="line"><span class="cl"><span class="cm">Hello, I am Alice
+</span></span></span><span class="line"><span class="cl"><span class="cm">p1 已经失去所有权
+</span></span></span><span class="line"><span class="cl"><span class="cm">Hello, I am Alice
+</span></span></span><span class="line"><span class="cl"><span class="cm">Hello, I am Alice
+</span></span></span><span class="line"><span class="cl"><span class="cm">析构 Person: Alice
+</span></span></span><span class="line"><span class="cl"><span class="cm">p2 也失去所有权了
+</span></span></span><span class="line"><span class="cl"><span class="cm">构造 Person: Bob
+</span></span></span><span class="line"><span class="cl"><span class="cm">Hello, I am Bob
+</span></span></span><span class="line"><span class="cl"><span class="cm">使用自定义删除器释放 Person
+</span></span></span><span class="line"><span class="cl"><span class="cm">析构 Person: Bob
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span></code></pre></div></div><div class="tabpanel-content" data-tab-index="1"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Person</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Person</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span> <span class="o">:</span> <span class="n">name_</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;构造 Person: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">name_</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">Person</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;析构 Person: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">name_</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">sayHello</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Hello, I am &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">name_</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 1. 创建 shared_ptr
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&#34;Alice&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;p1.use_count = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">p1</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 2. 复制 shared_ptr（引用计数 +1）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// use_count() 用来返回当前共享同一对象的 shared_ptr 的数量.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;p1.use_count = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">p1</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;p2.use_count = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">p2</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">p2</span><span class="o">-&gt;</span><span class="n">sayHello</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="c1">// p2 离开作用域，引用计数 -1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;p1.use_count = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">p1</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 3. 自定义删除器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">auto</span> <span class="n">deleter</span> <span class="o">=</span> <span class="p">[](</span><span class="n">Person</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;使用自定义删除器释放 Person</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">p3</span><span class="p">(</span><span class="k">new</span> <span class="n">Person</span><span class="p">(</span><span class="s">&#34;Bob&#34;</span><span class="p">),</span> <span class="n">deleter</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;p3.use_count = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">p3</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">p3</span><span class="o">-&gt;</span><span class="n">sayHello</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 4. 使用 weak_ptr 观察 shared_ptr（不增加引用计数）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">weak_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">wp</span> <span class="o">=</span> <span class="n">p3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;p3.use_count = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">p3</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// expired() 用来判断 weak_ptr 所观察的对象是否已经被销毁.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;wp.expired = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">wp</span><span class="p">.</span><span class="n">expired</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 5. 通过 weak_ptr 获取 shared_ptr
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="k">auto</span> <span class="n">sp</span> <span class="o">=</span> <span class="n">wp</span><span class="p">.</span><span class="n">lock</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sp</span><span class="o">-&gt;</span><span class="n">sayHello</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;sp.use_count = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">sp</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></div><div class="tabpanel-content" data-tab-index="2"></div><div class="tabpanel-content" data-tab-index="3"></div></div>
+</div>
 <h4 id="指针与引用的区别">指针与引用的区别</h4>
 <table>
   <thead>
@@ -882,6 +1017,14 @@
   <script id="blog-data" type="application/json">
       {
         "posts": [{
+            "title": "移山所需的最少秒数",
+            "url": "\/posts\/leetcode\/%E4%BA%8C%E5%88%86%E6%B3%95\/%E7%A7%BB%E5%B1%B1%E6%89%80%E9%9C%80%E7%9A%84%E6%9C%80%E5%B0%91%E7%A7%92%E6%95%B0\/",
+            "date": "2026-03-13",
+            "filename": "移山所需的最少秒数.md",
+            "section": "posts\/leetcode\/二分法",
+            "lastmod": "2026-03-13",
+            "content": " h1 id=\u0026#34;移山所需的最少秒数\u0026#34; 移山所需的最少秒数 \/h1 h2 id=\u0026#34;题目描述\u0026#34; 题目描述 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h2 h2 id=\u0026#34;题目讲解\u0026#34; 题目讲解 \/h2 h3 id=\u0026#34;为什么使用二分法\u0026#34; 为什么使用二分法 \/h3 p 假设你要把一堆石头搬完，你问朋友： \/p p “如果给你 10 分钟，你能搬完吗？” \/p p 他能回答“能”或“不能”。 \/p p 你继续问： \/p p “那 5 分钟呢？” \/p p 你发现： \/p p 时间越长，他越可能搬完 \/p p 一旦某个时间点能搬完，之后的时间都能搬完 \/p p 这就是典型的“单调性 \u002b 判断函数”，二分法的黄金搭档 \/p h3 id=\u0026#34;具体流程\u0026#34; 具体流程 \/h3 ol li 每个工人削第 1 单位高度需要 w 秒，削第 2 单位需要 2w 秒，削第 3 单位需要 3w 秒…… 也就是说，给定时间 T，最多能削多少高度： \/li \/ol div …"
+          },{
             "title": "Qt信号槽",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/qt\/qt%E5%88%9D%E7%BA%A7\/qt%E4%BF%A1%E5%8F%B7%E6%A7%BD\/",
             "date": "2026-03-12",
@@ -3146,13 +3289,13 @@
             "lastmod": "2023-08-16",
             "content": " h2 id=\u0026#34;windows-增量同步到-linux\u0026#34; windows 增量同步到 linux \/h2 p a href=\u0026#34;https:\/\/www.bilibili.com\/video\/BV1qL411A7hr\/\u0026#34; Rsync文件增量同步备份讲解与实操 \/a \/p ol li a href=\u0026#34;https:\/\/blog.csdn.net\/international24\/article\/details\/107498925\u0026#34; 链接 \/a \/li li a href=\u0026#34;https:\/\/wzfou.com\/resilio-sync\/\u0026#34; docker搭建resync \/a \/li \/ol "
           },{
-            "title": "指针与引用",
-            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E5%88%9D%E7%BA%A7\/cplusplus%E6%8C%87%E9%92%88\/",
+            "title": "cplusplus指针与引用",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E5%88%9D%E7%BA%A7\/cplusplus%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8\/",
             "date": "2023-08-15",
-            "filename": "指针与引用.md",
+            "filename": "cplusplus指针与引用.md",
             "section": "posts\/后端\/cplusplus\/cplusplus初级",
             "lastmod": "2023-08-15",
-            "content": " h2 id=\u0026#34;智能指针\u0026#34; 智能指针 \/h2 ol li 智能指针分类: std::unique_ptr, std::shared_ptr, std::weak_ptr.使用它们需要包含头文件 memory \/li li C\u002b\u002b11 新增了 std::make_shared() 方法创建一个 std::shared_ptr 对象，却没有提供相应的 std::make_unique() 方法创建一个 std::unique_ptr 对象，这个方法直到 C\u002b\u002b14 才被添加进来. \/li li std::unique_ptr 是独占所有权的智能指针, 确保同一时间只能有一个 unique_ptr指向对象. 不能进行拷贝操作，但是可以通过移动操作将所有权转移给其它指针. \/li li std::shared_ptr 允许多个指针共享同一个对象的所有权,通过引用计数来管理共享资源,当最后一个指向该对象的指针被销毁时，对象会被自动释放. \/li li std::weak_ptr 是一种弱引用的智能指针, 不拥有对象的所有权, 不会影响对象的生命周期，通常用于解决循环引用问题.配合 …"
+            "content": " h2 id=\u0026#34;智能指针\u0026#34; 智能指针 \/h2 ol li 智能指针分类: std::unique_ptr, std::shared_ptr, std::weak_ptr.使用它们需要包含头文件 code \u0026amp;lt;memory\u0026amp;gt; \/code . \/li li strong std::unique_ptr 是独占所有权的智能指针, 确保同一时间只能有一个 unique_ptr指向对象. 不能进行拷贝操作，但是可以通过移动操作将所有权转移给其它指针. \/strong \/li li strong std::shared_ptr 允许多个指针共享同一个对象的所有权,通过引用计数来管理共享资源,当最后一个指向该对象的指针被销毁时，对象会被自动释放. \/strong \/li li strong std::weak_ptr 是一种弱引用的智能指针, 不拥有对象的所有权, 不会影响对象的生命周期，通常用于解决循环引用问题.配合 std::shared_ptr 的使用，解决循环引用的问题. \/strong \/li li strong std::auto_ptr 是C\u002b\u002b98标准引入的智能指针, 也实 …"
           },{
             "title": "继承",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E5%88%9D%E7%BA%A7\/%E7%BB%A7%E6%89%BF\/",
@@ -3200,7 +3343,7 @@
             "filename": "cplusplus的完美转发.md",
             "section": "posts\/后端\/cplusplus\/cplusplus高级",
             "lastmod": "2023-06-15",
-            "content": " h1 id=\u0026#34;cplusplus的完美转发\u0026#34; cplusplus的完美转发 \/h1 h2 id=\u0026#34;cplusplus-的左值和右值1\u0026#34; cplusplus 的左值和右值[^1] \/h2 h2 id=\u0026#34;为什么需要完美转发\u0026#34; 为什么需要完美转发？ \/h2 ol li 在模板函数中, 如果你写一个包装函数来调用另一个函数, 参数的值类别(左值\/右值)可能会丢失. \/li \/ol h2 id=\u0026#34;代码示例\u0026#34; 代码示例 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 没有使用完美转发 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 使用完美转发 \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div class=\u0026#34;tabpanel-content active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; div …"
+            "content": " h1 id=\u0026#34;cplusplus的完美转发\u0026#34; cplusplus的完美转发 \/h1 ol li 在 C\u002b\u002b 中, 完美转发(perfect forwarding) 用来在函数模板中保持参数的原始类型特性(左值\/右值, const\/非 const、引用等), 并将它们原封不动地传递给另一个函数. \/li \/ol h2 id=\u0026#34;cplusplus-的左值和右值1\u0026#34; cplusplus 的左值和右值[^1] \/h2 h2 id=\u0026#34;为什么需要完美转发\u0026#34; 为什么需要完美转发？ \/h2 ol li 在模板函数中, 如果你写一个包装函数来调用另一个函数, 参数的值类别(左值\/右值)可能会丢失. \/li \/ol h2 id=\u0026#34;代码示例\u0026#34; 代码示例 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 没有使用完美转发 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; 使用完美转发 …"
           },{
             "title": "Cplusplus的模版函数",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E9%AB%98%E7%BA%A7\/cplusplus%E7%9A%84%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0\/",
