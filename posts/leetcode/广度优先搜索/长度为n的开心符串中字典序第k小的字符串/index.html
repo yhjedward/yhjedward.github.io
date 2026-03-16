@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shortcode 嵌套测试 - Windows 7 Style Blog</title>
+  <title>长度为n的开心符串中字典序第k小的字符串 - Windows 7 Style Blog</title>
   
   <link rel="stylesheet" href="/css/win7.css">
   <link rel="stylesheet" href="/css/explore.css">
@@ -399,7 +399,7 @@
   </div>
   <div class="window blog-window" id="blog-window">
     <div class="window-titlebar">
-      <div class="window-title">Shortcode 嵌套测试</div>
+      <div class="window-title">长度为n的开心符串中字典序第k小的字符串</div>
       <div class="window-controls">
         <button class="minimize blog-minimize">─</button>
         <button class="maximize blog-maximize">□</button>
@@ -414,29 +414,74 @@
 
 <div class="article-layout">
 	<article class="article-content" id="main-article-content">
-		<h1>Shortcode 嵌套测试</h1>
+		<h1>长度为n的开心符串中字典序第k小的字符串</h1>
 		<div class="article-meta">
-			<span class="article-date">2025-10-16</span>
+			<span class="article-date">2026-03-16</span>
 			
 		</div>
 		<div class="article-body">
-			<p>下面测试 <code>tabpanel</code> 嵌套 <code>collapse</code>：</p>
+			<h1 id="长度为-n-的开心符串中字典序第-k-小的字符串">长度为 n 的开心符串中字典序第 k 小的字符串<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></h1>
+<h2 id="题目描述">题目描述</h2>
+<h2 id="题目讲解">题目讲解</h2>
+<h3 id="广度优先搜索bfs与深度优先搜索dfs比较">广度优先搜索(BFS)与深度优先搜索(DFS)比较</h3>
+<table>
+  <tr>
+    <td>广度优先搜索</td>
+    <td>深度优先搜索</td>
+  </tr>
+  <tr>
+    <td>天然保持字典序,直接数第k个即可</td>
+    <td>生成所有结果后再排序，才能保证字典序</td>
+  </tr>
+</table>
+<h2 id="具体流程">具体流程</h2>
+<ul>
+<li>使用n = 3, k = 4 的例子, 采用广度优先搜索 讲解</li>
+</ul>
+<ol>
+<li></li>
+</ol>
+<h2 id="代码">代码</h2>
 
 <div class="tabpanel-container">
-    <div class="tabpanel-tabs"><div class="tabpanel-tab active" data-tab-index="0">标签1</div><div class="tabpanel-tab" data-tab-index="1">标签2</div></div>
-    <div class="tabpanel-content-container"><div class="tabpanel-content active" data-tab-index="0"><h3 id="标签1-内容">标签1 内容</h3>
-<p>这里有一个折叠短代码：</p>
-<div class="collapse-container">
-    <div class="collapse-header">
-        <span class="collapse-icon">+</span>
-        <span class="collapse-title">点击展开详细</span>
-    </div>
-    <div class="collapse-content">
-        <p>这是折叠内的文本，包含另一个短代码示例：</p>
+    <div class="tabpanel-tabs"><div class="tabpanel-tab active" data-tab-index="0">广度优先搜索</div><div class="tabpanel-tab" data-tab-index="1">深度优先搜索</div></div>
+    <div class="tabpanel-content-container"><div class="tabpanel-content active" data-tab-index="0"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">getHappyString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+</span></span><span class="line"><span class="cl">    <span class="n">next_letters</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s2">&#34;bc&#34;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="s2">&#34;ac&#34;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span><span class="s2">&#34;ab&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">,</span> <span class="s2">&#34;c&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">u</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">      <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">next_letters</span><span class="p">[</span><span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="o">+</span><span class="n">ch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">      <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span></code></pre></div></div><div class="tabpanel-content" data-tab-index="1"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">getHappyString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="s2">&#34;abc&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span> <span class="ow">or</span> <span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">ch</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dfs</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="n">ch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dfs</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">res</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&#34;&#34;</span>
+</span></span></code></pre></div></div></div>
 </div>
-</div></div><div class="tabpanel-content" data-tab-index="1"><h3 id="标签2-内容">标签2 内容</h3>
-<p>简单文本。</p>
-</div></div>
+<h2 id="链接">链接</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>长度为 n 的开心符串中字典序第 k 小的字符串<a href="https://leetcode.cn/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/description/">https://leetcode.cn/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/description/</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
 </div>
 
 		</div>
@@ -453,7 +498,19 @@
 			<nav class="toc-nav" id="toc-nav">
 				<div class="toc-list" id="toc-list">
 					
-						<nav id="TableOfContents"></nav>
+						<nav id="TableOfContents">
+  <ul>
+    <li><a href="#题目描述">题目描述</a></li>
+    <li><a href="#题目讲解">题目讲解</a>
+      <ul>
+        <li><a href="#广度优先搜索bfs与深度优先搜索dfs比较">广度优先搜索(BFS)与深度优先搜索(DFS)比较</a></li>
+      </ul>
+    </li>
+    <li><a href="#具体流程">具体流程</a></li>
+    <li><a href="#代码">代码</a></li>
+    <li><a href="#链接">链接</a></li>
+  </ul>
+</nav>
 					
 				</div>
 			</nav>
