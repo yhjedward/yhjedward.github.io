@@ -420,10 +420,70 @@
 			
 		</div>
 		<div class="article-body">
-			<h3 id="概述">概述</h3>
+			<h1 id="mixin与include语法">@Mixin与@include语法</h1>
+<h2 id="概述">概述</h2>
 <ol>
-<li>@mixin 用于定义可重复使用的样式, @include 用于引入这些定义的样式.通过 @mixin 定义的样式可以在整个样式表中重复使用, 而 @include 则用于将这些定义的样式引入到文档中.这种方法可以帮助简化样式表的管理和提高代码的重用性.</li>
+<li>在 Sass/SCSS 中, @mixin 用于定义可重复使用的样式, @include 用于调用(使用)这个 mixin.这种方法可以帮助简化样式表的管理和提高代码的重用性.</li>
 </ol>
+<h2 id="代码示例">代码示例</h2>
+
+<div class="tabpanel-container">
+    <div class="tabpanel-tabs"><div class="tabpanel-tab active" data-tab-index="0">@mixin</div><div class="tabpanel-tab" data-tab-index="1">@include</div><div class="tabpanel-tab" data-tab-index="2">编译后的 CSS</div></div>
+    <div class="tabpanel-content-container"><div class="tabpanel-content active" data-tab-index="0"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-scss" data-lang="scss"><span class="line"><span class="cl"><span class="c1">// 1. 定义一个基础 mixin（无参数）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">@mixin</span><span class="nf"> flex-center</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="na">display</span><span class="o">:</span> <span class="ni">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="na">justify-content</span><span class="o">:</span> <span class="ni">center</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="na">align-items</span><span class="o">:</span> <span class="ni">center</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 2. 定义一个带参数的 mixin
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">@mixin</span><span class="nf"> size</span><span class="p">(</span><span class="nv">$width</span><span class="o">,</span> <span class="nv">$height</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="na">width</span><span class="o">:</span> <span class="nv">$width</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="na">height</span><span class="o">:</span> <span class="nv">$height</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 3. 定义一个带默认值的 mixin
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">@mixin</span><span class="nf"> font-style</span><span class="p">(</span><span class="nv">$size</span><span class="o">:</span> <span class="mi">16</span><span class="kt">px</span><span class="o">,</span> <span class="nv">$color</span><span class="o">:</span> <span class="mh">#333</span><span class="o">,</span> <span class="nv">$weight</span><span class="o">:</span> <span class="ni">normal</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="na">font-size</span><span class="o">:</span> <span class="nv">$size</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="na">color</span><span class="o">:</span> <span class="nv">$color</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="na">font-weight</span><span class="o">:</span> <span class="nv">$weight</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 4. 定义一个带 @content 的 mixin（高级用法）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">@mixin</span><span class="nf"> hover-style</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">&amp;</span><span class="nd">:hover</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">@content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></div><div class="tabpanel-content" data-tab-index="1"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-scss" data-lang="scss"><span class="line"><span class="cl"><span class="nc">.box</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">@include</span><span class="nd"> flex-center</span><span class="p">;</span>        <span class="c1">// 使用无参数 mixin
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">@include</span><span class="nd"> size</span><span class="p">(</span><span class="mi">200</span><span class="kt">px</span><span class="o">,</span> <span class="mi">200</span><span class="kt">px</span><span class="p">);</span> <span class="c1">// 使用带参数 mixin
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">@include</span><span class="nd"> font-style</span><span class="p">(</span><span class="mi">20</span><span class="kt">px</span><span class="p">);</span>   <span class="c1">// 使用带默认值 mixin（只改一个参数）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="na">background</span><span class="o">:</span> <span class="mh">#f5f5f5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">@include</span><span class="nd"> hover-style</span> <span class="p">{</span>       <span class="c1">// 使用 @content
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="na">background</span><span class="o">:</span> <span class="mh">#ddd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">color</span><span class="o">:</span> <span class="no">red</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></div><div class="tabpanel-content" data-tab-index="2"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">width</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">height</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="mh">#333</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-weight</span><span class="p">:</span> <span class="kc">normal</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background</span><span class="p">:</span> <span class="mh">#f5f5f5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background</span><span class="p">:</span> <span class="mh">#ddd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="kc">red</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></div></div>
+</div>
 
 		</div>
 	</article>
@@ -441,11 +501,8 @@
 					
 						<nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#概述">概述</a></li>
-      </ul>
-    </li>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#代码示例">代码示例</a></li>
   </ul>
 </nav>
 					
@@ -706,6 +763,30 @@
   <script id="blog-data" type="application/json">
       {
         "posts": [{
+            "title": "元素和小于等于k的子矩阵的数目",
+            "url": "\/posts\/leetcode\/%E5%89%8D%E7%BC%80%E5%92%8C\/%E5%85%83%E7%B4%A0%E5%92%8C%E5%B0%8F%E4%BA%8E%E7%AD%89%E4%BA%8Ek%E7%9A%84%E5%AD%90%E7%9F%A9%E9%98%B5%E7%9A%84%E6%95%B0%E7%9B%AE\/",
+            "date": "2026-03-18",
+            "filename": "元素和小于等于k的子矩阵的数目.md",
+            "section": "posts\/leetcode\/前缀和",
+            "lastmod": "2026-03-18",
+            "content": " h1 id=\u0026#34;元素和小于等于-k-的子矩阵的数目\u0026#34; 元素和小于等于 k 的子矩阵的数目 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h1 h2 id=\u0026#34;题目讲解\u0026#34; 题目讲解 \/h2 h3 id=\u0026#34;容斥原理\u0026#34; 容斥原理 \/h3 p prefix[a][b] 表示从左上角 (0,0) 到 (a-1,b-1) 的矩形和. \/p div class=\u0026#34;latex-block\u0026#34; div class=\u0026#34;latex-content\u0026#34; $$ prefix[i-1][j] = \\sum_{x=0}^{i-2} \\sum_{y=0}^{j-1} grid[x][y] $$ \/div \/div h2 id=\u0026#34;具体流程\u0026#34; 具体流程 \/h2 h2 id=\u0026#34;代码\u0026#34; 代码 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; …"
+          },{
+            "title": "微信小程序工作原理",
+            "url": "\/posts\/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F\/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%9D%E7%BA%A7\/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86\/",
+            "date": "2026-03-18",
+            "filename": "微信小程序工作原理.md",
+            "section": "posts\/微信小程序\/微信小程序初级",
+            "lastmod": "2026-03-18",
+            "content": " h1 id=\u0026#34;微信小程序工作原理\u0026#34; 微信小程序工作原理 \/h1 h2 id=\u0026#34;微信小程序目录结构\u0026#34; 微信小程序目录结构 \/h2 p project\/ ├── miniprogram\/ # 主体代码目录 │ ├── pages\/ # 页面文件夹 │ │ ├── index\/ # 首页 │ │ │ ├── index.js # 页面逻辑 │ │ │ ├── index.wxml # 页面结构 │ │ │ ├── index.wxss # 页面样式 │ │ │ └── index.json # 页面样式 │ │ └── logs\/ # 日志页面 │ ├── components\/ # 自定义组件 │ ├── utils\/ # 公共工具函数 │ ├── images\/ # 图片资源 │ ├── app.js # 全局逻辑 │ ├── app.json # 全局配置 │ └── app.wxss # 全局样式 ├── node_modules\/ # npm依赖包 ├── package.json # 项目依赖说明 └── README.md # 项目说明文档 \/p "
+          },{
+            "title": "微信小程序基础",
+            "url": "\/posts\/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F\/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80\/",
+            "date": "2026-03-17",
+            "filename": "微信小程序基础.md",
+            "section": "posts\/微信小程序",
+            "lastmod": "2026-03-17",
+            "content": " h1 id=\u0026#34;微信小程序基础\u0026#34; 微信小程序基础 \/h1 h2 id=\u0026#34;微信小程序环境搭建\u0026#34; 微信小程序环境搭建 \/h2 ol li \/li \/ol "
+          },{
             "title": "矩阵中最大的三个菱形和",
             "url": "\/posts\/leetcode\/%E6%A8%A1%E6%8B%9F\/%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9A%84%E4%B8%89%E4%B8%AA%E8%8F%B1%E5%BD%A2%E5%92%8C\/",
             "date": "2026-03-17",
@@ -2488,7 +2569,7 @@
             "filename": "Mixin与include语法.md",
             "section": "posts\/前端\/css",
             "lastmod": "2024-04-08",
-            "content": " h3 id=\u0026#34;概述\u0026#34; 概述 \/h3 ol li @mixin 用于定义可重复使用的样式, @include 用于引入这些定义的样式.通过 @mixin 定义的样式可以在整个样式表中重复使用, 而 @include 则用于将这些定义的样式引入到文档中.这种方法可以帮助简化样式表的管理和提高代码的重用性. \/li \/ol "
+            "content": " h1 id=\u0026#34;mixin与include语法\u0026#34; @Mixin与@include语法 \/h1 h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 在 Sass\/SCSS 中, @mixin 用于定义可重复使用的样式, @include 用于调用(使用)这个 mixin.这种方法可以帮助简化样式表的管理和提高代码的重用性. \/li \/ol h2 id=\u0026#34;代码示例\u0026#34; 代码示例 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; @mixin \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; @include \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;2\u0026#34; 编译后的 CSS \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div class=\u0026#34;tabpanel-content …"
           },{
             "title": "构造函数",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cplusplus\/cplusplus%E5%88%9D%E7%BA%A7\/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0\/",
