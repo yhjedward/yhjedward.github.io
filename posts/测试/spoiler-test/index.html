@@ -727,6 +727,46 @@
   <script id="blog-data" type="application/json">
       {
         "posts": [{
+            "title": "构造乘积矩阵",
+            "url": "\/posts\/leetcode\/%E5%89%8D%E7%BC%80%E5%92%8C\/%E6%9E%84%E9%80%A0%E4%B9%98%E7%A7%AF%E7%9F%A9%E9%98%B5\/",
+            "date": "2026-03-24",
+            "filename": "构造乘积矩阵.md",
+            "section": "posts\/leetcode\/前缀和",
+            "lastmod": "2026-03-24",
+            "content": " h1 id=\u0026#34;构造乘积矩阵\u0026#34; 构造乘积矩阵 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h1 h2 id=\u0026#34;题目讲解\u0026#34; 题目讲解 \/h2 p 不能直接把所有数乘起来再除以 grid[i][j] \/p p 因为 grid[i][j] 可能为 0，除法不可行。 \/p p 采用 前缀积 \u002b 后缀积 的操作思路： \/p p 前缀积: Prefix[i] = arr[0] * arr[1] * arr[2] * arr a href=\u0026#34;%E4%B8%8D%E5%8C%85%E5%90%ABarr%5Bi%5D\u0026#34; i-1 \/a . \/p p 后缀积: suffix[i] = arr[i\u002b1] * arr[i\u002b2] * arr a href=\u0026#34;%E4%B8%8D%E5%8C%85%E5%90%ABarr%5Bi%5D\u0026#34; L-1 \/a \/p h2 id=\u0026#34;具体流程\u0026#34; 具体流程 \/h2 h2 id=\u0026#34;代码\u0026#34; 代码 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; …"
+          },{
+            "title": "矩阵的最大非负积",
+            "url": "\/posts\/leetcode\/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92\/%E7%9F%A9%E9%98%B5%E7%9A%84%E6%9C%80%E5%A4%A7%E9%9D%9E%E8%B4%9F%E7%A7%AF\/",
+            "date": "2026-03-23",
+            "filename": "矩阵的最大非负积.md",
+            "section": "posts\/leetcode\/动态规划",
+            "lastmod": "2026-03-23",
+            "content": " h1 id=\u0026#34;矩阵的最大非负积\u0026#34; 矩阵的最大非负积 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h1 h2 id=\u0026#34;题目描述\u0026#34; 题目描述 \/h2 h2 id=\u0026#34;题目讲解\u0026#34; 题目讲解 \/h2 p 矩阵中有正数、负数、0。 \/p p 乘积遇到负数会翻转符号，因此： \/p pre code 1. 当前格子的 最大乘积 可能来自上方或左方的 最小乘积 × 当前负数。 2. 当前格子的 最小乘积 可能来自上方或左方的 最大乘积 × 当前负数。 \/code \/pre p 故需要维护两个 DP 数组： \/p pre code 1. dpMax[i][j] ---\u0026amp;gt; 到达 (i,j) 的最大乘积. 2. dpMin[i][j] ---\u0026amp;gt; 到达 (i,j) 的最小乘积. \/code \/pre p 只能从第一行向左走，从第一列向下走. \/p p 设当前值为 v = grid[i][j] \/p p 从上方来: \/p p candidates from top = …"
+          },{
+            "title": "判断矩阵经轮转后是否一致",
+            "url": "\/posts\/leetcode\/%E6%A8%A1%E6%8B%9F\/%E5%88%A4%E6%96%AD%E7%9F%A9%E9%98%B5%E7%BB%8F%E8%BD%AE%E8%BD%AC%E5%90%8E%E6%98%AF%E5%90%A6%E4%B8%80%E8%87%B4\/",
+            "date": "2026-03-22",
+            "filename": "判断矩阵经轮转后是否一致.md",
+            "section": "posts\/leetcode\/模拟",
+            "lastmod": "2026-03-22",
+            "content": " h1 id=\u0026#34;判断矩阵经轮转后是否一致\u0026#34; 判断矩阵经轮转后是否一致 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h1 h2 id=\u0026#34;题目描述\u0026#34; 题目描述 \/h2 h2 id=\u0026#34;题目讲解\u0026#34; 题目讲解 \/h2 h2 id=\u0026#34;具体流程\u0026#34; 具体流程 \/h2 h2 id=\u0026#34;代码\u0026#34; 代码 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; c\u0026amp;#43;\u0026amp;#43; \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; python \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;2\u0026#34; java \/div \/div div class=\u0026#34;tabpanel-content-container\u0026#34; div …"
+          },{
+            "title": "垂直翻转子矩阵",
+            "url": "\/posts\/leetcode\/%E5%8F%8C%E6%8C%87%E9%92%88\/%E5%9E%82%E7%9B%B4%E7%BF%BB%E8%BD%AC%E5%AD%90%E7%9F%A9%E9%98%B5\/",
+            "date": "2026-03-21",
+            "filename": "垂直翻转子矩阵.md",
+            "section": "posts\/leetcode\/双指针",
+            "lastmod": "2026-03-21",
+            "content": " h1 id=\u0026#34;垂直翻转子矩阵\u0026#34; 垂直翻转子矩阵 \/h1 h2 id=\u0026#34;题目描述\u0026#34; 题目描述 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h2 h2 id=\u0026#34;题目讲解\u0026#34; 题目讲解 \/h2 p 确定子矩阵范围: \/p p 行范围：从 x 到 x \u002b k - 1 \/p p 列范围：从 y 到 y \u002b k - 1 \/p p 上下翻转: \/p p 使用双指针：top = x，bottom = x \u002b k - 1 \/p p 循环交换 grid[top][y..y\u002bk-1] 和 grid[bottom][y..y\u002bk-1] \/p p 每次交换后 top\u002b\u002b，bottom\u0026amp;ndash;，直到完成。 \/p p 返回结果: \/p h2 id=\u0026#34;具体流程\u0026#34; 具体流程 \/h2 h2 id=\u0026#34;代码\u0026#34; 代码 \/h2 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; …"
+          },{
+            "title": "微信小程序语法",
+            "url": "\/posts\/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F\/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%9D%E7%BA%A7\/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%AF%AD%E6%B3%95\/",
+            "date": "2026-03-20",
+            "filename": "微信小程序语法.md",
+            "section": "posts\/微信小程序\/微信小程序初级",
+            "lastmod": "2026-03-20",
+            "content": " h1 id=\u0026#34;微信小程序语法\u0026#34; 微信小程序语法 \/h1 h2 id=\u0026#34;数据绑定\u0026#34; 数据绑定 \/h2 h2 id=\u0026#34;列表渲染\u0026#34; 列表渲染 \/h2 h2 id=\u0026#34;事件\u0026#34; 事件 \/h2 h2 id=\u0026#34;模板\u0026#34; 模板 \/h2 "
+          },{
             "title": "CommonJS规范与ES6规范",
             "url": "\/posts\/%E5%89%8D%E7%AB%AF\/commonjs%E8%A7%84%E8%8C%83%E4%B8%8Ees6%E8%A7%84%E8%8C%83\/",
             "date": "2026-03-19",
