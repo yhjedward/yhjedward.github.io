@@ -643,6 +643,35 @@ body[data-theme="dark"] .start-menu-right {
     font-size: 0.9em;
 }
 
+.post-lastmod {
+    color: #999;
+    font-size: 0.9em;
+}
+
+/* 文章元信息样式 */
+.article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.article-date,
+.article-lastmod,
+.article-author {
+    display: inline-flex;
+    align-items: center;
+}
+
+.article-lastmod {
+    color: #999;
+}
+
 /* 文章内容样式 */
 .article-content {
     line-height: 1.6;
