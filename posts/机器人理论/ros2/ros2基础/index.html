@@ -422,10 +422,60 @@
 		</div>
 		<div class="article-body">
 			<h1 id="ros2-基础">ros2 基础</h1>
-<h2 id="ros2环境变量">ros2环境变量</h2>
+<h2 id="ros2-环境搭建">ros2 环境搭建</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 安装 Ubuntu/Debian 系统中用于管理软件源（PPA、仓库等）的工具包.</span>
+</span></span><span class="line"><span class="cl">sudo apt install software-properties-common
+</span></span><span class="line"><span class="cl"><span class="c1"># 在 Ubuntu 系统中启用 “universe” 软件源，以安装由社区维护的大量软件包.</span>
+</span></span><span class="line"><span class="cl">sudo add-apt-repository universe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo apt update <span class="o">&amp;&amp;</span> sudo apt install curl -y
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 从 GitHub 下载 ROS（Robot Operating System）的官方仓库密钥，并保存到系统的 keyring 中，用于验证 ROS 软件包的来源和完整性</span>
+</span></span><span class="line"><span class="cl">sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 使用 ROS2 官方仓库,当前ubuntu的版本代号，由 $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME) 自动获取,使用 main 组件，使用指定的架构和签名密钥.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [arch=$(dpkg --print-architecture)]: dpkg --print-architecture 会输出你的 CPU 架构.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># signed-by=/usr/share/keyrings/ros-archive-keyring.gpg]: 这个仓库的软件包必须用这个 GPG 密钥验证.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME): 读取系统版本信息,输出版本代号.这样可以自动适配不同 Ubuntu 版本.</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;deb [arch=</span><span class="k">$(</span>dpkg --print-architecture<span class="k">)</span><span class="s2"> signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu </span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$UBUNTU_CODENAME</span><span class="k">)</span><span class="s2"> main&#34;</span> <span class="p">|</span> sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl">sudo apt update
+</span></span><span class="line"><span class="cl">sudo apt upgrade
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo apt install ros-&lt;distro&gt;-desktop</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 将 &lt;distro&gt; 替换为发行版名(小写).</span>
+</span></span><span class="line"><span class="cl">sudo apt install ros-jazzy-desktop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装 ros 开发工具</span>
+</span></span><span class="line"><span class="cl">sudo apt install ros-dev-tools
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 将 source 行追加到 .bashrc</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 将 &lt;distro&gt; 替换为你的 ROS 发行版名</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># echo &#39;source /opt/ros/&lt;distro&gt;/setup.bash&#39; &gt;&gt; ~/.bashrc</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;source /opt/ros/jazzy/setup.bash&#39;</span> &gt;&gt; ~/.bashrc
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 验证安装</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动 turtlesim</span>
+</span></span><span class="line"><span class="cl">ros2 run turtlesim turtlesim_node
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动键盘遥控节点</span>
+</span></span><span class="line"><span class="cl">ros2 run turtlesim turtle_teleop_key
+</span></span></code></pre></div><h2 id="ros2环境变量">ros2环境变量</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">RCUTILS_CONSOLE_OUTPUT_FORMAT</span><span class="o">=</span><span class="s2">&#34;[{severity}] {message}&#34;</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">RCL_LOGGING_CONSOLE_OUTPUT</span><span class="o">=</span>stdout
 </span></span></code></pre></div><h2 id="ros2-常用命令">ros2 常用命令</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 启动节点</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &lt;package&gt;: 包名</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &lt;executable&gt;: 可执行程序名</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ros2 run &lt;package&gt; &lt;executable&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动发布者</span>
+</span></span><span class="line"><span class="cl">ros2 run demo_nodes_cpp talker
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动订阅者</span>
+</span></span><span class="line"><span class="cl">ros2 run demo_nodes_cpp listener
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 扫描当前 ROS2 网络,找出所有正在运行的节点,找出每个节点发布/订阅的话题,自动绘制一张通信拓扑图.</span>
+</span></span><span class="line"><span class="cl">rqt_graph
+</span></span></code></pre></div><h2 id="编写并运行节点">编写并运行节点</h2>
 
 		</div>
 	</article>
@@ -443,8 +493,10 @@
 					
 						<nav id="TableOfContents">
   <ul>
+    <li><a href="#ros2-环境搭建">ros2 环境搭建</a></li>
     <li><a href="#ros2环境变量">ros2环境变量</a></li>
     <li><a href="#ros2-常用命令">ros2 常用命令</a></li>
+    <li><a href="#编写并运行节点">编写并运行节点</a></li>
   </ul>
 </nav>
 					
@@ -705,6 +757,14 @@
   <script id="blog-data" type="application/json">
       {
         "posts": [{
+            "title": "机器人可以获得的最大金币数",
+            "url": "\/posts\/leetcode\/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92\/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%BE%97%E7%9A%84%E6%9C%80%E5%A4%A7%E9%87%91%E5%B8%81%E6%95%B0\/",
+            "date": "2026-04-02",
+            "filename": "机器人可以获得的最大金币数.md",
+            "section": "posts\/leetcode\/动态规划",
+            "lastmod": "2026-04-02",
+            "content": " h1 id=\u0026#34;机器人可以获得的最大金币数\u0026#34; 机器人可以获得的最大金币数 \/h1 h2 id=\u0026#34;题目描述\u0026#34; 题目描述 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h2 h2 id=\u0026#34;题目讲解\u0026#34; 题目讲解 \/h2 p 定义 dp[i][j][k] = 到达(i,j)并且用了k次无效化时的最大金币. \/p p 机器人从左上角走到右下角，只能：向右或者向下. \/p p 假设前一个状态是dp_prev,当前格子的值是 c = coins[i][j]. \/p p 分两种情况讨论: 不使用无效化和可以使用无效化. \/p ol li 不使用无效化 \/li \/ol div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; dp span class=\u0026#34;o\u0026#34; [ \/span i …"
+          },{
             "title": "Vue3的语法糖",
             "url": "\/posts\/%E5%89%8D%E7%AB%AF\/vue\/vue3\/vue3%E5%88%9D%E7%BA%A7\/vue3%E7%9A%84%E8%AF%AD%E6%B3%95%E7%B3%96\/",
             "date": "2026-03-26",
@@ -727,7 +787,7 @@
             "filename": "Ros2功能包.md",
             "section": "posts\/机器人理论\/ros2\/ros2初级",
             "lastmod": "2026-03-25",
-            "content": " h1 id=\u0026#34;ros2-功能包\u0026#34; ros2 功能包 \/h1 "
+            "content": " h1 id=\u0026#34;ros2-功能包\u0026#34; ros2 功能包 \/h1 h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 在 ROS 2 中, 功能包(package)是最基本的组织单位. 你可以把它想象成一个“模块化的文件夹”, 里面放着实现某个功能所需要的一切内容. \/li \/ol div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 功能包结构 \/span \/div div class=\u0026#34;collapse-content\u0026#34; div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-md\u0026#34; data-lang=\u0026#34;md\u0026#34; \/code \/pre \/div \/div \/div h2 \/h2 "
           },{
             "title": "Ros2基础",
             "url": "\/posts\/%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%90%86%E8%AE%BA\/ros2\/ros2%E5%9F%BA%E7%A1%80\/",
@@ -735,7 +795,7 @@
             "filename": "Ros2基础.md",
             "section": "posts\/机器人理论\/ros2",
             "lastmod": "2026-03-25",
-            "content": " h1 id=\u0026#34;ros2-基础\u0026#34; ros2 基础 \/h1 h2 id=\u0026#34;ros2环境变量\u0026#34; ros2环境变量 \/h2 div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;nb\u0026#34; export \/span span class=\u0026#34;nv\u0026#34; RCUTILS_CONSOLE_OUTPUT_FORMAT \/span span class=\u0026#34;o\u0026#34; = \/span span class=\u0026#34;s2\u0026#34; \u0026amp;#34;[{severity}] {message}\u0026amp;#34; \/span \/span \/span \/code \/pre \/div div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; …"
+            "content": " h1 id=\u0026#34;ros2-基础\u0026#34; ros2 基础 \/h1 h2 id=\u0026#34;ros2-环境搭建\u0026#34; ros2 环境搭建 \/h2 div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; # 安装 Ubuntu\/Debian 系统中用于管理软件源（PPA、仓库等）的工具包. \/span \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; sudo apt install software-properties-common \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; # 在 Ubuntu 系统中启用 “universe” 软件源，以安装由社区维护的大量软件包. \/span \/span \/span span class=\u0026#34;line\u0026#34; …"
           },{
             "title": "Ros2节点",
             "url": "\/posts\/%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%90%86%E8%AE%BA\/ros2\/ros2%E5%88%9D%E7%BA%A7\/ros2%E8%8A%82%E7%82%B9\/",
@@ -863,7 +923,7 @@
             "filename": "找出所有稳定的二进制数组I.md",
             "section": "posts\/leetcode\/动态规划",
             "lastmod": "2026-03-10",
-            "content": " h2 id=\u0026#34;题目描述\u0026#34; 题目描述 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h2 h2 id=\u0026#34;题目讲解\u0026#34; 题目讲解 \/h2 h3 id=\u0026#34;为什么要用-dp\u0026#34; 为什么要用 DP? \/h3 p 因为你每一步都要决定: \/p ol li 放 0 还是放 1 ? \/li li 放了之后会不会超过 limit ? \/li li 还剩多少 0 和 1 ? \/li \/ol p 这就是典型的“状态依赖前一步”的问题 → 用 DP。 \/p p 我们只关心： \/p ol li 当前用了多少个 0 \/li li 当前用了多少个 1 \/li li 最后放的是 0 还是 1 \/li \/ol p 所以我们定义： \/p pre tabindex=\u0026#34;0\u0026#34; code dp0[i][j] = 用了 i 个 0、j 个 1，并且最后放的是 0 的方案数 dp1[i][j] = 用了 i 个 0、j 个 1，并且最后放的是 1 的方案数 \/code \/pre p 假设我们要算: code …"
+            "content": " h1 id=\u0026#34;找出所有稳定的二进制数组i\u0026#34; 找出所有稳定的二进制数组I \/h1 h2 id=\u0026#34;题目描述\u0026#34; 题目描述 sup id=\u0026#34;fnref:1\u0026#34; a href=\u0026#34;#fn:1\u0026#34; class=\u0026#34;footnote-ref\u0026#34; role=\u0026#34;doc-noteref\u0026#34; 1 \/a \/sup \/h2 h2 id=\u0026#34;题目讲解\u0026#34; 题目讲解 \/h2 h3 id=\u0026#34;为什么要用-dp\u0026#34; 为什么要用 DP? \/h3 p 因为你每一步都要决定: \/p ol li 放 0 还是放 1 ? \/li li 放了之后会不会超过 limit ? \/li li 还剩多少 0 和 1 ? \/li \/ol p 这就是典型的“状态依赖前一步”的问题 → 用 DP。 \/p p 我们只关心： \/p ol li 当前用了多少个 0 \/li li 当前用了多少个 1 \/li li 最后放的是 0 还是 1 \/li \/ol p 所以我们定义： \/p pre tabindex=\u0026#34;0\u0026#34; code dp0[i][j] = 用了 i 个 0、j 个 1，并且最后放的是 0 的方案数 dp1[i][j] = 用了 i 个 0、j 个 1，并且最后放 …"
           },{
             "title": "Python数据类型",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/python\/python%E5%88%9D%E7%BA%A7\/python%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B\/",
@@ -1959,7 +2019,7 @@
             "filename": "css基础.md",
             "section": "posts\/前端\/css",
             "lastmod": "2025-08-20",
-            "content": " h1 id=\u0026#34;css-基础\u0026#34; css 基础 \/h1 h2 id=\u0026#34;css-modules\u0026#34; CSS Modules \/h2 ol li CSS Modules 让每个组件的样式只作用于自己，不会污染全局，也不会被全局污染,让 CSS \u0026amp;ldquo;局部作用域化(Scoped CSS)\u0026amp;rdquo;. \/li \/ol h3 id=\u0026#34;使用示例\u0026#34; 使用示例 \/h3 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 目录结构 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; Card.module.css \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;2\u0026#34; Card.jsx \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;3\u0026#34; App.jsx \/div \/div div …"
+            "content": " h1 id=\u0026#34;css-基础\u0026#34; css 基础 \/h1 h2 id=\u0026#34;css-modules\u0026#34; CSS Modules \/h2 ol li CSS Modules 让每个组件的样式只作用于自己，不会污染全局，也不会被全局污染,让 CSS \u0026amp;ldquo;局部作用域化(Scoped CSS)\u0026amp;rdquo;. \/li li 常用于 React 生态（React、Next.js、Vite） \/li \/ol h3 id=\u0026#34;使用示例\u0026#34; 使用示例 \/h3 div class=\u0026#34;tabpanel-container\u0026#34; div class=\u0026#34;tabpanel-tabs\u0026#34; div class=\u0026#34;tabpanel-tab active\u0026#34; data-tab-index=\u0026#34;0\u0026#34; 目录结构 \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;1\u0026#34; Card.module.css \/div div class=\u0026#34;tabpanel-tab\u0026#34; data-tab-index=\u0026#34;2\u0026#34; Card.jsx \/div div class=\u0026#34;tabpanel-tab\u0026#34; …"
           },{
             "title": "Cmake基础",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/cmake\/cmake%E5%9F%BA%E7%A1%80\/",
