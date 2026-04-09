@@ -424,14 +424,44 @@
 		</div>
 		<div class="article-body">
 			<h1 id="opencv-基础">opencv 基础</h1>
-<h2 id="windows-安装配置-opencv">windows 安装配置 opencv</h2>
+<h2 id="windows-搭建-opencv-环境">windows 搭建 opencv 环境</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 下载并安装python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 通过pip命令安装 numpy、matplotlib 和 opencv 库.</span>
+</span></span><span class="line"><span class="cl">python -m pip install numpy matplotlib opencv-python
+</span></span></code></pre></div><h2 id="ubuntu-搭建-opencv-环境">ubuntu 搭建 opencv 环境</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 安装 python3</span>
+</span></span><span class="line"><span class="cl">apt install python3
+</span></span><span class="line"><span class="cl"><span class="c1"># 通过pip命令安装 numpy、matplotlib 和 opencv 库.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 或者使用 apt 安装 numpy、matplotlib 和 opencv 库.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo apt-cache search numpy | grep python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo apt install python-numpy</span>
+</span></span><span class="line"><span class="cl">python3 -m pip install numpy matplotlib opencv-python
+</span></span></code></pre></div><h2 id="windows-下源码方式编译-opencv">windows 下源码方式编译 opencv</h2>
+<ol>
+<li>安装 python3 和 numpy 库.</li>
+<li>安装 cmake.</li>
+<li>下载 opencv 源码</li>
+</ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 下载 opencv 源码(已经验证，成熟)</span>
 </span></span><span class="line"><span class="cl">git clone https://github.com/opencv/opencv.git
 </span></span><span class="line"><span class="cl"><span class="c1"># 或者下载 opencv-contribute 源码(未验证，可能包含专利)</span>
 </span></span><span class="line"><span class="cl">git clone https://github.com/opencv/opencv_contrib.git
-</span></span><span class="line"><span class="cl"><span class="c1"># 使用 cmake 编译 opencv 源码</span>
-</span></span></code></pre></div><h2 id="linux-安装配置-opencv">linux 安装配置 opencv</h2>
-<h2 id="vs2019-中-opencv-示例">vs2019 中 opencv 示例</h2>
+</span></span></code></pre></div><ol start="4">
+<li>使用 cmake 编译 opencv 源码</li>
+</ol>
+
+        <figure class="image-container">
+            <img src="static/images/%e5%9b%be%e5%83%8f%e5%a4%84%e7%90%86/opencv/%e7%bc%96%e8%af%91opencv_1.png" alt="带标题图片" title="这是一个带标题的图片" loading="lazy"><figcaption>这是一个带标题的图片</figcaption></figure>
+
+        <figure class="image-container">
+            <img src="static/images/%e5%9b%be%e5%83%8f%e5%a4%84%e7%90%86/opencv/%e7%bc%96%e8%af%91opencv_2.png" alt="带标题图片" title="这是一个带标题的图片" loading="lazy"><figcaption>这是一个带标题的图片</figcaption></figure>
+
+        <figure class="image-container">
+            <img src="static/images/%e5%9b%be%e5%83%8f%e5%a4%84%e7%90%86/opencv/%e7%bc%96%e8%af%91opencv_3.png" alt="带标题图片" title="这是一个带标题的图片" loading="lazy"><figcaption>这是一个带标题的图片</figcaption></figure>
+<h2 id="vs2022-使用-opencv">vs2022 使用 opencv</h2>
+<ol>
+<li></li>
+</ol>
 
 <div class="tabpanel-container">
     <div class="tabpanel-tabs"><div class="tabpanel-tab active" data-tab-index="0"> 引入opencv库 </div><div class="tabpanel-tab" data-tab-index="1"> opencv测试代码 </div></div>
@@ -450,6 +480,10 @@ opencv头文件目录。Opencv的头文件目录存放在你编绎
 OpencV目录的install中的include目录中。对于我的环境而言
 </code></pre></div><div class="tabpanel-content" data-tab-index="1"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"></code></pre></div></div></div>
 </div>
+<h2 id="视频链接">视频链接</h2>
+<ol>
+<li><a href="https://www.bilibili.com/video/BV1DzrpBJE19">2026最新OpenCV图像识别</a></li>
+</ol>
 
 		</div>
 	</article>
@@ -467,9 +501,11 @@ OpencV目录的install中的include目录中。对于我的环境而言
 					
 						<nav id="TableOfContents">
   <ul>
-    <li><a href="#windows-安装配置-opencv">windows 安装配置 opencv</a></li>
-    <li><a href="#linux-安装配置-opencv">linux 安装配置 opencv</a></li>
-    <li><a href="#vs2019-中-opencv-示例">vs2019 中 opencv 示例</a></li>
+    <li><a href="#windows-搭建-opencv-环境">windows 搭建 opencv 环境</a></li>
+    <li><a href="#ubuntu-搭建-opencv-环境">ubuntu 搭建 opencv 环境</a></li>
+    <li><a href="#windows-下源码方式编译-opencv">windows 下源码方式编译 opencv</a></li>
+    <li><a href="#vs2022-使用-opencv">vs2022 使用 opencv</a></li>
+    <li><a href="#视频链接">视频链接</a></li>
   </ul>
 </nav>
 					
@@ -896,7 +932,7 @@ OpencV目录的install中的include目录中。对于我的环境而言
             "filename": "Opencv基础.md",
             "section": "posts\/图像处理\/opencv",
             "lastmod": "2026-03-11",
-            "content": " h1 id=\u0026#34;opencv-基础\u0026#34; opencv 基础 \/h1 h2 id=\u0026#34;windows-安装配置-opencv\u0026#34; windows 安装配置 opencv \/h2 div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; # 下载 opencv 源码(已经验证，成熟) \/span \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; git clone https:\/\/github.com\/opencv\/opencv.git \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; # 或者下载 opencv-contribute 源码(未验证，可能包含专利) \/span \/span \/span span class=\u0026#34;line\u0026#34; span …"
+            "content": " h1 id=\u0026#34;opencv-基础\u0026#34; opencv 基础 \/h1 h2 id=\u0026#34;windows-搭建-opencv-环境\u0026#34; windows 搭建 opencv 环境 \/h2 div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; # 下载并安装python3 \/span \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; # 通过pip命令安装 numpy、matplotlib 和 opencv 库. \/span \/span \/span span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; python -m pip install numpy matplotlib opencv-python \/span \/span \/code \/pre \/div h2 …"
           },{
             "title": "找出所有稳定的二进制数组I",
             "url": "\/posts\/leetcode\/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92\/%E6%89%BE%E5%87%BA%E6%89%80%E6%9C%89%E7%A8%B3%E5%AE%9A%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E7%BB%84i\/",
@@ -3311,6 +3347,36 @@ OpencV目录的install中的include目录中。对于我的环境而言
                   "size": "302999 bytes",
                   "isDir":  false ,
                   "dir": "images\/qt"
+                },{
+                  "name": "图像处理",
+                  "path": "/images/图像处理",
+                  "size": "4096 bytes",
+                  "isDir":  true ,
+                  "dir": "images"
+                },{
+                  "name": "opencv",
+                  "path": "/images\/图像处理/opencv",
+                  "size": "4096 bytes",
+                  "isDir":  true ,
+                  "dir": "images\/图像处理"
+                },{
+                  "name": "编译opencv_1.png",
+                  "path": "/images\/图像处理\/opencv/编译opencv_1.png",
+                  "size": "20906 bytes",
+                  "isDir":  false ,
+                  "dir": "images\/图像处理\/opencv"
+                },{
+                  "name": "编译opencv_2.png",
+                  "path": "/images\/图像处理\/opencv/编译opencv_2.png",
+                  "size": "14671 bytes",
+                  "isDir":  false ,
+                  "dir": "images\/图像处理\/opencv"
+                },{
+                  "name": "编译opencv_3.png",
+                  "path": "/images\/图像处理\/opencv/编译opencv_3.png",
+                  "size": "41614 bytes",
+                  "isDir":  false ,
+                  "dir": "images\/图像处理\/opencv"
                 },{
                   "name": "安卓",
                   "path": "/images/安卓",
