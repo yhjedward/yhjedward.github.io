@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>判断矩阵经轮转后是否一致 - Windows 7 Style Blog</title>
+  <title>Go接口 - Windows 7 Style Blog</title>
   
   <link rel="stylesheet" href="/css/win7.css">
   <link rel="stylesheet" href="/css/explore.css">
@@ -401,7 +401,7 @@
   </div>
   <div class="window blog-window" id="blog-window">
     <div class="window-titlebar">
-      <div class="window-title">判断矩阵经轮转后是否一致</div>
+      <div class="window-title">Go接口</div>
       <div class="window-controls">
         <button class="minimize blog-minimize">─</button>
         <button class="maximize blog-maximize">□</button>
@@ -416,48 +416,63 @@
 
 <div class="article-layout">
 	<article class="article-content" id="main-article-content">
-		<h1>判断矩阵经轮转后是否一致</h1>
+		<h1>Go接口</h1>
 		<div class="article-meta">
-			<span class="article-date">📝发布：2026-03-22</span>
+			<span class="article-date">📝发布：2026-04-08</span>
 			
 			
 		</div>
 		<div class="article-body">
-			<h1 id="判断矩阵经轮转后是否一致">判断矩阵经轮转后是否一致<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></h1>
-<h2 id="题目描述">题目描述</h2>
-<h2 id="题目讲解">题目讲解</h2>
-<h2 id="具体流程">具体流程</h2>
-<h2 id="代码">代码</h2>
+			<h1 id="go-接口">Go 接口</h1>
+<h2 id="概述">概述</h2>
+<ol>
+<li>Go 的接口是隐式实现, 不需要写 &ldquo;implements&rdquo;.</li>
+</ol>
 
 <div class="tabpanel-container">
-    <div class="tabpanel-tabs"><div class="tabpanel-tab active" data-tab-index="0">c&#43;&#43;</div><div class="tabpanel-tab" data-tab-index="1">python</div><div class="tabpanel-tab" data-tab-index="2">java</div></div>
-    <div class="tabpanel-content-container"><div class="tabpanel-content active" data-tab-index="0"></div><div class="tabpanel-content" data-tab-index="1"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">findRotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mat</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">target</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">mat</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="kc">True</span>
-</span></span><span class="line"><span class="cl">            <span class="n">mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mat</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span><span class="o">-&gt;</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># 上下翻转</span>
-</span></span><span class="line"><span class="cl">        <span class="n">mat</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># 转置: 行变列，列变行.</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># 如果从 j = 0 开始，就会把每对元素交换两次，等于没交换.</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">                <span class="n">mat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">mat</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">mat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">mat</span>
-</span></span></code></pre></div></div><div class="tabpanel-content" data-tab-index="2"></div></div>
-</div>
-<h2 id="链接">链接</h2>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>判断矩阵经轮转后是否一致<a href="https://leetcode.cn/problems/determine-whether-matrix-can-be-obtained-by-rotation/">https://leetcode.cn/problems/determine-whether-matrix-can-be-obtained-by-rotation/</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
+    <div class="tabpanel-tabs"><div class="tabpanel-tab active" data-tab-index="0">go接口示例</div></div>
+    <div class="tabpanel-content-container"><div class="tabpanel-content active" data-tab-index="0"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="s">&#34;fmt&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">任何类型, 只要有 Speak() 方法, 就自动实现这个接口(隐式实现).
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nx">Speaker</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nf">Speak</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">(d Dog) 是值接收者
+</span></span></span><span class="line"><span class="cl"><span class="cm">Dog 类型有了 Speak() 方法
+</span></span></span><span class="line"><span class="cl"><span class="cm">所以 Dog 自动实现 Speaker 接口
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">d</span><span class="w"> </span><span class="nx">Dog</span><span class="p">)</span><span class="w"> </span><span class="nf">Speak</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Woof&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nx">Name</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="nx">Person</span><span class="p">)</span><span class="w"> </span><span class="nf">Speak</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Hi, I&#39;m&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">Name</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">多态
+</span></span></span><span class="line"><span class="cl"><span class="cm">参数类型是 Speaker 接口，可以接收任何实现了 Speak() 的类型
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="nf">MakeItSpeak</span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="nx">Speaker</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nx">s</span><span class="p">.</span><span class="nf">Speak</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nf">MakeItSpeak</span><span class="p">(</span><span class="nx">Dog</span><span class="p">{})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nf">MakeItSpeak</span><span class="p">(</span><span class="nx">Person</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Alice&#34;</span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></div></div>
 </div>
 
 		</div>
@@ -476,11 +491,7 @@
 					
 						<nav id="TableOfContents">
   <ul>
-    <li><a href="#题目描述">题目描述</a></li>
-    <li><a href="#题目讲解">题目讲解</a></li>
-    <li><a href="#具体流程">具体流程</a></li>
-    <li><a href="#代码">代码</a></li>
-    <li><a href="#链接">链接</a></li>
+    <li><a href="#概述">概述</a></li>
   </ul>
 </nav>
 					
