@@ -492,6 +492,53 @@
 </span></span><span class="line"><span class="cl">  <span class="p">],</span>
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">import</span> <span class="s1">&#39;package:flutter/rendering.dart&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">debugPaintSizeEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">runApp</span><span class="p">(</span><span class="kd">const</span> <span class="n">MyApp</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MyApp</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">const</span> <span class="n">MyApp</span><span class="p">({</span><span class="k">super</span><span class="p">.</span><span class="n">key</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">override</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">MaterialApp</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">title:</span> <span class="s1">&#39;flutter layout demo&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">home:</span> <span class="n">Scaffold</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">title:</span> <span class="kd">const</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Flutter Demo Home Page&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">body:</span> <span class="n">Center</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">child:</span> <span class="n">showGrid</span> <span class="o">?</span> <span class="n">_buildGrid</span><span class="p">()</span> <span class="o">:</span> <span class="n">_buildList</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// GridView.extent: Flutter 提供的一种网格布局构造方式，它会根据你给定的 最大交叉轴宽度（maxCrossAxisExtent） 自动计算每行能放多少个元素.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Widget</span> <span class="n">_buildGrid</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">GridView</span><span class="p">.</span><span class="n">extent</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// maxCrossAxisExtent: 150   表示每个网格项的最大宽度是 150 像素.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nl">maxCrossAxisExtent:</span> <span class="m">150</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 整个 GridView 四周留 4 像素的内边距
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nl">padding:</span> <span class="kd">const</span> <span class="n">EdgeInsets</span><span class="p">.</span><span class="n">all</span><span class="p">(</span><span class="m">4</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// mainAxisSpacing: 4 → 主轴（竖向）每个格子之间的间距是 4 像素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nl">mainAxisSpacing:</span> <span class="m">4</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// crossAxisSpacing: 4 → 交叉轴（水平方向）每个格子之间的间距是 4 像素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nl">crossAxisSpacing:</span> <span class="m">4</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nl">children:</span> <span class="n">_buildGridTileList</span><span class="p">(</span><span class="m">30</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">List</span><span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;</span> <span class="n">_buildGridTileList</span><span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">List</span><span class="p">.</span><span class="n">generate</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">GridTile</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="nl">child:</span> <span class="n">Image</span><span class="p">.</span><span class="n">asset</span><span class="p">(</span><span class="s1">&#39;images/pic</span><span class="si">${</span><span class="n">index</span> <span class="o">%</span> <span class="m">3</span> <span class="o">+</span> <span class="m">1</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="nl">footer:</span> <span class="n">Container</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">color:</span> <span class="n">Colors</span><span class="p">.</span><span class="n">black54</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">child:</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;grid item </span><span class="si">$</span><span class="n">index</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nl">style:</span> <span class="kd">const</span> <span class="n">TextStyle</span><span class="p">(</span><span class="nl">color:</span> <span class="n">Colors</span><span class="p">.</span><span class="n">white</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">  <span class="p">),</span>
+</span></span><span class="line"><span class="cl"><span class="p">));</span> 
 </span></span></code></pre></div>
 		</div>
 	</article>
@@ -1135,10 +1182,10 @@
             "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 在 Godot 引擎的 C# 脚本里, code [Export] \/code 是一个特性(attribute), 用来把字段暴露到 code Inspector \/code 面板, 让你在编辑器里直接调整参数, 而不用改代码. \/li \/ol h2 id=\u0026#34;参考链接\u0026#34; 参考链接 \/h2 ol li a href=\u0026#34;https:\/\/docs.godotengine.org\/zh-cn\/4.3\/about\/introduction.html\u0026#34; Godot Engine 4.3 简体中文文档 \/a \/li \/ol "
           },{
             "title": "Excel表格添加甘特图",
-            "url": "\/posts\/%E9%9A%8F%E7%AC%94\/%E7%94%9F%E6%B4%BB\/excel%E8%A1%A8%E6%A0%BC%E6%B7%BB%E5%8A%A0%E7%94%98%E7%89%B9%E5%9B%BE\/",
+            "url": "\/posts\/%E9%9A%8F%E7%AC%94\/%E6%AF%8F%E6%97%A5%E4%B8%80%E7%BB%83\/excel%E8%A1%A8%E6%A0%BC%E6%B7%BB%E5%8A%A0%E7%94%98%E7%89%B9%E5%9B%BE\/",
             "date": "2026-01-14",
             "filename": "Excel表格添加甘特图.md",
-            "section": "posts\/随笔\/生活",
+            "section": "posts\/随笔\/每日一练",
             "lastmod": "2026-01-14",
             "content": ""
           },{

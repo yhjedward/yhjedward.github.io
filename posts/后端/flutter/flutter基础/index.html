@@ -428,16 +428,26 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">flutter doctor -v
 </span></span></code></pre></div><p>使用命令创建 flutter 工程</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># flutter create --platform web &lt;项目名称&gt;</span>
-</span></span></code></pre></div><h2 id="解释-flutter-的-build-函数">解释 flutter 的 build 函数</h2>
+</span></span></code></pre></div><h2 id="解释-flutter-的-superkey">解释 flutter 的 super.key</h2>
+<ol>
+<li>可以将父类(StatelessWidget)看成一个通用的“建筑模板”, 子类(MyWidget)是你根据模板盖出的“具体大楼”. Key 就是这栋楼的“门牌号”.当你写 super.key 时, 只是在说：“请给我的这栋新楼贴上门牌号，并登记在建筑总局(父类)的档案里.” 它不会改变大楼的外观, 只是为了让 Flutter 引擎在更新界面时能通过这个“门牌号”快速找到这栋楼.</li>
+</ol>
+<h2 id="解释-flutter-的-build-函数">解释 flutter 的 build 函数</h2>
 <ol>
 <li>build 函数是 flutter 的 &ldquo;界面工厂&rdquo;, 它的作用是: 根据当前的状态返回一个新的 Widget 树.</li>
 <li>每当状态变化(setState),父组件更新,窗口尺寸变化时，flutter 都会重新调用 build 来 &ldquo;重置界面&rdquo;.</li>
 <li></li>
 </ol>
+<h2 id="解释-flutter-项目的-pubspecyaml-文件">解释 flutter 项目的 pubspec.yaml 文件</h2>
+<ol>
+<li>pubspec.yaml 是 Flutter 项目中最重要的配置文件之一，用于管理项目的包依赖、资源、版本信息、环境要求等。它相当于 Flutter 应用的“项目说明书”.</li>
+</ol>
 <h2 id="参考链接">参考链接</h2>
 <ol>
 <li><a href="https://zhuanlan.zhihu.com/p/1989017634285577333">如何从零开始,启动一个Flutter项目</a></li>
 <li><a href="https://docs.flutter.dev">flutter教程</a></li>
+<li><a href="https://www.jianshu.com/p/8c0b74f28dfc">flutter打包</a></li>
+<li><a href="https://juejin.cn/post/7412075509481963530">flutter打包</a></li>
 </ol>
 
 		</div>
@@ -457,7 +467,9 @@
 						<nav id="TableOfContents">
   <ul>
     <li><a href="#搭建-flutter-开发环境">搭建 flutter 开发环境</a></li>
+    <li><a href="#解释-flutter-的-superkey">解释 flutter 的 super.key</a></li>
     <li><a href="#解释-flutter-的-build-函数">解释 flutter 的 build 函数</a></li>
+    <li><a href="#解释-flutter-项目的-pubspecyaml-文件">解释 flutter 项目的 pubspec.yaml 文件</a></li>
     <li><a href="#参考链接">参考链接</a></li>
   </ul>
 </nav>
@@ -1088,10 +1100,10 @@
             "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 在 Godot 引擎的 C# 脚本里, code [Export] \/code 是一个特性(attribute), 用来把字段暴露到 code Inspector \/code 面板, 让你在编辑器里直接调整参数, 而不用改代码. \/li \/ol h2 id=\u0026#34;参考链接\u0026#34; 参考链接 \/h2 ol li a href=\u0026#34;https:\/\/docs.godotengine.org\/zh-cn\/4.3\/about\/introduction.html\u0026#34; Godot Engine 4.3 简体中文文档 \/a \/li \/ol "
           },{
             "title": "Excel表格添加甘特图",
-            "url": "\/posts\/%E9%9A%8F%E7%AC%94\/%E7%94%9F%E6%B4%BB\/excel%E8%A1%A8%E6%A0%BC%E6%B7%BB%E5%8A%A0%E7%94%98%E7%89%B9%E5%9B%BE\/",
+            "url": "\/posts\/%E9%9A%8F%E7%AC%94\/%E6%AF%8F%E6%97%A5%E4%B8%80%E7%BB%83\/excel%E8%A1%A8%E6%A0%BC%E6%B7%BB%E5%8A%A0%E7%94%98%E7%89%B9%E5%9B%BE\/",
             "date": "2026-01-14",
             "filename": "Excel表格添加甘特图.md",
-            "section": "posts\/随笔\/生活",
+            "section": "posts\/随笔\/每日一练",
             "lastmod": "2026-01-14",
             "content": ""
           },{
