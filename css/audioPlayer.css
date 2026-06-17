@@ -1,3 +1,8 @@
+/* 音乐管理器桌面图标 */
+.music-manager-icon .icon {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="6" y="8" width="36" height="28" rx="4" fill="%23ffffff" stroke="%232563eb" stroke-width="2"/><text x="12" y="28" font-size="14" fill="%232563eb">MD</text></svg>');
+}
+
 /* 音频播放器样式 */
 .audio-player {
     display: none;

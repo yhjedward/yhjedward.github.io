@@ -1,3 +1,8 @@
+/* Markdown 桌面图标 */
+.video-manager-icon .icon {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="6" y="8" width="36" height="28" rx="4" fill="%23ffffff" stroke="%232563eb" stroke-width="2"/><polygon points="20,16 32,24 20,32" fill="%232563eb"/></svg>');
+}
+
 /* 视频管理器窗口样式 */
 .video-manager-window {
     display: none;
