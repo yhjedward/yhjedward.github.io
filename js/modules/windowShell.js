@@ -61,6 +61,19 @@ export const WindowShell = (() => {
             hide: () => globalThis.hideTodoWindow?.()
         },
         {
+            app: 'timeline',
+            windowId: 'timeline-window',
+            title: '时间线',
+            icon: '🕗',
+            controls: {
+                minimize: '.timeline-minimize',
+                maximize: '.timeline-maximize',
+                close: '.timeline-close'
+            },
+            show: () => globalThis.startOpenTimeline?.(),
+            hide: () => globalThis.hideTimelineWindow?.()
+        },
+        {
             app: 'musicManager',
             windowId: 'music-manager-window',
             title: '音乐管理器',
@@ -393,11 +406,13 @@ export const WindowShell = (() => {
         globalThis.showDrawingWindow = globalThis.startOpenDrawing;
         globalThis.showMdWindow = globalThis.startOpenMd;
         globalThis.showTodoWindow = globalThis.startOpenTodo;
+        globalThis.showTimelineWindow = () => globalThis.startOpenTimeline?.();
 
         globalThis.hideExplorerWindow = () => closeWindow('explorer', document.getElementById('explorer-window'));
         globalThis.hideDrawingWindow = () => closeWindow('drawing', document.getElementById('drawing-window'));
         globalThis.hideMdWindow = () => closeWindow('markdown', document.getElementById('md-window'));
         globalThis.hideTodoWindow = () => closeWindow('todo', document.getElementById('todo-window'));
+        globalThis.hideTimelineWindow = () => closeWindow('timeline', document.getElementById('timeline-window'));
         globalThis.hideMusicManagerWindow = () => closeWindow('musicManager', document.getElementById('music-manager-window'));
         globalThis.hideVideoManagerWindow = () => closeWindow('videoManager', document.getElementById('video-manager-window'));
 

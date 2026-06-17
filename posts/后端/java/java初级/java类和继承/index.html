@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="/css/markdown.css">
   <link rel="stylesheet" href="/css/draw.css">
   <link rel="stylesheet" href="/css/todo.css">
+  <link rel="stylesheet" href="/css/timeline.css">
   <link rel="stylesheet" href="/css/tts.css">
   <link rel="stylesheet" href="/css/aiSlideout.css">
   <link rel="stylesheet" href="/css/im.css">
@@ -56,6 +57,7 @@
   <script src="/js/ai-image-generator.js"></script>
   <script src="/js/markdown-persistence.js"></script>
   <script src="/js/todo.js"></script>
+  <script src="/js/timeline.js"></script>
   <script src="/js/tts-window-manager.js"></script>
   <script src="/js/tts-application.js"></script>
   <script src="/js/notification-manager.js"></script>
@@ -63,6 +65,22 @@
   <script src="/js/im-widget.js"></script>
   <script type="module" src="/js/modules/win7-loader.js"></script>
   <script type="module" src="/js/modules/core-init.js"></script>
+  
+  <script>
+    console.log('[Diagnostic] Page loaded, checking timeline icon');
+    window.addEventListener('load', () => {
+      const timelineIcon = document.getElementById('timeline');
+      console.log('[Diagnostic] Timeline icon found:', !!timelineIcon);
+      if (timelineIcon) {
+        console.log('[Diagnostic] Timeline icon details:', {
+          id: timelineIcon.id,
+          class: timelineIcon.className,
+          parent: timelineIcon.parentElement?.tagName
+        });
+      }
+      console.log('[Diagnostic] Checking globalThis.startOpenTimeline:', typeof globalThis.startOpenTimeline);
+    });
+  </script>
   
   
 </head>
@@ -85,9 +103,9 @@
       <div class="icon"></div>
       <div class="label">待办事项</div>
     </div>
-    <div class="desktop-icon fileupload-icon" id="file-uploader">
+    <div class="desktop-icon timeline-icon" id="timeline">
       <div class="icon"></div>
-      <div class="label">文件上传</div>
+      <div class="label">时间线</div>
     </div>
     <div class="desktop-icon tts-icon" id="tts-app">
       <div class="icon"></div>
@@ -104,7 +122,7 @@
     
     <div id="desktop-central" aria-hidden="true">
       <div id="desktop-central-text"
-        data-text="我想 || 已经 || 没有 || 什么 || 令我高兴的事情了"
+        data-text=" ^_^ || &gt;_&lt; || v_v || *_* "
         data-speed="80"
         data-delete-speed="40"
         data-pause="1500"
@@ -292,6 +310,7 @@
       <button type="button" class="start-menu-item" data-start-action="drawing">🎨 画板</button>
       <button type="button" class="start-menu-item" data-start-action="markdown">📝 Markdown 编辑器</button>
       <button type="button" class="start-menu-item" data-start-action="todo">✓ 待办事项</button>
+      <button type="button" class="start-menu-item" data-start-action="timeline">🕗 时间线</button>
       <button type="button" class="start-menu-item" data-start-action="tts">🔊 文本转语音</button>
     </div>
     <div class="start-menu-right">
@@ -685,6 +704,63 @@
     </div>
   </div>
   
+  <div class="window timeline-window" id="timeline-window"
+    style="display: none; left: 120px; top: 80px; width: 1000px; height: 650px;">
+    <div class="window-titlebar">
+      <div class="title-left">
+        <div class="window-title">项目时间线</div>
+      </div>
+      <div class="window-controls">
+        <button class="minimize timeline-minimize">─</button>
+        <button class="maximize timeline-maximize">□</button>
+        <button class="close timeline-close">×</button>
+      </div>
+    </div>
+    <div class="timeline-content">
+      <div class="timeline-project-panel">
+        <h3>项目目录</h3>
+        <div class="timeline-field">
+          <label for="timeline-project-name">项目名称</label>
+          <input id="timeline-project-name" type="text" placeholder="输入项目名称" />
+        </div>
+        <div class="timeline-actions">
+          <button id="project-add-btn" class="timeline-btn primary">新增项目</button>
+          <button id="project-update-btn" class="timeline-btn">更新项目</button>
+          <button id="project-delete-btn" class="timeline-btn danger">删除项目</button>
+        </div>
+        <div id="project-list" class="project-list"></div>
+      </div>
+      <div class="timeline-input-panel">
+        <h3>当前项目：<span id="current-project-label">无</span></h3>
+        <div class="timeline-field">
+          <label for="timeline-title">标题</label>
+          <input id="timeline-title" type="text" placeholder="输入事件标题" />
+        </div>
+        <div class="timeline-field">
+          <label for="timeline-date">日期</label>
+          <input id="timeline-date" type="date" />
+        </div>
+        <div class="timeline-field">
+          <label for="timeline-description">描述</label>
+          <textarea id="timeline-description" rows="3" placeholder="输入事件描述"></textarea>
+        </div>
+        <div class="timeline-actions">
+          <button id="timeline-add-btn" class="timeline-btn primary">添加事件</button>
+          <button id="timeline-sample-btn" class="timeline-btn">示例</button>
+          <button id="timeline-clear-btn" class="timeline-btn danger">清空事件</button>
+          <button id="timeline-export-btn" class="timeline-btn">导出</button>
+          <button id="timeline-import-btn" class="timeline-btn">导入</button>
+          <input id="timeline-import-file" type="file" accept=".json" style="display: none;" />
+        </div>
+      </div>
+      <div class="timeline-list-panel">
+        <h3>项目时间线</h3>
+        <div id="timeline-view" class="timeline-view"></div>
+      </div>
+    </div>
+  </div>
+
+  
   <div class="window tts-window" id="tts-window"
     style="display: none; left: 300px; top: 150px; width: 500px; height: 600px;">
     <div class="window-titlebar">
@@ -863,7 +939,7 @@
             "filename": "Flutter基础.md",
             "section": "posts\/后端\/flutter",
             "lastmod": "2026-04-27",
-            "content": " h2 id=\u0026#34;搭建-flutter-开发环境\u0026#34; 搭建 flutter 开发环境 \/h2 p 诊断 flutter 环境 \/p div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; flutter doctor -v \/span \/span \/code \/pre \/div p 使用命令创建 flutter 工程 \/p div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; # flutter create --platform web \u0026amp;lt;项目名称\u0026amp;gt; \/span \/span \/span \/code \/pre \/div h2 …"
+            "content": " h2 id=\u0026#34;搭建-flutter-开发环境\u0026#34; 搭建 flutter 开发环境 \/h2 p 诊断 flutter 环境 \/p div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; flutter doctor -v \/span \/span \/code \/pre \/div p 使用命令创建 flutter 工程 \/p div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; # flutter create --platform web \u0026amp;lt;项目名称\u0026amp;gt; \/span \/span \/span \/code \/pre \/div p 启用 …"
           },{
             "title": "Dart类",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/flutter\/dart\/dart%E7%B1%BB\/",
@@ -1911,7 +1987,7 @@
             "filename": "Solidworks基础.md",
             "section": "posts\/软件使用\/solidworks",
             "lastmod": "2025-09-20",
-            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 h4 id=\u0026#34;专业术语\u0026#34; 专业术语 \/h4 ol li 带边线上色模式, 线架图模式, \/li li 孤立 \/li li 剖面视图 \/li li 随配合复制 \/li li 转换实体引用: 将轮廓线或草图线投影至正在绘制的草图的功能. \/li li 扫描: 将草图沿着另一草图为路径生成实体. \/li li 样条曲线 \/li li 套合样条曲线 \/li \/ol h2 id=\u0026#34;视频链接\u0026#34; 视频链接 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 视频 \/span \/div div class=\u0026#34;collapse-content\u0026#34; a href=\u0026#34;https:\/\/www.bilibili.com\/video\/BV1iw411Z7HZ\u0026#34; 转换实体引用 \/a \/br \/div \/div div class=\u0026#34;collapse-container\u0026#34; div …"
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 h4 id=\u0026#34;专业术语\u0026#34; 专业术语 \/h4 ol li 带边线上色模式, 线架图模式, \/li li 孤立 \/li li 剖面视图 \/li li 随配合复制 \/li li 转换实体引用: 将轮廓线或草图线投影至正在绘制的草图的功能. \/li li 扫描: 将草图沿着另一草图为路径生成实体. \/li li 样条曲线 \/li li 套合样条曲线 \/li \/ol h4 id=\u0026#34;解释-solidworks-的压缩解压缩功能与隐藏功能\u0026#34; 解释 solidworks 的压缩\/解压缩功能与隐藏功能 \/h4 p 隐藏 = 看不见但仍存在、仍参与计算(装配配合、特征引用都有效); 压缩 = 看不见且被禁用、不参与计算、相关特征\/配合也失效. \/p h2 id=\u0026#34;视频链接\u0026#34; 视频链接 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 视频 \/span \/div div …"
           },{
             "title": "Solidworks快捷键",
             "url": "\/posts\/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8\/solidworks\/solidworks%E5%BF%AB%E6%8D%B7%E9%94%AE\/",

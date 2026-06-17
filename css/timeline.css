@@ -1,0 +1,365 @@
+.timeline-window {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    z-index: 10005;
+    left: 120px;
+    top: 80px;
+    width: 1000px;
+    height: 650px;
+    background: #ffffff;
+    border: 1px solid #999;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.timeline-window .timeline-content {
+    display: grid;
+    grid-template-columns: 240px 320px 1fr;
+    height: calc(100% - 36px);
+    gap: 0;
+}
+
+.timeline-project-panel,
+.timeline-input-panel,
+.timeline-list-panel {
+    padding: 12px;
+    background: #f0f0f0;
+    border-top: 1px solid #d3d3d3;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.timeline-project-panel {
+    border-right: 1px solid #d3d3d3;
+}
+
+.timeline-input-panel {
+    border-right: 1px solid #d3d3d3;
+}
+
+.timeline-list-panel {
+    overflow-y: auto;
+}
+
+.timeline-project-panel h3,
+.timeline-input-panel h3,
+.timeline-list-panel h3 {
+    margin: 0 0 12px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.project-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #c0c0c0;
+    background: #fff;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    font-size: 12px;
+}
+
+.project-item.selected {
+    border-color: #0078d4;
+    background: #e8f0fe;
+}
+
+.project-item:hover {
+    background: #f5f5f5;
+}
+
+.project-item span {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.timeline-view {
+    position: relative;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 20px 16px;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 36px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: #0078d4;
+}
+
+.timeline-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.timeline-item:not(:last-child) {
+    margin-bottom: 18px;
+}
+
+.timeline-item-marker {
+    position: relative;
+    width: 24px;
+    min-width: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.timeline-item-marker::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #0078d4;
+    box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.08);
+}
+
+.timeline-item-card {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #d3d3d3;
+    border-radius: 6px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.timeline-item-date {
+    font-size: 11px;
+    color: #0078d4;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.timeline-item-title {
+    margin: 0 0 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+}
+
+.timeline-item-desc {
+    margin: 0;
+    color: #555;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.timeline-card-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.timeline-field {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.timeline-field label {
+    font-size: 12px;
+    color: #666;
+}
+
+.timeline-field input,
+.timeline-field textarea {
+    width: 100%;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 6px 8px;
+    font-size: 12px;
+    color: #333;
+    background: #fff;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.timeline-field textarea {
+    height: 60px;
+}
+
+.timeline-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.timeline-btn {
+    padding: 6px 8px;
+    border: 1px solid #999;
+    border-radius: 2px;
+    background: #e8e8e8;
+    color: #000;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.15s;
+}
+
+.timeline-btn:hover {
+    background: #dfdfdf;
+}
+
+.timeline-btn:active {
+    background: #c0c0c0;
+}
+
+.timeline-btn.primary {
+    background: #0078d4;
+    color: #fff;
+    border-color: #0078d4;
+}
+
+.timeline-btn.primary:hover {
+    background: #106ebe;
+}
+
+.timeline-btn.danger {
+    background: #e81b23;
+    color: #fff;
+    border-color: #e81b23;
+}
+
+.timeline-btn.danger:hover {
+    background: #d81b1f;
+}
+
+.timeline-view {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding-right: 4px;
+}
+
+.timeline-card {
+    background: #fff;
+    border: 1px solid #d3d3d3;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.timeline-card-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.timeline-card-title {
+    margin: 0 0 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+}
+
+.timeline-card-date {
+    font-size: 11px;
+    color: #0078d4;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.timeline-card-desc {
+    margin: 0;
+    color: #666;
+    font-size: 12px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.timeline-card-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.timeline-card-btn {
+    padding: 4px 6px;
+    border: 1px solid #999;
+    background: #e8e8e8;
+    color: #000;
+    cursor: pointer;
+    font-size: 11px;
+    border-radius: 2px;
+    transition: background 0.15s;
+}
+
+.timeline-card-btn:hover {
+    background: #dfdfdf;
+}
+
+.timeline-card-btn.edit {
+    background: #0078d4;
+    color: #fff;
+    border-color: #0078d4;
+}
+
+.timeline-card-btn.edit:hover {
+    background: #106ebe;
+}
+
+.timeline-card-btn.delete {
+    background: #e81b23;
+    color: #fff;
+    border-color: #e81b23;
+}
+
+.timeline-card-btn.delete:hover {
+    background: #d81b1f;
+}
+
+.timeline-empty {
+    color: #999;
+    padding: 20px;
+    text-align: center;
+    border: 1px dashed #d3d3d3;
+    border-radius: 4px;
+    background: #fafafa;
+    font-size: 12px;
+}
+
+.timeline-icon .icon::before {
+    content: '🕗';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 32px;
+}
+

@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="/css/markdown.css">
   <link rel="stylesheet" href="/css/draw.css">
   <link rel="stylesheet" href="/css/todo.css">
+  <link rel="stylesheet" href="/css/timeline.css">
   <link rel="stylesheet" href="/css/tts.css">
   <link rel="stylesheet" href="/css/aiSlideout.css">
   <link rel="stylesheet" href="/css/im.css">
@@ -56,6 +57,7 @@
   <script src="/js/ai-image-generator.js"></script>
   <script src="/js/markdown-persistence.js"></script>
   <script src="/js/todo.js"></script>
+  <script src="/js/timeline.js"></script>
   <script src="/js/tts-window-manager.js"></script>
   <script src="/js/tts-application.js"></script>
   <script src="/js/notification-manager.js"></script>
@@ -63,6 +65,22 @@
   <script src="/js/im-widget.js"></script>
   <script type="module" src="/js/modules/win7-loader.js"></script>
   <script type="module" src="/js/modules/core-init.js"></script>
+  
+  <script>
+    console.log('[Diagnostic] Page loaded, checking timeline icon');
+    window.addEventListener('load', () => {
+      const timelineIcon = document.getElementById('timeline');
+      console.log('[Diagnostic] Timeline icon found:', !!timelineIcon);
+      if (timelineIcon) {
+        console.log('[Diagnostic] Timeline icon details:', {
+          id: timelineIcon.id,
+          class: timelineIcon.className,
+          parent: timelineIcon.parentElement?.tagName
+        });
+      }
+      console.log('[Diagnostic] Checking globalThis.startOpenTimeline:', typeof globalThis.startOpenTimeline);
+    });
+  </script>
   
   
 </head>
@@ -85,9 +103,9 @@
       <div class="icon"></div>
       <div class="label">待办事项</div>
     </div>
-    <div class="desktop-icon fileupload-icon" id="file-uploader">
+    <div class="desktop-icon timeline-icon" id="timeline">
       <div class="icon"></div>
-      <div class="label">文件上传</div>
+      <div class="label">时间线</div>
     </div>
     <div class="desktop-icon tts-icon" id="tts-app">
       <div class="icon"></div>
@@ -104,7 +122,7 @@
     
     <div id="desktop-central" aria-hidden="true">
       <div id="desktop-central-text"
-        data-text="我想 || 已经 || 没有 || 什么 || 令我高兴的事情了"
+        data-text=" ^_^ || &gt;_&lt; || v_v || *_* "
         data-speed="80"
         data-delete-speed="40"
         data-pause="1500"
@@ -292,6 +310,7 @@
       <button type="button" class="start-menu-item" data-start-action="drawing">🎨 画板</button>
       <button type="button" class="start-menu-item" data-start-action="markdown">📝 Markdown 编辑器</button>
       <button type="button" class="start-menu-item" data-start-action="todo">✓ 待办事项</button>
+      <button type="button" class="start-menu-item" data-start-action="timeline">🕗 时间线</button>
       <button type="button" class="start-menu-item" data-start-action="tts">🔊 文本转语音</button>
     </div>
     <div class="start-menu-right">
@@ -563,9 +582,21 @@
 </span></span><span class="line"><span class="cl">        <span class="nl">body:</span> <span class="kd">const</span> <span class="n">SingleChildScrollView</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">          <span class="nl">child:</span><span class="n">Column</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">            <span class="nl">children:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">              <span class="n">ImageSection</span><span class="p">(</span><span class="nl">image:</span><span class="s1">&#39;images/pic1.png&#39;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">              <span class="n">TitleSection</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">                <span class="nl">name:</span> <span class="s1">&#39;Oeschinen Lake Campground&#39;</span> 
 </span></span><span class="line"><span class="cl">              <span class="p">,</span> <span class="nl">location:</span> <span class="s1">&#39;Kandersteg, Switzerland&#39;</span>
+</span></span><span class="line"><span class="cl">              <span class="p">),</span>
+</span></span><span class="line"><span class="cl">              <span class="n">ButtonSection</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">              <span class="n">TextSection</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">description:</span> 
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;Lake Oeschinen lies at the foot of the Blüemlisalp in the &#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;Bernese Alps. Situated 1,578 meters above sea level, it &#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;is one of the larger Alpine Lakes. A gondola ride from &#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;Kandersteg, followed by a half-hour walk through pastures &#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;and pine forest, leads you to the lake, which warms to 20 &#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;degrees Celsius in the summer. Activities enjoyed here &#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;include rowing, and riding the summer toboggan run.&#39;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">              <span class="p">),</span>
 </span></span><span class="line"><span class="cl">            <span class="p">],</span>
 </span></span><span class="line"><span class="cl">
@@ -605,8 +636,7 @@
 </span></span><span class="line"><span class="cl">              <span class="p">],</span>
 </span></span><span class="line"><span class="cl">            <span class="p">)</span>
 </span></span><span class="line"><span class="cl">          <span class="p">),</span>
-</span></span><span class="line"><span class="cl">          <span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="p">.</span><span class="n">start</span><span class="p">,</span> <span class="nl">color:</span><span class="n">Colors</span><span class="p">.</span><span class="n">red</span><span class="p">[</span><span class="m">500</span><span class="p">]),</span>
-</span></span><span class="line"><span class="cl">          <span class="kd">const</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;41&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">          <span class="kd">const</span> <span class="n">FavoriteWidget</span><span class="p">(),</span>
 </span></span><span class="line"><span class="cl">        <span class="p">],</span>
 </span></span><span class="line"><span class="cl">      <span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">);</span>
@@ -619,6 +649,33 @@
 </span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">override</span>
 </span></span><span class="line"><span class="cl">  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">final</span> <span class="n">Color</span> <span class="n">color</span> <span class="o">=</span> <span class="n">Theme</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">primaryColor</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">SizedBox</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">child:</span> <span class="n">Row</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">mainAxisAlignment:</span> <span class="n">MainAxisAlignment</span><span class="p">.</span><span class="n">spaceEvenly</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">children:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">          <span class="n">ButtonWithText</span><span class="p">(</span><span class="nl">color:</span><span class="n">color</span><span class="p">,</span> <span class="nl">icon:</span><span class="n">Icons</span><span class="p">.</span><span class="n">call</span><span class="p">,</span> <span class="nl">label:</span><span class="s1">&#39;CALL&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">          <span class="n">ButtonWithText</span><span class="p">(</span><span class="nl">color:</span><span class="n">color</span><span class="p">,</span> <span class="nl">icon:</span><span class="n">Icons</span><span class="p">.</span><span class="n">near_me</span><span class="p">,</span> <span class="nl">label:</span><span class="s1">&#39;ROUTE&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">          <span class="n">ButtonWithText</span><span class="p">(</span><span class="nl">color:</span><span class="n">color</span><span class="p">,</span> <span class="nl">icon:</span><span class="n">Icons</span><span class="p">.</span><span class="n">share</span><span class="p">,</span> <span class="nl">label:</span><span class="s1">&#39;SHARE&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">],</span>
+</span></span><span class="line"><span class="cl">      <span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">TextSection</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">const</span> <span class="n">TextSection</span><span class="p">({</span><span class="k">super</span><span class="p">.</span><span class="n">key</span><span class="p">,</span> <span class="kd">required</span> <span class="k">this</span><span class="p">.</span><span class="n">description</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">final</span> <span class="kt">String</span> <span class="n">description</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">override</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">Padding</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">padding:</span> <span class="n">EdgeInsets</span><span class="p">.</span><span class="n">all</span><span class="p">(</span><span class="m">32</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">child:</span> <span class="n">Text</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">description</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">softWrap:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -636,12 +693,68 @@
 </span></span><span class="line"><span class="cl">      <span class="nl">mainAxisAlignment:</span> <span class="n">MainAxisAlignment</span><span class="p">.</span><span class="n">center</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">      <span class="nl">children:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">        <span class="n">Icon</span><span class="p">(</span><span class="n">icon</span><span class="p">,</span> <span class="nl">color:</span><span class="n">color</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Container</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">          <span class="nl">margin:</span> <span class="kd">const</span> <span class="n">EdgeInsets</span><span class="p">.</span><span class="n">only</span><span class="p">(</span><span class="nl">top:</span><span class="m">8</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Padding</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">padding:</span> <span class="kd">const</span> <span class="n">EdgeInsets</span><span class="p">.</span><span class="n">only</span><span class="p">(</span><span class="nl">top:</span><span class="m">8</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">          <span class="nl">child:</span> <span class="n">Text</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="nl">style:</span> <span class="n">TextStyle</span><span class="p">(</span><span class="nl">fontSize:</span><span class="m">12</span><span class="p">,</span> <span class="nl">fontWeight:</span><span class="n">FontWeight</span><span class="p">.</span><span class="n">w400</span><span class="p">,</span> <span class="nl">color:</span><span class="n">color</span><span class="p">)),</span>
-</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">),</span>
 </span></span><span class="line"><span class="cl">      <span class="p">],</span>
-</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">ImageSection</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">const</span> <span class="n">ImageSection</span><span class="p">({</span><span class="k">super</span><span class="p">.</span><span class="n">key</span><span class="p">,</span> <span class="kd">required</span> <span class="k">this</span><span class="p">.</span><span class="n">image</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">final</span> <span class="kt">String</span> <span class="n">image</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">override</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">Image</span><span class="p">.</span><span class="n">asset</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nl">width:</span> <span class="m">600</span><span class="p">,</span> <span class="nl">height:</span> <span class="m">240</span><span class="p">,</span> <span class="nl">fit:</span> <span class="n">BoxFit</span><span class="p">.</span><span class="n">cover</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">FavoriteWidget</span> <span class="kd">extends</span> <span class="n">StatefulWidget</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">const</span> <span class="n">FavoriteWidget</span><span class="p">({</span><span class="k">super</span><span class="p">.</span><span class="n">key</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">override</span>
+</span></span><span class="line"><span class="cl">  <span class="n">State</span><span class="o">&lt;</span><span class="n">FavoriteWidget</span><span class="o">&gt;</span> <span class="n">createState</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">_FavoriteWidgetState</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">_FavoriteWidgetState</span> <span class="kd">extends</span> <span class="n">State</span><span class="o">&lt;</span><span class="n">FavoriteWidget</span><span class="o">&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">bool</span> <span class="n">_isFavorited</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">_favoriteCount</span> <span class="o">=</span> <span class="m">41</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">override</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">Row</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">mainAxisSize:</span> <span class="n">MainAxisSize</span><span class="p">.</span><span class="n">min</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">children:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Container</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">padding:</span> <span class="kd">const</span> <span class="n">EdgeInsets</span><span class="p">.</span><span class="n">all</span><span class="p">(</span><span class="m">0</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">child:</span><span class="n">IconButton</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">padding:</span> <span class="kd">const</span>  <span class="n">EdgeInsets</span><span class="p">.</span><span class="n">all</span><span class="p">(</span><span class="m">0</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">alignment:</span> <span class="n">Alignment</span><span class="p">.</span><span class="n">topCenter</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">icon:</span> <span class="p">(</span><span class="n">_isFavorited</span>
+</span></span><span class="line"><span class="cl">            <span class="o">?</span> <span class="kd">const</span> <span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="p">.</span><span class="n">star</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="o">:</span> <span class="kd">const</span> <span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="p">.</span><span class="n">star_border</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">color:</span> <span class="n">Colors</span><span class="p">.</span><span class="n">red</span><span class="p">[</span><span class="m">500</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">onPressed:</span> <span class="n">_toggleFavorite</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SizedBox</span><span class="p">(</span><span class="nl">width:</span> <span class="m">18</span><span class="p">,</span> <span class="nl">child:</span> <span class="n">SizedBox</span><span class="p">(</span><span class="nl">child:</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">$</span><span class="n">_favoriteCount</span><span class="s1">&#39;</span><span class="p">))),</span>
+</span></span><span class="line"><span class="cl">      <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="n">_toggleFavorite</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">setState</span><span class="p">(()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="n">_isFavorited</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">_favoriteCount</span> <span class="o">-=</span> <span class="m">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">_isFavorited</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">_favoriteCount</span> <span class="o">+=</span> <span class="m">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">_isFavorited</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div>
@@ -769,6 +882,63 @@
       <div id="todo-list"></div>
     </div>
   </div>
+  
+  <div class="window timeline-window" id="timeline-window"
+    style="display: none; left: 120px; top: 80px; width: 1000px; height: 650px;">
+    <div class="window-titlebar">
+      <div class="title-left">
+        <div class="window-title">项目时间线</div>
+      </div>
+      <div class="window-controls">
+        <button class="minimize timeline-minimize">─</button>
+        <button class="maximize timeline-maximize">□</button>
+        <button class="close timeline-close">×</button>
+      </div>
+    </div>
+    <div class="timeline-content">
+      <div class="timeline-project-panel">
+        <h3>项目目录</h3>
+        <div class="timeline-field">
+          <label for="timeline-project-name">项目名称</label>
+          <input id="timeline-project-name" type="text" placeholder="输入项目名称" />
+        </div>
+        <div class="timeline-actions">
+          <button id="project-add-btn" class="timeline-btn primary">新增项目</button>
+          <button id="project-update-btn" class="timeline-btn">更新项目</button>
+          <button id="project-delete-btn" class="timeline-btn danger">删除项目</button>
+        </div>
+        <div id="project-list" class="project-list"></div>
+      </div>
+      <div class="timeline-input-panel">
+        <h3>当前项目：<span id="current-project-label">无</span></h3>
+        <div class="timeline-field">
+          <label for="timeline-title">标题</label>
+          <input id="timeline-title" type="text" placeholder="输入事件标题" />
+        </div>
+        <div class="timeline-field">
+          <label for="timeline-date">日期</label>
+          <input id="timeline-date" type="date" />
+        </div>
+        <div class="timeline-field">
+          <label for="timeline-description">描述</label>
+          <textarea id="timeline-description" rows="3" placeholder="输入事件描述"></textarea>
+        </div>
+        <div class="timeline-actions">
+          <button id="timeline-add-btn" class="timeline-btn primary">添加事件</button>
+          <button id="timeline-sample-btn" class="timeline-btn">示例</button>
+          <button id="timeline-clear-btn" class="timeline-btn danger">清空事件</button>
+          <button id="timeline-export-btn" class="timeline-btn">导出</button>
+          <button id="timeline-import-btn" class="timeline-btn">导入</button>
+          <input id="timeline-import-file" type="file" accept=".json" style="display: none;" />
+        </div>
+      </div>
+      <div class="timeline-list-panel">
+        <h3>项目时间线</h3>
+        <div id="timeline-view" class="timeline-view"></div>
+      </div>
+    </div>
+  </div>
+
   
   <div class="window tts-window" id="tts-window"
     style="display: none; left: 300px; top: 150px; width: 500px; height: 600px;">
@@ -948,7 +1118,7 @@
             "filename": "Flutter基础.md",
             "section": "posts\/后端\/flutter",
             "lastmod": "2026-04-27",
-            "content": " h2 id=\u0026#34;搭建-flutter-开发环境\u0026#34; 搭建 flutter 开发环境 \/h2 p 诊断 flutter 环境 \/p div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; flutter doctor -v \/span \/span \/code \/pre \/div p 使用命令创建 flutter 工程 \/p div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; # flutter create --platform web \u0026amp;lt;项目名称\u0026amp;gt; \/span \/span \/span \/code \/pre \/div h2 …"
+            "content": " h2 id=\u0026#34;搭建-flutter-开发环境\u0026#34; 搭建 flutter 开发环境 \/h2 p 诊断 flutter 环境 \/p div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; flutter doctor -v \/span \/span \/code \/pre \/div p 使用命令创建 flutter 工程 \/p div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-shell\u0026#34; data-lang=\u0026#34;shell\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; span class=\u0026#34;c1\u0026#34; # flutter create --platform web \u0026amp;lt;项目名称\u0026amp;gt; \/span \/span \/span \/code \/pre \/div p 启用 …"
           },{
             "title": "Dart类",
             "url": "\/posts\/%E5%90%8E%E7%AB%AF\/flutter\/dart\/dart%E7%B1%BB\/",
@@ -1996,7 +2166,7 @@
             "filename": "Solidworks基础.md",
             "section": "posts\/软件使用\/solidworks",
             "lastmod": "2025-09-20",
-            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 h4 id=\u0026#34;专业术语\u0026#34; 专业术语 \/h4 ol li 带边线上色模式, 线架图模式, \/li li 孤立 \/li li 剖面视图 \/li li 随配合复制 \/li li 转换实体引用: 将轮廓线或草图线投影至正在绘制的草图的功能. \/li li 扫描: 将草图沿着另一草图为路径生成实体. \/li li 样条曲线 \/li li 套合样条曲线 \/li \/ol h2 id=\u0026#34;视频链接\u0026#34; 视频链接 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 视频 \/span \/div div class=\u0026#34;collapse-content\u0026#34; a href=\u0026#34;https:\/\/www.bilibili.com\/video\/BV1iw411Z7HZ\u0026#34; 转换实体引用 \/a \/br \/div \/div div class=\u0026#34;collapse-container\u0026#34; div …"
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 h4 id=\u0026#34;专业术语\u0026#34; 专业术语 \/h4 ol li 带边线上色模式, 线架图模式, \/li li 孤立 \/li li 剖面视图 \/li li 随配合复制 \/li li 转换实体引用: 将轮廓线或草图线投影至正在绘制的草图的功能. \/li li 扫描: 将草图沿着另一草图为路径生成实体. \/li li 样条曲线 \/li li 套合样条曲线 \/li \/ol h4 id=\u0026#34;解释-solidworks-的压缩解压缩功能与隐藏功能\u0026#34; 解释 solidworks 的压缩\/解压缩功能与隐藏功能 \/h4 p 隐藏 = 看不见但仍存在、仍参与计算(装配配合、特征引用都有效); 压缩 = 看不见且被禁用、不参与计算、相关特征\/配合也失效. \/p h2 id=\u0026#34;视频链接\u0026#34; 视频链接 \/h2 div class=\u0026#34;collapse-container\u0026#34; div class=\u0026#34;collapse-header\u0026#34; span class=\u0026#34;collapse-icon\u0026#34; \u002b \/span span class=\u0026#34;collapse-title\u0026#34; 视频 \/span \/div div …"
           },{
             "title": "Solidworks快捷键",
             "url": "\/posts\/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8\/solidworks\/solidworks%E5%BF%AB%E6%8D%B7%E9%94%AE\/",

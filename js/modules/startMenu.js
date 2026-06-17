@@ -9,6 +9,7 @@ export const StartMenu = (() => {
         drawing: () => globalThis.startOpenDrawing?.(),
         markdown: () => globalThis.startOpenMd?.(),
         todo: () => globalThis.startOpenTodo?.(),
+        timeline: () => globalThis.startOpenTimeline?.(),
         tts: () => globalThis.startOpenTTS?.()
     };
 

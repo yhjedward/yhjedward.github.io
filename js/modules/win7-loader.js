@@ -3,6 +3,11 @@
  * 初始化所有功能模块
  */
 
+console.log('[Win7Loader] ========== START MODULE LOADING ==========');
+console.log('[Win7Loader] Current time:', new Date().toISOString());
+console.log('[Win7Loader] Document ready state:', document.readyState);
+console.log('[Win7Loader] GlobalThis location:', globalThis.location.href);
+
 import { DeviceDetection } from './deviceDetection.js';
 import { ThemeManager } from './themeManager.js';
 import { BackgroundManager } from './backgroundManager.js';
@@ -24,6 +29,33 @@ import { TableOfContents } from './toc.js';
 import { Search } from './search.js';
 import { WindowDragger } from './windowDragger.js';
 import { RandomArticle } from './randomArticle.js';
+
+console.log('[Win7Loader] module loaded');
+
+function bindTimelineIconClick() {
+    const timelineIcon = document.getElementById('timeline') || document.querySelector('.desktop-icon.timeline-icon');
+    if (!timelineIcon) {
+        console.warn('[Win7Loader] timeline icon not found for click binding');
+        return;
+    }
+
+    if (timelineIcon.__timelineClickBound) {
+        return;
+    }
+    timelineIcon.__timelineClickBound = true;
+
+    console.log('[Win7Loader] binding timeline click');
+    timelineIcon.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('[Win7Loader] timeline icon clicked');
+        if (typeof globalThis.startOpenTimeline === 'function') {
+            globalThis.startOpenTimeline();
+        } else {
+            console.warn('[Win7Loader] startOpenTimeline is not defined');
+        }
+    });
+}
 
 /**
  * Win7博客系统的主初始化函数
@@ -131,7 +163,12 @@ export function initWin7Blog() {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('[Win7] DOM Content Loaded - Starting initialization');
     initWin7Blog();
+    bindTimelineIconClick();
 });
+
+if (document.readyState !== 'loading') {
+    bindTimelineIconClick();
+}
 
 /**
  * 暴露全局函数供 WindowManager 和其他模块使用
@@ -246,6 +283,46 @@ globalThis.startOpenTodo = function() {
     }
 };
 
+globalThis.startOpenTimeline = function() {
+    console.log('[startOpenTimeline] called');
+    const win = document.getElementById('timeline-window');
+    if (win) {
+        win.style.display = 'flex';
+        win.style.visibility = 'visible';
+        win.style.opacity = '1';
+        WindowShell.bringToFront(win);
+        win.classList.remove('minimized');
+        win.classList.add('restored', 'active');
+
+        const taskbarIcon = document.querySelector('[data-app="timeline"]');
+        if (taskbarIcon) {
+            taskbarIcon.style.display = 'flex';
+            taskbarIcon.classList.add('active');
+        }
+
+        if (globalThis.timelineManager) {
+            globalThis.timelineManager.renderTimeline();
+        }
+    } else {
+        console.warn('[startOpenTimeline] timeline-window not found');
+    }
+};
+
+globalThis.hideTimelineWindow = function() {
+    const win = document.getElementById('timeline-window');
+    if (win) {
+        win.style.display = 'none';
+        win.style.visibility = 'hidden';
+        win.style.opacity = '0';
+        win.classList.remove('active', 'minimized', 'restored');
+        const taskbarIcon = document.querySelector('[data-app="timeline"]');
+        if (taskbarIcon) {
+            taskbarIcon.style.display = 'none';
+            taskbarIcon.classList.remove('active');
+        }
+    }
+};
+
 globalThis.startOpenMusicManager = function() {
     console.log('[startOpenMusicManager] Called');
     const win = document.getElementById('music-manager-window');
@@ -343,6 +420,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    bindTimelineIconClick();
+
     // 在 DOM 加载完成后，重新初始化通知管理器事件处理器
     if (globalThis.notificationManager && typeof globalThis.notificationManager.bindEventHandlers === 'function') {
         console.log('[Win7Loader] Re-initializing notification manager event handlers');
@@ -399,3 +478,18 @@ globalThis.initToc = function(context) {
         TableOfContents.initTocContext(context || document);
     }
 };
+
+// 暴露测试函数
+globalThis.debugTimeline = function() {
+    console.log('[debugTimeline] Testing timeline functionality');
+    console.log('[debugTimeline] Timeline icon:', document.getElementById('timeline'));
+    console.log('[debugTimeline] startOpenTimeline:', typeof globalThis.startOpenTimeline);
+    console.log('[debugTimeline] bindTimelineIconClick:', typeof bindTimelineIconClick);
+    
+    if (typeof globalThis.startOpenTimeline === 'function') {
+        console.log('[debugTimeline] Calling startOpenTimeline()...');
+        globalThis.startOpenTimeline();
+    }
+};
+
+console.log('[Win7Loader] ========== MODULE LOADING COMPLETE ==========');

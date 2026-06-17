@@ -11,7 +11,8 @@ export const WindowManager = (() => {
                 if (typeof globalThis.startOpenExplorer === 'function' &&
                     typeof globalThis.startOpenDrawing === 'function' &&
                     typeof globalThis.startOpenMd === 'function' &&
-                    typeof globalThis.startOpenTodo === 'function') {
+                    typeof globalThis.startOpenTodo === 'function' &&
+                    typeof globalThis.startOpenTimeline === 'function') {
                     resolve();
                 } else {
                     setTimeout(check, 100);
@@ -103,11 +104,31 @@ export const WindowManager = (() => {
         }
     };
 
+    const timeline = {
+        open: () => {
+            waitForWin7Functions().then(() => {
+                if (typeof globalThis.showTimelineWindow === 'function') {
+                    globalThis.showTimelineWindow();
+                }
+            });
+        },
+        close: () => {
+            try {
+                if (typeof globalThis.hideTimelineWindow === 'function') {
+                    globalThis.hideTimelineWindow();
+                }
+            } catch(err) {
+                console.error('[WindowManager][Timeline] Error closing window:', err);
+            }
+        }
+    };
+
     return {
         explorer,
         drawing,
         markdown,
         todo,
+        timeline,
         waitForWin7Functions
     };
 })();
