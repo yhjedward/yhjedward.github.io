@@ -12,6 +12,7 @@ class IMWidget {
         this.messagesContainer = document.getElementById('im-messages');
         this.avatar = document.getElementById('im-avatar');
         this.displayName = document.getElementById('im-display-name');
+        this.widget = document.getElementById('im-widget');
 
         // 设置 API 基础 URL
         this.apiBaseUrl = this.getApiBaseUrl();
@@ -115,6 +116,7 @@ class IMWidget {
     open() {
         this.isOpen = true;
         this.chatWindow.classList.remove('hidden');
+        this.moveButtonToAvatar();
         this.inputField.focus();
         this.clearUnreadCount();
         console.log('[IM] Chat window opened');
@@ -126,7 +128,29 @@ class IMWidget {
     close() {
         this.isOpen = false;
         this.chatWindow.classList.add('hidden');
+        this.restoreButtonToWidget();
         console.log('[IM] Chat window closed');
+    }
+
+    /**
+     * 将打开按钮移入头像区域
+     */
+    moveButtonToAvatar() {
+        if (!this.avatar.contains(this.button)) {
+            this.avatar.appendChild(this.button);
+            this.button.classList.add('in-header');
+        }
+    }
+
+    /**
+     * 将打开按钮恢复到浮动面板外部
+     */
+    restoreButtonToWidget() {
+        if (!this.widget.contains(this.button)) return;
+        if (this.chatWindow.previousSibling !== this.button) {
+            this.widget.insertBefore(this.button, this.chatWindow);
+        }
+        this.button.classList.remove('in-header');
     }
 
     /**

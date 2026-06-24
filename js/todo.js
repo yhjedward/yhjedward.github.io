@@ -3,6 +3,10 @@ class TodoManager {
   constructor() {
     this.todos = [];
     this.apiUrl = ApiConfig.getModuleUrl('todos');
+    this.importBtn = null;
+    this.exportBtn = null;
+    this.importFileInput = null;
+    this.isOnline = true;
     this.init();
   }
 
@@ -428,6 +432,7 @@ class TodoManager {
             this.todos = this.todos.filter(t => !t.completed);
             this.saveTodosToLocalStorage();
             this.renderTodos();
+            this.saveTodos();
             return;
           }
 
@@ -443,11 +448,37 @@ class TodoManager {
           this.todos = this.todos.filter(t => !t.completed);
           this.saveTodosToLocalStorage();
           this.renderTodos();
+          this.saveTodos();
         } catch (err) {
           console.error('Error clearing completed todos:', err);
           alert('清空失败');
         }
       });
+    }
+
+    const exportBtn = document.getElementById('todo-export-btn');
+    const importBtn = document.getElementById('todo-import-btn');
+    this.importFileInput = document.getElementById('todo-import-file');
+
+    console.log('[TodoManager] 事件绑定调试:', { exportBtn: !!exportBtn, importBtn: !!importBtn, importFileInput: !!this.importFileInput });
+
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => this.handleExport());
+      console.log('[TodoManager] 导出按钮绑定成功');
+    } else {
+      console.warn('[TodoManager] 导出按钮未找到');
+    }
+    if (importBtn) {
+      importBtn.addEventListener('click', () => this.handleImportClick());
+      console.log('[TodoManager] 导入按钮绑定成功');
+    } else {
+      console.warn('[TodoManager] 导入按钮未找到');
+    }
+    if (this.importFileInput) {
+      this.importFileInput.addEventListener('change', (e) => this.handleImportFile(e));
+      console.log('[TodoManager] 文件输入绑定成功');
+    } else {
+      console.warn('[TodoManager] 文件输入未找到');
     }
 
     // 筛选按钮
@@ -471,6 +502,109 @@ class TodoManager {
         });
       });
     });
+  }
+
+  handleExport() {
+    try {
+      console.log('[TodoManager] 开始导出...');
+      const exportData = {
+        version: '1.0',
+        exportTime: new Date().toISOString(),
+        todos: this.todos
+      };
+
+      const dataStr = JSON.stringify(exportData, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `todo-backup-${Date.now()}.json`;
+      
+      // 不添加到 DOM，直接触发下载
+      link.click();
+      
+      // 释放 URL 对象
+      setTimeout(() => URL.revokeObjectURL(url), 100);
+      
+      console.log('[TodoManager] 数据导出成功');
+      alert('导出成功！文件已下载到本地。');
+    } catch (error) {
+      console.error('[TodoManager] 导出失败:', error);
+      alert('导出失败：' + (error.message || '未知错误'));
+    }
+  }
+
+  handleImportClick() {
+    console.log('[TodoManager] 点击导入按钮');
+    if (this.importFileInput) {
+      this.importFileInput.click();
+      console.log('[TodoManager] 打开文件选择对话框');
+    } else {
+      console.warn('[TodoManager] 文件输入元素未找到');
+      alert('导入功能暂不可用');
+    }
+  }
+
+  handleImportFile(event) {
+    console.log('[TodoManager] 文件选择事件触发');
+    const file = event.target.files?.[0];
+    if (!file) {
+      console.log('[TodoManager] 未选择文件');
+      return;
+    }
+
+    console.log('[TodoManager] 选择的文件:', file.name, '大小:', file.size);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result;
+        if (typeof content !== 'string') {
+          throw new Error('文件读取失败');
+        }
+
+        console.log('[TodoManager] 文件内容读取完毕，长度:', content.length);
+        const importData = JSON.parse(content);
+        console.log('[TodoManager] JSON 解析成功');
+        
+        if (!importData || !Array.isArray(importData.todos)) {
+          throw new Error('无效的备份文件格式：缺少 todos 数组');
+        }
+
+        console.log('[TodoManager] 找到', importData.todos.length, '个待办项');
+
+        if (!confirm(`导入此备份会覆盖当前所有待办数据（共 ${importData.todos.length} 项），是否继续？`)) {
+          console.log('[TodoManager] 用户取消导入');
+          return;
+        }
+
+        const validTodos = importData.todos.every(todo => {
+          return todo && typeof todo.id !== 'undefined' && typeof todo.text === 'string' && typeof todo.completed === 'boolean';
+        });
+        if (!validTodos) {
+          throw new Error('备份文件包含不合法的待办项');
+        }
+
+        this.todos = importData.todos;
+        this.saveTodosToLocalStorage();
+        this.saveTodos();
+        this.renderTodos();
+        alert('导入成功！已加载 ' + importData.todos.length + ' 个待办项。');
+        console.log('[TodoManager] 数据导入成功，共', importData.todos.length, '项');
+      } catch (error) {
+        console.error('[TodoManager] 导入失败:', error);
+        alert('导入失败：' + (error.message || '无效文件'));
+      }
+    };
+
+    reader.onerror = () => {
+      console.error('[TodoManager] 文件读取错误');
+      alert('文件读取失败');
+    };
+
+    reader.readAsText(file);
+    if (this.importFileInput) {
+      this.importFileInput.value = '';
+    }
   }
 }
 

@@ -45,6 +45,19 @@
     background-size: cover;
     background-position: center;
     border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.im-avatar .im-button {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    font-size: 18px;
+    animation: none;
+    box-shadow: none;
 }
 
 .im-header-info {
@@ -230,6 +243,9 @@
     align-items: center;
     justify-content: center;
     animation: pulse 2s infinite;
+    padding: 0;
+    line-height: 1;
+    vertical-align: middle;
 }
 
 .im-button:hover {
@@ -243,29 +259,6 @@
 
 .im-button.hidden {
     display: none;
-}
-
-/* IM 未读消息徽章 */
-.im-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #ff4444;
-    color: white;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: bold;
-    border: 2px solid white;
-    min-width: 24px;
-}
-
-.im-button {
-    position: relative;
 }
 
 /* 动画 */
