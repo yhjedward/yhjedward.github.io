@@ -8,6 +8,8 @@ class IMWidget {
         this.chatWindow = document.getElementById('im-chat-window');
         this.closeBtn = document.getElementById('im-close-btn');
         this.inputField = document.getElementById('im-input-field');
+        this.emailField = document.getElementById('im-email-field');
+        this.nicknameField = document.getElementById('im-nickname-field');
         this.sendBtn = document.getElementById('im-send-btn');
         this.messagesContainer = document.getElementById('im-messages');
         this.avatar = document.getElementById('im-avatar');
@@ -50,7 +52,7 @@ class IMWidget {
         this.bindEvents();
 
         // 显示欢迎消息
-        this.addBotMessage('Hi👋 ！有什么可以帮助您吗？留言请带上您的接收邮箱');
+        this.addBotMessage('Hi👋 ！有什么可以帮助您吗？请填写邮箱和昵称后留言');
 
         // 从localStorage加载消息历史
         this.loadMessageHistory();
@@ -92,6 +94,9 @@ class IMWidget {
 
         // 发送消息
         this.sendBtn.addEventListener('click', () => this.sendMessage());
+        this.emailField && this.emailField.addEventListener('input', () => this.validateInputs());
+        this.nicknameField && this.nicknameField.addEventListener('input', () => this.validateInputs());
+        this.inputField.addEventListener('input', () => { this.autoResizeTextarea(); this.validateInputs(); });
         this.inputField.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -99,8 +104,6 @@ class IMWidget {
             }
         });
 
-        // 自动调整输入框高度
-        this.inputField.addEventListener('input', () => this.autoResizeTextarea());
     }
 
     /**
@@ -158,23 +161,30 @@ class IMWidget {
      */
     sendMessage() {
         const text = this.inputField.value.trim();
-        if (!text) return;
+        const email = this.emailField ? this.emailField.value.trim() : '';
+        const nickname = this.nicknameField ? this.nicknameField.value.trim() : '';
+
+        // 必须通过校验才能发送（邮箱格式且昵称非空）
+        if (!this.isValidEmail(email) || !nickname || !text) {
+            this.addBotMessage('请填写有效的邮箱和昵称，且留言不为空');
+            return;
+        }
 
         // 显示用户消息
         this.addUserMessage(text);
 
-        // 清空输入框
+        // 清空输入框（保留邮箱字段）
         this.inputField.value = '';
         this.autoResizeTextarea();
 
-        // 发送到后端
-        this.sendToServer(text);
+        // 发送到后端，包含 email 和 nickname
+        this.sendToServer(text, email, nickname);
     }
 
     /**
      * 发送消息到服务器
      */
-    sendToServer(message) {
+    sendToServer(message, email, nickname) {
         fetch(`${this.apiBaseUrl}/im/send`, {
             method: 'POST',
             headers: {
@@ -182,6 +192,8 @@ class IMWidget {
             },
             body: JSON.stringify({
                 message: message,
+                email: email,
+                nickname: nickname,
                 timestamp: new Date().toISOString(),
                 userAgent: navigator.userAgent,
                 url: window.location.href
@@ -208,6 +220,26 @@ class IMWidget {
                 console.error('[IM] Error details:', err.message);
                 console.log('[IM] API URL used:', `${this.apiBaseUrl}/im/send`);
             });
+    }
+
+    /**
+     * 验证邮箱格式
+     */
+    isValidEmail(email) {
+        if (!email) return false;
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    /**
+     * 根据当前输入启用/禁用发送按钮
+     */
+    validateInputs() {
+        const email = this.emailField ? this.emailField.value.trim() : '';
+        const nickname = this.nicknameField ? this.nicknameField.value.trim() : '';
+        const text = this.inputField ? this.inputField.value.trim() : '';
+        const valid = this.isValidEmail(email) && nickname.length > 0 && text.length > 0;
+        if (this.sendBtn) this.sendBtn.disabled = !valid;
     }
 
     /**

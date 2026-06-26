@@ -172,23 +172,34 @@
 }
 
 /* IM 输入框容器 */
+
 .im-input-container {
     padding: 12px;
     border-top: 1px solid #e0e0e0;
     background: white;
     flex-shrink: 0;
     display: flex;
-    gap: 8px;
-    align-items: flex-end;
+    flex-direction: column;
 }
 
+.im-email-field,
+.im-nickname-field,
 .im-input-field {
-    flex: 1;
+    width: 100%;
     border: 1px solid #ddd;
     border-radius: 6px;
     padding: 8px 12px;
     font-size: 13px;
     font-family: inherit;
+    box-sizing: border-box;
+}
+
+.im-email-field,
+.im-nickname-field {
+    margin-bottom: 8px;
+}
+
+.im-input-field {
     resize: none;
     max-height: 80px;
     transition: border-color 0.2s;
@@ -210,7 +221,7 @@
     font-size: 13px;
     font-weight: 500;
     transition: all 0.2s;
-    min-width: 50px;
+    align-self: flex-end;
 }
 
 .im-send-btn:hover {
@@ -229,6 +240,7 @@
 
 /* IM 开启按钮 */
 .im-button {
+    position: relative;
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -255,6 +267,24 @@
 
 .im-button:active {
     transform: scale(0.95);
+}
+
+.im-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: #ff4d4f;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .im-button.hidden {
