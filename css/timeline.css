@@ -173,13 +173,6 @@
     word-break: break-word;
 }
 
-.timeline-card-actions {
-    display: flex;
-    gap: 6px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-}
-
 .timeline-field {
     margin-bottom: 10px;
     display: flex;
@@ -256,13 +249,6 @@
     background: #d81b1f;
 }
 
-.timeline-view {
-    flex: 1;
-    overflow-y: auto;
-    min-height: 0;
-    padding-right: 4px;
-}
-
 .timeline-card {
     background: #fff;
     border: 1px solid #d3d3d3;
@@ -305,7 +291,8 @@
 .timeline-card-actions {
     display: flex;
     gap: 4px;
-    flex-shrink: 0;
+    flex-wrap: wrap;
+    margin-top: 8px;
 }
 
 .timeline-card-btn {
@@ -363,3 +350,317 @@
     font-size: 32px;
 }
 
+/* ===== 移动端适配 ===== */
+
+/* 平板和手机屏幕 - 768px 及以下 */
+@media (max-width: 768px) {
+  /* 窗口全屏显示 */
+  .timeline-window {
+    position: fixed;
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+    transform: none !important;
+    z-index: 10005;
+  }
+
+  .timeline-window.minimized {
+    display: none !important;
+  }
+
+  /* 内容区域改为单列布局 */
+  .timeline-window .timeline-content {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: none;
+    height: calc(100% - 36px);
+    gap: 0;
+  }
+
+  /* 项目面板放在最上面 */
+  .timeline-project-panel {
+    border-right: none;
+    border-bottom: 1px solid #d3d3d3;
+    max-height: 120px;
+    padding: 8px;
+    flex-shrink: 0;
+  }
+
+  .timeline-project-panel h3 {
+    margin: 0 0 8px;
+    font-size: 12px;
+  }
+
+  .project-list {
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 6px;
+    gap: 8px;
+    padding-right: 8px;
+  }
+
+  .project-item {
+    flex-shrink: 0;
+    min-width: 120px;
+    padding: 6px;
+    font-size: 11px;
+  }
+
+  .project-item span {
+    white-space: normal;
+  }
+
+  /* 输入面板改为紧凑型 */
+  .timeline-input-panel {
+    border-right: none;
+    border-bottom: 1px solid #d3d3d3;
+    padding: 8px;
+    flex-shrink: 0;
+  }
+
+  .timeline-input-panel h3 {
+    margin: 0 0 8px;
+    font-size: 12px;
+  }
+
+  .timeline-field {
+    margin-bottom: 6px;
+  }
+
+  .timeline-field label {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  .timeline-field input,
+  .timeline-field textarea {
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+
+  .timeline-field textarea {
+    height: 50px;
+  }
+
+  /* 按钮改为两列 */
+  .timeline-actions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .timeline-btn {
+    padding: 5px 6px;
+    font-size: 11px;
+  }
+
+  /* 时间线列表面板占满剩余空间 */
+  .timeline-list-panel {
+    flex: 1;
+    border-right: none;
+    overflow-y: auto;
+    padding: 8px;
+    min-height: 0;
+  }
+
+  .timeline-list-panel h3 {
+    margin: 0 0 8px;
+    font-size: 12px;
+  }
+
+  /* 时间线视图优化 */
+  .timeline-view {
+    padding: 12px 8px;
+  }
+
+  /* 隐藏竖直时间线 */
+  .timeline-line {
+    display: none;
+  }
+
+  /* 时间线项目显示为卡片 */
+  .timeline-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+
+  .timeline-item:not(:last-child) {
+    margin-bottom: 12px;
+  }
+
+  /* 标记点隐藏 */
+  .timeline-item-marker {
+    display: none;
+  }
+
+  /* 卡片全宽显示 */
+  .timeline-item-card {
+    flex: 1;
+    width: 100%;
+  }
+
+  /* 标题栏调整 */
+  .timeline-window .window-titlebar {
+    padding: 2px 4px;
+    height: 36px;
+  }
+
+  .timeline-window .window-title {
+    font-size: 12px;
+  }
+
+  .timeline-window .window-controls button {
+    width: 16px;
+    height: 16px;
+    font-size: 11px;
+  }
+
+  /* 历史卡片布局调整 */
+  .timeline-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .timeline-card-btn {
+    flex: 1;
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+
+  /* 空状态 */
+  .timeline-empty {
+    font-size: 11px;
+    padding: 15px;
+  }
+
+  /* 横屏模式优化 (max-height: 500px) */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .timeline-project-panel {
+      max-height: 80px;
+    }
+
+    .timeline-input-panel {
+      max-height: 150px;
+    }
+
+    .project-item {
+      min-width: 100px;
+      padding: 4px;
+      font-size: 10px;
+    }
+
+    .timeline-field textarea {
+      height: 40px;
+    }
+
+    .timeline-actions {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .timeline-btn {
+      padding: 4px;
+      font-size: 10px;
+    }
+  }
+
+  /* 竖屏模式优化 */
+  @media (orientation: portrait) {
+    .timeline-project-panel {
+      max-height: 140px;
+    }
+
+    .timeline-field textarea {
+      height: 60px;
+    }
+  }
+}
+
+/* 手机屏幕 - 480px 及以下 */
+@media (max-width: 480px) {
+  .timeline-project-panel {
+    max-height: 100px;
+    padding: 6px;
+  }
+
+  .project-item {
+    min-width: 100px;
+    font-size: 10px;
+    padding: 4px;
+  }
+
+  .timeline-input-panel {
+    padding: 6px;
+  }
+
+  .timeline-field label {
+    font-size: 10px;
+  }
+
+  .timeline-field input,
+  .timeline-field textarea {
+    padding: 4px;
+    font-size: 11px;
+  }
+
+  .timeline-field textarea {
+    height: 45px;
+  }
+
+  .timeline-actions {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .timeline-btn {
+    padding: 6px;
+    font-size: 11px;
+    width: 100%;
+  }
+
+  .timeline-view {
+    padding: 8px 4px;
+  }
+
+  .timeline-item-card {
+    padding: 8px;
+  }
+
+  .timeline-item-title {
+    font-size: 12px;
+  }
+
+  .timeline-item-date {
+    font-size: 10px;
+  }
+
+  .timeline-item-desc {
+    font-size: 11px;
+  }
+
+  .timeline-card-actions {
+    gap: 3px;
+  }
+
+  .timeline-card-btn {
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+
+  .timeline-window .window-title {
+    font-size: 11px;
+  }
+
+  .timeline-window .window-controls button {
+    width: 14px;
+    height: 14px;
+    font-size: 10px;
+  }
+}
