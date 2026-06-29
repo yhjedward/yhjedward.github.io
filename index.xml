@@ -6,8 +6,15 @@
     <description>Recent content on Windows 7 Style Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 08 May 2026 10:06:14 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 09:58:22 +0800</lastBuildDate>
     <atom:link href="https://yhjedward.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>大模型基础</title>
+      <link>https://yhjedward.github.io/posts/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Mon, 29 Jun 2026 09:58:22 +0800</pubDate>
+      <guid>https://yhjedward.github.io/posts/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/</guid>
+      <description>&lt;h3 id=&#34;大模型术语&#34;&gt;大模型术语&lt;/h3&gt;&#xA;&lt;h4 id=&#34;rag&#34;&gt;RAG&lt;/h4&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;RAG（Retrieval-Augmented Generation，检索增强生成）的核心思想是：让大模型不再“只靠记忆说话”，而是“先查资料再回答”。它通过把外部知识库的检索结果动态注入到模型的上下文中，大幅提升回答的准确性、时效性和可解释性.&lt;/li&gt;&#xA;&lt;li&gt;RAG = 检索(Retrieve) + 增强(Augment) + 生成(Generate)&lt;br&gt;&#xA;模型在回答前会从知识库中检索相关内容，把这些内容作为上下文输入，再由大模型生成最终答案。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h4 id=&#34;rlhf&#34;&gt;RLHF&lt;/h4&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;RLHF（Reinforcement Learning from Human Feedback，人类反馈强化学习）的核心思想是：让大模型先学会基本能力, 再通过人类反馈告诉它什么是“好回答”, 最后用强化学习逼它朝这个方向优化.是让大模型“更像人、更可控、更安全”的关键技术.&lt;/li&gt;&#xA;&lt;li&gt;RLHF = 监督微调(SFT) + 奖励模型(RM) + 强化学习(PPO)它让模型从“会说话”变成“说得好、说得安全、说得符合人类偏好”&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h4 id=&#34;rlhf-的流程&#34;&gt;RLHF 的流程&lt;/h4&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;监督微调（SFT）&#xA;用人工写的高质量示范数据，让模型学会“基本的好回答方式”.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;人类写示范回答&lt;/p&gt;&#xA;&lt;p&gt;模型模仿这些回答&lt;/p&gt;&#xA;&lt;p&gt;目标：让模型具备“基础对话能力”&lt;/p&gt;&#xA;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;奖励模型（Reward Model, RM）训练&lt;br&gt;&#xA;让模型学会“什么是更好的回答”.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;人类对多个回答进行排序（如 A 比 B 好）&lt;/p&gt;&#xA;&lt;p&gt;用这些排序训练一个奖励模型&lt;/p&gt;&#xA;&lt;p&gt;奖励模型能给任意回答打分&lt;/p&gt;&#xA;&lt;p&gt;奖励模型的作用：&#xA;它是模型的“审稿人”和“评分器”.&lt;/p&gt;&#xA;&lt;ol start=&#34;3&#34;&gt;&#xA;&lt;li&gt;强化学习（PPO）优化主模型&lt;br&gt;&#xA;让模型在奖励模型的评分下不断改进.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;模型生成回答&lt;/p&gt;&#xA;&lt;p&gt;奖励模型打分&lt;/p&gt;&#xA;&lt;p&gt;用 PPO（Proximal Policy Optimization）优化模型&lt;/p&gt;&#xA;&lt;p&gt;目标：让模型输出更符合人类偏好的回答&lt;/p&gt;&#xA;&lt;p&gt;最终效果：&#xA;模型会自动倾向于“礼貌、安全、逻辑清晰、符合人类价值”的回答.&lt;/p&gt;&#xA;&lt;h4 id=&#34;cot-和-tot&#34;&gt;CoT 和 ToT&lt;/h4&gt;&#xA;&lt;h3 id=&#34;提示词工程&#34;&gt;提示词工程&lt;/h3&gt;&#xA;&lt;p&gt;提示词六要素: 角色, 任务, 背景/上下文, 输入数据, 输出格式, 质量与约束.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>代码每日一练</title>
       <link>https://yhjedward.github.io/posts/%E9%9A%8F%E7%AC%94/%E6%AF%8F%E6%97%A5%E4%B8%80%E7%BB%83/%E4%BB%A3%E7%A0%81%E6%AF%8F%E6%97%A5%E4%B8%80%E7%BB%83/</link>
