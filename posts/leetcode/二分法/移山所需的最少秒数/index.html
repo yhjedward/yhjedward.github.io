@@ -896,6 +896,14 @@ $$
   <script id="blog-data" type="application/json">
       {
         "posts": [{
+            "title": "JetpackCompose的项目结构",
+            "url": "\/posts\/android\/jetpackcompose\/jetpackcompose%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84\/",
+            "date": "2026-07-03",
+            "filename": "JetpackCompose的项目结构.md",
+            "section": "posts\/android\/JetpackCompose",
+            "lastmod": "2026-07-03",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li Jetpack Compose 项目结构的核心是：UI（Composable）只负责展示，ViewModel 负责状态与逻辑，Repository 负责数据来源，UIState 负责封装状态. \/li li Jetpack Compose 项目围绕 状态流动 来设计：Repository → ViewModel → UIState → UI(Composable). \/li \/ol h3 id=\u0026#34;ui-层composable\u0026#34; UI 层（Composable） \/h3 ul li 只负责展示 \/li li 不写业务逻辑 \/li li 通过 collectAsState() 观察 ViewModel 的状态 \/li li 通过事件回调调用 ViewModel 的函数 \/li \/ul h3 id=\u0026#34;viewmodel\u0026#34; ViewModel \/h3 ol li ViewModel 是 MVVM 中的 “VM” 层, 负责： \/li \/ol ul li 保存 UI 状态（不会因旋转丢失） \/li li 使用 MutableStateFlow 更 …"
+          },{
             "title": "大模型基础",
             "url": "\/posts\/%E5%A4%A7%E6%A8%A1%E5%9E%8B\/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80\/",
             "date": "2026-06-29",
@@ -1353,10 +1361,10 @@ $$
             "content": " h2 id=\u0026#34;简介\u0026#34; 简介 \/h2 p code tree \/code 命令提供了一种以树形结构显示文件和子目录的简单方法. \/p h3 id=\u0026#34;基本用法\u0026#34; 基本用法 \/h3 div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; code class=\u0026#34;language-bash\u0026#34; data-lang=\u0026#34;bash\u0026#34; span class=\u0026#34;line\u0026#34; span class=\u0026#34;cl\u0026#34; tree \/span \/span \/code \/pre \/div p 这将显示当前目录及其所有子目录和文件的层次结构。 \/p h3 id=\u0026#34;常用选项\u0026#34; 常用选项 \/h3 p code tree \/code 命令提供了多种选项来定制输出。以下是一些常用选项： \/p ul li p code -L \u0026amp;lt;level\u0026amp;gt; \/code ：限制显示的目录层级。例如， code tree -L 2 \/code 将只显示当前目录及其子目录的两层。 \/p div class=\u0026#34;highlight\u0026#34; pre tabindex=\u0026#34;0\u0026#34; class=\u0026#34;chroma\u0026#34; …"
           },{
             "title": "JetpackCompose的声明式UI",
-            "url": "\/posts\/android\/jetpackcompose%E7%9A%84%E5%A3%B0%E6%98%8E%E5%BC%8Fui\/",
+            "url": "\/posts\/android\/jetpackcompose\/jetpackcompose%E7%9A%84%E5%A3%B0%E6%98%8E%E5%BC%8Fui\/",
             "date": "2026-01-03",
             "filename": "JetpackCompose的声明式UI.md",
-            "section": "posts\/android",
+            "section": "posts\/android\/JetpackCompose",
             "lastmod": "2026-01-03",
             "content": " h3 id=\u0026#34;声明式ui\u0026#34; 声明式UI \/h3 ul li 声明式(Declarative) UI: 你只需要声明界面状态和结构，框架会根据数据变化自动更新 UI，而不需要你手动控制每一步的绘制和修改. \/li \/ul h4 id=\u0026#34;声明式-ui-的特点\u0026#34; 声明式 UI 的特点 \/h4 ul li 关注结果：描述“界面长什么样”，而不是“怎么一步步构建”。 \/li li 响应式更新：当数据变化时，UI 会自动刷新，不需要手动更新控件。 \/li li 简洁：代码更短、更直观。 \/li li 可维护性强：逻辑和界面绑定更紧密，减少状态同步的麻烦 \/li \/ul h4 id=\u0026#34;解释-jetpackcompose的重组recomposition\u0026#34; 解释 JetpackCompose的重组(Recomposition) \/h4 ul li 重组(Recomposition): 当数据或状态发生变化时，Compose 重新执行相关的 Composable 函数，以更新 UI 的过程.更新的是界面的一部分，而不是整个界面. \/li li 重组(Recomposition) = 当状态变化时 …"
           },{

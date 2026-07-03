@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Windows 7 Style Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 29 Jun 2026 09:58:22 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 14:00:02 +0800</lastBuildDate>
     <atom:link href="https://yhjedward.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JetpackCompose的项目结构</title>
+      <link>https://yhjedward.github.io/posts/android/jetpackcompose/jetpackcompose%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Fri, 03 Jul 2026 14:00:02 +0800</pubDate>
+      <guid>https://yhjedward.github.io/posts/android/jetpackcompose/jetpackcompose%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84/</guid>
+      <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Jetpack Compose 项目结构的核心是：UI（Composable）只负责展示，ViewModel 负责状态与逻辑，Repository 负责数据来源，UIState 负责封装状态.&lt;/li&gt;&#xA;&lt;li&gt;Jetpack Compose 项目围绕 状态流动 来设计：Repository → ViewModel → UIState → UI(Composable).&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;ui-层composable&#34;&gt;UI 层（Composable）&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;只负责展示&lt;/li&gt;&#xA;&lt;li&gt;不写业务逻辑&lt;/li&gt;&#xA;&lt;li&gt;通过 collectAsState() 观察 ViewModel 的状态&lt;/li&gt;&#xA;&lt;li&gt;通过事件回调调用 ViewModel 的函数&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;viewmodel&#34;&gt;ViewModel&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;ViewModel 是 MVVM 中的 “VM” 层, 负责：&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;保存 UI 状态（不会因旋转丢失）&lt;/li&gt;&#xA;&lt;li&gt;使用 MutableStateFlow 更新状态&lt;/li&gt;&#xA;&lt;li&gt;使用 StateFlow 暴露只读状态&lt;/li&gt;&#xA;&lt;li&gt;调用 Repository 获取数据&lt;/li&gt;&#xA;&lt;li&gt;处理 UI 事件（按钮点击、输入变化）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;在 ViewModel 中, StateFlow 是 只读的状态流, MutableStateFlow 是 可写的状态流.&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;StateFlow 只能在 UI 中观察状态:&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;始终有一个当前值(通过 .value 获取)&lt;/li&gt;&#xA;&lt;li&gt;新订阅者会立即收到最新值&lt;/li&gt;&#xA;&lt;li&gt;状态变化会自动通知所有收集者(UI)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;ol start=&#34;4&#34;&gt;&#xA;&lt;li&gt;MutableStateFlow 用来在 ViewModel 中更新状态：&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;内部可以修改 .value.&lt;/li&gt;&#xA;&lt;li&gt;外部通常只暴露成 StateFlow(只读).&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;repository-层数据来源&#34;&gt;Repository 层(数据来源)&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;统一管理数据来源&lt;/li&gt;&#xA;&lt;li&gt;决定从网络还是本地读取&lt;/li&gt;&#xA;&lt;li&gt;ViewModel 不直接访问网络或数据库&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
     <item>
       <title>大模型基础</title>
       <link>https://yhjedward.github.io/posts/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/</link>
@@ -409,9 +416,9 @@
     </item>
     <item>
       <title>JetpackCompose的声明式UI</title>
-      <link>https://yhjedward.github.io/posts/android/jetpackcompose%E7%9A%84%E5%A3%B0%E6%98%8E%E5%BC%8Fui/</link>
+      <link>https://yhjedward.github.io/posts/android/jetpackcompose/jetpackcompose%E7%9A%84%E5%A3%B0%E6%98%8E%E5%BC%8Fui/</link>
       <pubDate>Sat, 03 Jan 2026 21:58:33 +0800</pubDate>
-      <guid>https://yhjedward.github.io/posts/android/jetpackcompose%E7%9A%84%E5%A3%B0%E6%98%8E%E5%BC%8Fui/</guid>
+      <guid>https://yhjedward.github.io/posts/android/jetpackcompose/jetpackcompose%E7%9A%84%E5%A3%B0%E6%98%8E%E5%BC%8Fui/</guid>
       <description>&lt;h3 id=&#34;声明式ui&#34;&gt;声明式UI&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;声明式(Declarative) UI: 你只需要声明界面状态和结构，框架会根据数据变化自动更新 UI，而不需要你手动控制每一步的绘制和修改.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h4 id=&#34;声明式-ui-的特点&#34;&gt;声明式 UI 的特点&lt;/h4&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;关注结果：描述“界面长什么样”，而不是“怎么一步步构建”。&lt;/li&gt;&#xA;&lt;li&gt;响应式更新：当数据变化时，UI 会自动刷新，不需要手动更新控件。&lt;/li&gt;&#xA;&lt;li&gt;简洁：代码更短、更直观。&lt;/li&gt;&#xA;&lt;li&gt;可维护性强：逻辑和界面绑定更紧密，减少状态同步的麻烦&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h4 id=&#34;解释-jetpackcompose的重组recomposition&#34;&gt;解释 JetpackCompose的重组(Recomposition)&lt;/h4&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;重组(Recomposition): 当数据或状态发生变化时，Compose 重新执行相关的 Composable 函数，以更新 UI 的过程.更新的是界面的一部分，而不是整个界面.&lt;/li&gt;&#xA;&lt;li&gt;重组(Recomposition) = 当状态变化时，Compose 重新运行 Composable 函数来更新 UI.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;命令式ui&#34;&gt;命令式UI&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;命令式(Imperative) UI: 你要一步步告诉系统怎么做, 比如“先创建一个按钮, 再设置颜色，再添加点击事件”.&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
     </item>
     <item>
