@@ -563,7 +563,9 @@ export const MediaPlayer = (() => {
             taskbarIcon.style.display = 'none';
         });
 
-        playlistToggleBtn.addEventListener('click', () => {
+        playlistToggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (!playlistPanel) return;
             playlistPanel.classList.toggle('open');
         });
@@ -899,7 +901,9 @@ export const MediaPlayer = (() => {
         });
 
         if (playlistToggleBtn && videoSidebar) {
-            playlistToggleBtn.addEventListener('click', () => {
+            playlistToggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 videoSidebar.classList.toggle('closed');
             });
         }

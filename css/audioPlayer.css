@@ -92,6 +92,7 @@
 }
 
 .audio-player .playlist-panel {
+    flex: 0 0 auto;
     width: 280px;
     min-width: 280px;
     background: rgba(255, 255, 255, 0.06);
@@ -101,6 +102,8 @@
     display: flex;
     flex-direction: column;
     transition: width 0.2s ease, opacity 0.2s ease, padding 0.2s ease;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .audio-player .playlist-panel:not(.open) {
@@ -149,10 +152,6 @@
     transform: translateX(2px);
 }
 
-.audio-player .player-meta-row {
-    width: 100%;
-}
-
 @media (max-width: 900px) {
     .audio-player {
         width: 100vw;
@@ -171,12 +170,6 @@
     .audio-player .playlist-panel {
         width: 100%;
         min-width: auto;
-    }
-
-    .audio-player .playlist-panel:not(.open) {
-        width: 100%;
-        opacity: 1;
-        pointer-events: auto;
     }
 }
 
@@ -216,18 +209,9 @@
 .audio-player .song-title {
     font-size: 20px;
     font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: 0.01em;
-    word-break: break-word;
-}
-
-.audio-player .track-subtitle {
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.72);
-    line-height: 1.5;
-}
-
-.audio-player .progress-wrap {
+        line-height: 1.5;
+        letter-spacing: 0.01em;
+        overflow-wrap: anywhere;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -369,21 +353,6 @@
     cursor: pointer;
 }
 
-.audio-player .playlist-panel {
-    display: none;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
-    padding: 14px 14px 10px;
-    max-height: 220px;
-    overflow-y: auto;
-    backdrop-filter: blur(8px);
-}
-
-.audio-player .playlist-panel.open {
-    display: block;
-}
 
 .audio-player .playlist-header {
     display: flex;
