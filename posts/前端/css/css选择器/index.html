@@ -12,9 +12,7 @@
   <link rel="stylesheet" href="/css/toc.css">
   <link rel="stylesheet" href="/css/imageViewer.css">
   <link rel="stylesheet" href="/css/audioPlayer.css">
-  <link rel="stylesheet" href="/css/musicManager.css">
   <link rel="stylesheet" href="/css/videoPlayer.css">
-  <link rel="stylesheet" href="/css/videoManager.css">
   <link rel="stylesheet" href="/css/markdown.css">
   <link rel="stylesheet" href="/css/draw.css">
   <link rel="stylesheet" href="/css/todo.css">
@@ -111,18 +109,18 @@
       <div class="icon"></div>
       <div class="label">文本转语音</div>
     </div>
-    <div class="desktop-icon music-manager-icon" id="music-manager">
+    <div class="desktop-icon audio-player-icon" id="audio-player-icon">
       <div class="icon"></div>
-      <div class="label">音乐管理器</div>
+      <div class="label">音乐播放器</div>
     </div>
-    <div class="desktop-icon video-manager-icon" id="video-manager">
+    <div class="desktop-icon video-player-icon" id="video-player-icon">
       <div class="icon"></div>
-      <div class="label">视频管理器</div>
+      <div class="label">视频播放器</div>
     </div>
     
     <div id="desktop-central" aria-hidden="true">
       <div id="desktop-central-text"
-        data-text=" ^_^ || &gt;_&lt; || v_v || *_* "
+        data-text=" 傻der || 搞设计 || 做开发 || 做游戏 "
         data-speed="80"
         data-delete-speed="40"
         data-pause="1500"
@@ -213,52 +211,6 @@
     </div>
   </div>
   
-  <div class="window music-manager-window" id="music-manager-window">
-    <div class="window-titlebar">
-      <div class="window-title">音乐管理器</div>
-      <div class="window-controls">
-        <button class="minimize music-minimize">─</button>
-        <button class="maximize music-maximize">□</button>
-        <button class="close music-close">×</button>
-      </div>
-    </div>
-    <div class="music-toolbar">
-      <button class="toolbar-btn music-play-all" title="播放全部">▶ 播放全部</button>
-      <button class="toolbar-btn music-add-to-playlist" title="添加到列表">➕ 加入列表</button>
-    </div>
-    <div class="music-layout">
-      <div class="music-sidebar">
-        <div class="music-sidebar-item active">全部音乐</div>
-        <div class="music-sidebar-item">最近播放</div>
-      </div>
-      <div class="music-content">
-        <div class="music-files-container"></div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="window video-manager-window" id="video-manager-window">
-    <div class="window-titlebar">
-      <div class="window-title">视频管理器</div>
-      <div class="window-controls">
-        <button class="minimize video-minimize">─</button>
-        <button class="maximize video-maximize">□</button>
-        <button class="close video-close">×</button>
-      </div>
-    </div>
-    <div class="video-toolbar">
-      <button class="toolbar-btn video-play-all" title="播放全部">▶ 播放</button>
-    </div>
-    <div class="video-layout">
-      <div class="video-sidebar">
-        <div class="video-sidebar-item active">全部视频</div>
-        <div class="video-sidebar-item">最近播放</div>
-      </div>
-      <div class="video-content">
-        <div class="video-files-container"></div>
-      </div>
-    </div>
-  </div>
   <div class="taskbar">
     <div class="start-button" id="start-button" role="button" tabindex="0" aria-label="开始" aria-expanded="false"
       aria-controls="start-menu">
@@ -1087,6 +1039,38 @@
   <script id="blog-data" type="application/json">
       {
         "posts": [{
+            "title": "JetpackCompose常用组合式函数",
+            "url": "\/posts\/android\/jetpackcompose\/jetpackcompose%E5%B8%B8%E7%94%A8%E7%BB%84%E5%90%88%E5%BC%8F%E5%87%BD%E6%95%B0\/",
+            "date": "2026-07-08",
+            "filename": "JetpackCompose常用组合式函数.md",
+            "section": "posts\/android\/JetpackCompose",
+            "lastmod": "2026-07-08",
+            "content": " h4 id=\u0026#34;remeber-函数\u0026#34; remeber 函数 \/h4 ul li 它是一个泛型函数, 你可以通过它记住任何类型的数据(比如一个对象、一个列表、一个状态等). \/li li 它接收一个 Lambda 表达式：也就是我们在大括号 { } 里写的初始化代码. \/li li 它返回一个值：返回的就是你大括号里计算出来的那个对象. \/li \/ul h4 id=\u0026#34;它和普通函数有什么区别\u0026#34; 它和普通函数有什么区别？ \/h4 p 普通的函数每次被调用时，都会从头到尾执行一遍里面的代码。但 remember 是一个带有记忆功能的函数： 首次执行时：它会运行大括号 {} 里的代码，把结果存起来，然后返回这个结果。 后续重组（Recomposition）时：当界面因为状态改变而重新绘制时，Compose 会跳过大括号里的代码，直接把之前存好的那个结果返回给你。 \/p h4 id=\u0026#34;launchedeffect-函数\u0026#34; LaunchedEffect 函数 \/h4 ul li LaunchedEffect 是一个核心的副作用（Side Effects）处理 API，主要用于在 …"
+          },{
+            "title": "Kotlin数据类型",
+            "url": "\/posts\/%E5%90%8E%E7%AB%AF\/kotlin\/kotlin%E5%88%9D%E7%BA%A7\/kotlin%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B\/",
+            "date": "2026-07-08",
+            "filename": "Kotlin数据类型.md",
+            "section": "posts\/后端\/kotlin\/kotlin初级",
+            "lastmod": "2026-07-08",
+            "content": " h2 \/h2 h3 id=\u0026#34;uint\u0026#34; Uint \/h3 ul li Kotlin 的 Unit 就是“没有返回值”，但它本身是一个真正的类型，并且有一个唯一实例 Unit. \/li \/ul p kotlin 的 Uint 与 Java 的 void 的区别: \/p table tr td 特性 \/td td Kotlin的Uint \/td td Java的void \/td \/tr tr td 是否是类型 \/td td 是真正的类型 \/td td 不是类型 \/td \/tr tr td 是否有实例 \/td td 有唯一实例Uint \/td td 没有实例 \/td \/tr tr td 是否能作为泛型参数 \/td td 可以 \/td td 不行 \/td \/tr tr td 是否能作为值传递 \/td td 可以 \/td td 不行 \/td \/tr \/table "
+          },{
+            "title": "Blender骨骼",
+            "url": "\/posts\/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8\/blender\/blender%E5%88%9D%E7%BA%A7\/blender%E9%AA%A8%E9%AA%BC%E5%9F%BA%E7%A1%80\/",
+            "date": "2026-07-06",
+            "filename": "Blender骨骼.md",
+            "section": "posts\/软件使用\/Blender\/Blender初级",
+            "lastmod": "2026-07-06",
+            "content": " h2 id=\u0026#34;概述\u0026#34; 概述 \/h2 ol li 骨骼有两端: 粗的一端叫骨首(Head)(Pivot Point), 细的一端叫骨尾(Tail)(End of the Bone).骨首是骨骼的旋转中心. \/li \/ol "
+          },{
+            "title": "日语文章1",
+            "url": "\/posts\/%E8%AF%AD%E8%A8%80\/%E6%97%A5%E8%AF%AD\/%E6%97%A5%E8%AF%AD%E9%AB%98%E7%BA%A7\/%E6%97%A5%E8%AF%AD%E6%96%87%E7%AB%A01\/",
+            "date": "2026-07-03",
+            "filename": "日语文章1.md",
+            "section": "posts\/语言\/日语\/日语高级",
+            "lastmod": "2026-07-03",
+            "content": " h2 id=\u0026#34;文章链接\u0026#34; 文章链接 \/h2 ol li a href=\u0026#34;https:\/\/nihogo-study.com\/2022\/10\/27\/column-nan-nani\/\u0026#34; 【日本語教育】「何」の読み方「なん」と「なに」の使い分け \/a \/li \/ol "
+          },{
             "title": "JetpackCompose的项目结构",
             "url": "\/posts\/android\/jetpackcompose\/jetpackcompose%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84\/",
             "date": "2026-07-03",
@@ -1917,7 +1901,7 @@
             "filename": "Blender快捷键.md",
             "section": "posts\/软件使用\/Blender",
             "lastmod": "2025-11-06",
-            "content": " h2 id=\u0026#34;blender-快捷键\u0026#34; Blender 快捷键 \/h2 table tr td 快捷键 \/td \/tr tr td A: 全选物体 \/td \/tr tr td shift\u002bA: 新建物体 \/td \/tr tr td shift\u002bD: 复制物体 \/td td shift\u002bD - x: 复制出的物体只能沿 X 轴移动. td alt\u002bD: 关联的形式复制物体，修改时可以同步修改 \/td \/tr tr td X: 删除物体 \/td \/tr tr td P: 分离选中的物体 \/td \/tr tr td E: 向外挤出 \/td \/tr tr td I: 内插面 \/td \/tr tr td 小键盘数字0: 切换\/退出摄像机视图 \/td td 小键盘数字1: 正视图 \/td td 小键盘数字2: 向下转15° \/td \/tr tr td 小键盘数字3: 侧视图 \/td td 小键盘数字4: 向左转15° \/td td 小键盘数字5: 切换正交视图与透视视图 \/td \/tr tr td 小键盘数字7: 顶视图 \/td td 小键盘数字9: 去相反方向视图 \/td td 小键盘小数点: …"
+            "content": " h2 id=\u0026#34;blender-快捷键\u0026#34; Blender 快捷键 \/h2 h3 id=\u0026#34;基础快捷键\u0026#34; 基础快捷键 \/h3 table tr td 快捷键 \/td \/tr tr td A: 全选物体 \/td \/tr tr td shift\u002bA: 新建物体 \/td \/tr tr td shift\u002bD: 复制物体 \/td td shift\u002bD - x: 复制出的物体只能沿 X 轴移动. td alt\u002bD: 关联的形式复制物体，修改时可以同步修改 \/td \/tr tr td X: 删除物体 \/td \/tr tr td P: 分离选中的物体 \/td \/tr tr td E: 向外挤出 \/td \/tr tr td I: 内插面 \/td \/tr tr td 小键盘数字0: 切换\/退出摄像机视图 \/td td 小键盘数字1: 正视图 \/td td 小键盘数字2: 向下转15° \/td \/tr tr td 小键盘数字3: 侧视图 \/td td 小键盘数字4: 向左转15° \/td td 小键盘数字5: 切换正交视图与透视视图 \/td \/tr tr td 小键盘数字7: 顶视图 \/td td 小键盘数字 …"
           },{
             "title": "Unity3D基础",
             "url": "\/posts\/%E6%B8%B8%E6%88%8F\/unity3d\/unity3d%E5%9F%BA%E7%A1%80\/",
@@ -4346,7 +4330,19 @@
   
   <script id="video-data" type="application/json">
       {
-        "videos": [{"name": "dummy", "path": "/videos/dummy", "size": "0 bytes", "isDir": false, "dir": "videos" }
+        "videos": [{
+                  "name": "测试",
+                  "path": "/videos/测试",
+                  "size": "4096 bytes",
+                  "isDir":  true ,
+                  "dir": "videos"
+                },{
+                  "name": "youtube_bIufqPklrR8_1920x1080_h264.mp4",
+                  "path": "/videos\/测试/youtube_bIufqPklrR8_1920x1080_h264.mp4",
+                  "size": "71539563 bytes",
+                  "isDir":  false ,
+                  "dir": "videos\/测试"
+                },{"name": "dummy", "path": "/videos/dummy", "size": "0 bytes", "isDir": false, "dir": "videos" }
         ]
       }
     </script>

@@ -21,8 +21,6 @@ import { WindowManager } from './windowManager.js';
 import { WindowShell } from './windowShell.js';
 import { StartMenu } from './startMenu.js';
 import { Explorer } from './explorer.js';
-import { MusicManager } from './musicManager.js';
-import { VideoManager } from './videoManager.js';
 import { Drawing } from './drawing.js';
 import { MarkdownEditor } from './markdownEditor.js';
 import { TableOfContents } from './toc.js';
@@ -134,13 +132,13 @@ export function initWin7Blog() {
     console.log('[Win7] Initializing Explorer');
     Explorer.init();
 
-    // 10.5 音乐管理器（Music Manager）
-    console.log('[Win7] Initializing Music Manager');
-    MusicManager.init();
+    // 10.5 音乐播放器（Audio Player）
+    console.log('[Win7] Initializing Audio Player');
+    // MediaPlayer already handles its own taskbar icon and player window dynamically.
 
-    // 10.6 视频管理器（Video Manager）
-    console.log('[Win7] Initializing Video Manager');
-    VideoManager.init();
+    // 10.6 视频播放器（Video Player）
+    console.log('[Win7] Initializing Video Player');
+    // MediaPlayer already handles its own video player window dynamically.
 
     // 11. 画板（Drawing）
     console.log('[Win7] Initializing Drawing');
@@ -323,63 +321,22 @@ globalThis.hideTimelineWindow = function() {
     }
 };
 
-globalThis.startOpenMusicManager = function() {
-    console.log('[startOpenMusicManager] Called');
-    const win = document.getElementById('music-manager-window');
-    if (win) {
-        console.log('[startOpenMusicManager] Music Manager window found');
-        win.style.display = 'flex';
-        win.style.visibility = 'visible';
-        win.style.opacity = '1';
-        WindowShell.bringToFront(win);
-        win.classList.remove('minimized');
-        win.classList.add('restored', 'active');
-
-        const taskbarIcon = document.querySelector('[data-app="musicManager"]');
-        if (taskbarIcon) {
-            taskbarIcon.style.display = 'flex';
-            taskbarIcon.classList.add('active');
-        }
-
-        // 确保音乐管理器已初始化
-        if (globalThis.musicManager && typeof globalThis.musicManager.open === 'function') {
-            globalThis.musicManager.open();
-        }
+globalThis.startOpenAudioPlayer = function() {
+    console.log('[startOpenAudioPlayer] Called');
+    if (globalThis.mediaPlayer && typeof globalThis.mediaPlayer.openAudioPlayer === 'function') {
+        globalThis.mediaPlayer.openAudioPlayer();
     } else {
-        console.warn('[startOpenMusicManager] Music Manager window not found');
+        console.warn('[startOpenAudioPlayer] MediaPlayer openAudioPlayer not available');
     }
 };
 
-// 暴露MusicManager为全局变量
-globalThis.musicManager = MusicManager;
-
-// 暴露VideoManager为全局变量
-globalThis.videoManager = VideoManager;
-
-globalThis.startOpenVideoManager = function() {
-    console.log('[startOpenVideoManager] Called');
-    const win = document.getElementById('video-manager-window');
-    if (win) {
-        console.log('[startOpenVideoManager] Video Manager window found');
-        win.style.display = 'flex';
-        win.style.visibility = 'visible';
-        win.style.opacity = '1';
-        WindowShell.bringToFront(win);
-        win.classList.remove('minimized');
-        win.classList.add('restored', 'active');
-
-        const taskbarIcon = document.querySelector('[data-app="videoManager"]');
-        if (taskbarIcon) {
-            taskbarIcon.style.display = 'flex';
-            taskbarIcon.classList.add('active');
-        }
-
-        // 确保视频管理器已初始化
-        if (globalThis.videoManager && typeof globalThis.videoManager.open === 'function') {
-            globalThis.videoManager.open();
-        }
+// 暴露视频播放器打开函数为全局变量
+globalThis.startOpenVideoPlayer = function() {
+    console.log('[startOpenVideoPlayer] Called');
+    if (globalThis.mediaPlayer && typeof globalThis.mediaPlayer.openVideoPlayer === 'function') {
+        globalThis.mediaPlayer.openVideoPlayer();
     } else {
-        console.warn('[startOpenVideoManager] Video Manager window not found');
+        console.warn('[startOpenVideoPlayer] MediaPlayer openVideoPlayer not available');
     }
 };
 
@@ -397,25 +354,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 为音乐管理器图标绑定点击事件
-    const musicManagerIcon = document.getElementById('music-manager');
-    if (musicManagerIcon) {
-        musicManagerIcon.addEventListener('click', (e) => {
+    const audioPlayerIcon = document.getElementById('audio-player-icon');
+    if (audioPlayerIcon) {
+        audioPlayerIcon.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            if (typeof globalThis.startOpenMusicManager === 'function') {
-                globalThis.startOpenMusicManager();
+            if (typeof globalThis.startOpenAudioPlayer === 'function') {
+                globalThis.startOpenAudioPlayer();
             }
         });
     }
 
-    // 为视频管理器图标绑定点击事件
-    const videoManagerIcon = document.getElementById('video-manager');
-    if (videoManagerIcon) {
-        videoManagerIcon.addEventListener('click', (e) => {
+    // 为视频播放器图标绑定点击事件
+    const videoPlayerIcon = document.getElementById('video-player-icon');
+    if (videoPlayerIcon) {
+        videoPlayerIcon.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            if (typeof globalThis.startOpenVideoManager === 'function') {
-                globalThis.startOpenVideoManager();
+            if (typeof globalThis.startOpenVideoPlayer === 'function') {
+                globalThis.startOpenVideoPlayer();
             }
         });
     }
@@ -464,8 +421,6 @@ globalThis.Win7 = {
     WindowShell,
     StartMenu,
     Explorer,
-    MusicManager,
-    VideoManager,
     Drawing,
     MarkdownEditor,
     TableOfContents,

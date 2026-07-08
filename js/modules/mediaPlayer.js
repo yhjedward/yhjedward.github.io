@@ -31,6 +31,8 @@ export const MediaPlayer = (() => {
 
     function init(taskbarContainer) {
         taskbarItems = taskbarContainer;
+        loadStaticAudioPlaylist();
+        loadStaticVideoPlaylist();
     }
 
     function updateImageTransform(img) {
@@ -332,6 +334,80 @@ export const MediaPlayer = (() => {
         }
     }
 
+    function openAudioPlayer() {
+        if (!taskbarItems) {
+            console.error('MediaPlayer not initialized');
+            return;
+        }
+
+        let audioPlayerElement = document.getElementById('audio-player');
+        let taskbarIcon = document.getElementById('audio-taskbar-icon');
+
+        if (!audioPlayerElement) {
+            const playerObj = createAudioPlayer();
+            audioPlayerElement = playerObj.element;
+            taskbarIcon = playerObj.taskbarIcon;
+            taskbarItems.appendChild(taskbarIcon);
+        }
+
+        updatePlaylistDisplay(audioPlayerElement);
+
+        const audio = audioPlayerElement.querySelector('audio');
+        const songTitle = audioPlayerElement.querySelector('.song-title');
+        const firstTrack = playlist.tracks[playlist.currentIndex];
+        if (audio && songTitle && firstTrack && !audio.src) {
+            audio.src = firstTrack.path;
+            songTitle.textContent = firstTrack.name;
+        }
+
+        audioPlayerElement.style.display = 'flex';
+        audioPlayerElement.classList.remove('minimized');
+        audioPlayerElement.classList.add('restored');
+
+        if (taskbarIcon) {
+            taskbarIcon.style.display = 'flex';
+            taskbarIcon.classList.add('active');
+        }
+    }
+
+    function openVideoPlayer() {
+        if (!taskbarItems) {
+            console.error('MediaPlayer not initialized');
+            return;
+        }
+
+        let videoPlayerElement = document.getElementById('video-player');
+        let taskbarIcon = document.getElementById('video-taskbar-icon');
+
+        if (!videoPlayerElement) {
+            const playerObj = createVideoPlayer();
+            videoPlayerElement = playerObj.element;
+            taskbarIcon = playerObj.taskbarIcon;
+            taskbarItems.appendChild(taskbarIcon);
+        }
+
+        renderVideoPlaylist(videoPlayerElement);
+
+        const video = videoPlayerElement.querySelector('video');
+        const title = videoPlayerElement.querySelector('.video-title');
+        if (video && title && !video.src && videoPlaylist.tracks.length > 0) {
+            const firstTrack = videoPlaylist.tracks[videoPlaylist.currentIndex];
+            if (firstTrack) {
+                video.src = firstTrack.path;
+                title.textContent = firstTrack.name;
+            }
+        }
+
+        videoPlayerElement.style.display = 'flex';
+        videoPlayerElement.classList.remove('minimized');
+        videoPlayerElement.classList.add('restored');
+
+        if (taskbarIcon) {
+            taskbarIcon.style.display = 'flex';
+            taskbarIcon.classList.add('active');
+        }
+    }
+
     function playAudio(audioPath, filename) {
         if (!taskbarItems) {
             console.error('MediaPlayer not initialized');
@@ -395,32 +471,51 @@ export const MediaPlayer = (() => {
 
         audioPlayer.innerHTML = `
             <div class="window-titlebar">
-                <div class="window-title">音乐播放器</div>
+                <div class="window-title">
+                    <span class="audio-title-icon">🎧</span>
+                    <span>音乐播放器</span>
+                </div>
                 <div class="window-controls">
-                    <button class="minimize audio-minimize">─</button>
-                    <button class="maximize audio-maximize">□</button>
-                    <button class="close audio-close">×</button>
+                    <button class="minimize audio-minimize" title="最小化">─</button>
+                    <button class="maximize audio-maximize" title="最大化">□</button>
+                    <button class="close audio-close" title="关闭">×</button>
                 </div>
             </div>
             <div class="audio-content">
-                <div class="audio-info">
-                    <div class="song-title">正在加载...</div>
-                    <div class="song-controls">
-                        <button class="prev-track" title="上一曲">⏮</button>
-                        <button class="play-pause">⏵</button>
-                        <button class="next-track" title="下一曲">⏭</button>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
+                <div class="player-top">
+                    <div class="cover-panel">
+                        <div class="cover-wrapper">
+                            <div class="cover-icon">♫</div>
                         </div>
-                        <div class="time-info">0:00 / 0:00</div>
                     </div>
-                    <div class="volume-control">
-                        <span>🔊</span>
-                        <input type="range" min="0" max="100" value="50" class="volume-slider">
+                    <div class="track-info">
+                        <div class="song-title">正在加载...</div>
+                        <div class="track-subtitle">轻触歌曲以继续播放</div>
+                        <div class="progress-wrap">
+                            <div class="progress-container">
+                                <div class="progress-bar"></div>
+                            </div>
+                            <div class="time-info">0:00 / 0:00</div>
+                        </div>
+                        <div class="controls-row">
+                            <button class="prev-track" title="上一曲">⏮</button>
+                            <button class="play-pause" title="播放/暂停">⏵</button>
+                            <button class="next-track" title="下一曲">⏭</button>
+                        </div>
+                        <div class="player-meta-row">
+                            <button class="playlist-toggle" title="显示/隐藏播放列表">播放列表</button>
+                            <div class="volume-control">
+                                <span>🔊</span>
+                                <input type="range" min="0" max="100" value="50" class="volume-slider">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="playlist-panel" style="display: none;">
-                    <div class="playlist-header">播放列表</div>
+                <div class="playlist-panel">
+                    <div class="playlist-header">
+                        <span>播放列表</span>
+                        <span class="playlist-count">0首</span>
+                    </div>
                     <div class="playlist-list"></div>
                 </div>
                 <audio src="" controls style="display: none;"></audio>
@@ -441,6 +536,7 @@ export const MediaPlayer = (() => {
 
         // 绑定事件
         bindAudioPlayerEvents(audioPlayer, taskbarIcon);
+        updatePlaylistDisplay(audioPlayer);
 
         return { element: audioPlayer, taskbarIcon };
     }
@@ -458,11 +554,18 @@ export const MediaPlayer = (() => {
         const progressContainer = audioPlayer.querySelector('.progress-container');
         const progressBar = audioPlayer.querySelector('.progress-bar');
         const timeInfo = audioPlayer.querySelector('.time-info');
+        const playlistToggleBtn = audioPlayer.querySelector('.playlist-toggle');
+        const playlistPanel = audioPlayer.querySelector('.playlist-panel');
 
         closeBtn.addEventListener('click', () => {
             audioPlayer.style.display = 'none';
             audio.pause();
             taskbarIcon.style.display = 'none';
+        });
+
+        playlistToggleBtn.addEventListener('click', () => {
+            if (!playlistPanel) return;
+            playlistPanel.classList.toggle('open');
         });
 
         minimizeBtn.addEventListener('click', () => {
@@ -603,7 +706,12 @@ export const MediaPlayer = (() => {
 
     function updatePlaylistDisplay(audioPlayer) {
         const playlistList = audioPlayer.querySelector('.playlist-list');
+        const playlistCount = audioPlayer.querySelector('.playlist-count');
         if (!playlistList) return;
+
+        if (playlistCount) {
+            playlistCount.textContent = `${playlist.tracks.length}首`;
+        }
 
         playlistList.innerHTML = '';
         playlist.tracks.forEach((track, index) => {
@@ -654,8 +762,7 @@ export const MediaPlayer = (() => {
         const videoTitle = videoPlayerElement.querySelector('.video-title');
         videoTitle.textContent = filename ? filename.split('/').pop() : '未知视频';
 
-        // 将当前播放的视频添加到播放列表
-        // 检查是否已存在
+        // 将当前播放的视频设置为播放列表当前项
         const existingIndex = videoPlaylist.tracks.findIndex(t => t.path === videoPath);
         if (existingIndex !== -1) {
             videoPlaylist.currentIndex = existingIndex;
@@ -663,6 +770,8 @@ export const MediaPlayer = (() => {
             videoPlaylist.tracks.push({ path: videoPath, name: filename });
             videoPlaylist.currentIndex = videoPlaylist.tracks.length - 1;
         }
+
+        renderVideoPlaylist(videoPlayerElement);
 
         videoPlayerElement.style.display = 'flex';
         videoPlayerElement.classList.remove('minimized');
@@ -691,25 +800,32 @@ export const MediaPlayer = (() => {
                     <button class="close video-close">×</button>
                 </div>
             </div>
-            <div class="video-content">
-                <div class="video-header">
-                    <div class="video-title">正在加载...</div>
+            <div class="video-player-body">
+                <div class="video-sidebar">
+                    <div class="video-sidebar-header">播放列表</div>
+                    <div class="video-playlist-list"></div>
                 </div>
-                <video src="" class="video-element" style="width: 100%; height: 100%;"></video>
-                <div class="video-controls">
-                    <div class="video-progress">
-                        <div class="progress-bar-bg">
-                            <div class="progress-bar-fill"></div>
-                        </div>
-                        <div class="progress-time">0:00 / 0:00</div>
+                <div class="video-content">
+                    <div class="video-header">
+                        <div class="video-title">正在加载...</div>
+                        <button class="video-playlist-toggle" title="显示/隐藏播放列表">播放列表</button>
                     </div>
-                    <div class="control-buttons">
-                        <button class="video-prev-track" title="上一个">⏮</button>
-                        <button class="video-play-pause" title="播放/暂停">⏵</button>
-                        <button class="video-next-track" title="下一个">⏭</button>
-                        <div class="video-volume-control">
-                            <span class="volume-icon">🔊</span>
-                            <input type="range" min="0" max="100" value="50" class="video-volume-slider">
+                    <video src="" class="video-element" style="width: 100%; height: 100%;"></video>
+                    <div class="video-controls">
+                        <div class="video-progress">
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill"></div>
+                            </div>
+                            <div class="progress-time">0:00 / 0:00</div>
+                        </div>
+                        <div class="control-buttons">
+                            <button class="video-prev-track" title="上一个">⏮</button>
+                            <button class="video-play-pause" title="播放/暂停">⏵</button>
+                            <button class="video-next-track" title="下一个">⏭</button>
+                            <div class="video-volume-control">
+                                <span class="volume-icon">🔊</span>
+                                <input type="range" min="0" max="100" value="50" class="video-volume-slider">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -730,6 +846,7 @@ export const MediaPlayer = (() => {
 
         // 绑定事件
         bindVideoPlayerEvents(videoPlayer, taskbarIcon);
+        renderVideoPlaylist(videoPlayer);
 
         return { element: videoPlayer, taskbarIcon };
     }
@@ -747,6 +864,8 @@ export const MediaPlayer = (() => {
         const progressContainer = videoPlayer.querySelector('.progress-bar-bg');
         const progressBar = videoPlayer.querySelector('.progress-bar-fill');
         const timeInfo = videoPlayer.querySelector('.progress-time');
+        const playlistToggleBtn = videoPlayer.querySelector('.video-playlist-toggle');
+        const videoSidebar = videoPlayer.querySelector('.video-sidebar');
 
         closeBtn.addEventListener('click', () => {
             videoPlayer.style.display = 'none';
@@ -779,6 +898,12 @@ export const MediaPlayer = (() => {
             }
         });
 
+        if (playlistToggleBtn && videoSidebar) {
+            playlistToggleBtn.addEventListener('click', () => {
+                videoSidebar.classList.toggle('closed');
+            });
+        }
+
         // 播放/暂停按钮
         playPauseBtn.addEventListener('click', () => {
             if (video.paused) {
@@ -810,6 +935,7 @@ export const MediaPlayer = (() => {
                 videoPlayer.querySelector('.video-title').textContent = track.name;
                 video.play();
                 playPauseBtn.textContent = '⏸';
+                renderVideoPlaylist(videoPlayer);
             }
         });
 
@@ -876,7 +1002,6 @@ export const MediaPlayer = (() => {
 
         // 视频播放结束
         video.addEventListener('ended', () => {
-            playPauseBtn.textContent = '⏵';
             if (videoPlaylist.tracks.length > 0) {
                 // 自动播放下一个
                 videoPlaylist.currentIndex = (videoPlaylist.currentIndex + 1) % videoPlaylist.tracks.length;
@@ -885,6 +1010,9 @@ export const MediaPlayer = (() => {
                 videoPlayer.querySelector('.video-title').textContent = track.name;
                 video.play();
                 playPauseBtn.textContent = '⏸';
+                renderVideoPlaylist(videoPlayer);
+            } else {
+                playPauseBtn.textContent = '⏵';
             }
         });
 
@@ -955,9 +1083,74 @@ export const MediaPlayer = (() => {
         document.addEventListener('pointercancel', endWindowDrag);
     }
 
+    function loadStaticAudioPlaylist() {
+        const musicDataEl = document.getElementById('music-data');
+        if (!musicDataEl) {
+            return;
+        }
+
+        try {
+            const raw = musicDataEl.textContent || musicDataEl.innerText;
+            const json = JSON.parse(raw);
+            const list = Array.isArray(json.music) ? json.music : [];
+            playlist.tracks = list
+                .filter((item) => item && !item.isDir && item.path && item.name && item.path !== '/audios/dummy')
+                .map((item) => ({ path: item.path, name: item.name }));
+            playlist.currentIndex = 0;
+        } catch (error) {
+            console.warn('[MediaPlayer] loadStaticAudioPlaylist failed:', error);
+        }
+    }
+
+    function loadStaticVideoPlaylist() {
+        const videoDataEl = document.getElementById('video-data');
+        if (!videoDataEl) {
+            return;
+        }
+
+        try {
+            const raw = videoDataEl.textContent || videoDataEl.innerText;
+            const json = JSON.parse(raw);
+            const list = Array.isArray(json.videos) ? json.videos : [];
+            videoPlaylist.tracks = list
+                .filter((item) => item && !item.isDir && item.path && item.name && item.path !== '/videos/dummy')
+                .map((item) => ({ path: item.path, name: item.name }));
+            videoPlaylist.currentIndex = 0;
+        } catch (error) {
+            console.warn('[MediaPlayer] loadStaticVideoPlaylist failed:', error);
+        }
+    }
+
+    function renderVideoPlaylist(videoPlayer) {
+        const playlistContainer = videoPlayer.querySelector('.video-playlist-list');
+        if (!playlistContainer) return;
+
+        playlistContainer.innerHTML = '';
+        videoPlaylist.tracks.forEach((track, index) => {
+            const item = document.createElement('div');
+            item.className = 'video-playlist-item' + (index === videoPlaylist.currentIndex ? ' active' : '');
+            item.textContent = track.name;
+            item.title = track.name;
+            item.addEventListener('click', () => {
+                videoPlaylist.currentIndex = index;
+                const video = videoPlayer.querySelector('video');
+                if (!video) return;
+                video.src = track.path;
+                videoPlayer.querySelector('.video-title').textContent = track.name;
+                video.play();
+                const playPauseBtn = videoPlayer.querySelector('.video-play-pause');
+                if (playPauseBtn) playPauseBtn.textContent = '⏸';
+                renderVideoPlaylist(videoPlayer);
+            });
+            playlistContainer.appendChild(item);
+        });
+    }
+
     return {
         init,
         previewImage,
+        openAudioPlayer,
+        openVideoPlayer,
         playAudio,
         playVideo,
         // 播放全部音乐
