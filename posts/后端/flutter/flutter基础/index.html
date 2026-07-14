@@ -426,6 +426,28 @@ r
 <li>child: 只能放一个 Widget,适用于只能包含一个内容的布局组件.</li>
 <li>children: 放多个 Widget(列表),适用于可以包含多个子组件的布局组件.</li>
 </ol>
+<h2 id="解释-flutter-项目的-statelesswidget-和-statefulwidget">解释 flutter 项目的 StatelessWidget 和 StatefulWidget</h2>
+<h3 id="statelesswidget无状态组件">StatelessWidget(无状态组件)</h3>
+<ol>
+<li>StatelessWidget 最大的特点是不可变性.这意味着一旦一个 StatelessWidget 被创建, 它的属性(如文本内容、颜色、尺寸等)就无法在内部被修改.它没有内部可变状态, 其 UI 在渲染完成后就不会再自行改变, 就像一张打印好的照片一样，始终保持静态.</li>
+<li>StatelessWidget 的生命周期非常简单.它只有一个核心方法 —— build(BuildContext context).
+作用：build 方法负责根据当前传入的配置信息(构造函数参数)来绘制和返回 UI 界面.<br>
+触发时机：该方法通常在 Widget 初始化时被调用。此外，如果它的父级 Widget 发生了重建，StatelessWidget 也会随之重建.</li>
+</ol>
+<h3 id="statefulwidget有状态组件">StatefulWidget(有状态组件)</h3>
+<ul>
+<li>StatefulWidget 是构建动态交互界面的核心基础组件.它专门用于描述那些需要持有一些可变状态、并根据用户输入或数据变化来动态更新 UI 的界面片段.</li>
+<li>StatefulWidget 本身依然是不可变的，但它知道如何生成一个 State 对象.State 对象才是真正保存可变信息(如计数器数值、输入框文本、动画状态等)的载体.这种分离是因为两者的生命周期不同：Widget 是临时对象，用于构建应用在某一状态下的呈现；而 State 对象则在多次调用 build() 之间保持存在，从而能记住信息.</li>
+<li>StatefulWidget 的实现通常需要创建两个类：一个 StatefulWidget 子类和一个 State 子类。其核心生命周期如下：</li>
+</ul>
+<ol>
+<li>createState()：当 StatefulWidget 被插入到 Widget 树中时,框架会调用此方法来创建一个新的 State 对象.</li>
+<li>initState()：State 对象创建并关联到 BuildContext 后，框架会调用此方法，用于执行依赖于上下文或 widget 的一次性初始化.</li>
+<li>build()：该方法位于 State 类中.当 State 对象完全初始化后，框架会调用 build 方法来获取 UI 描述。只要状态发生变化，build 就会被重新调用.</li>
+<li>didUpdateWidget()：当父级 Widget 重建并传入了一个新的 StatefulWidget 实例时，框架会更新 State 的 widget 属性并调用此方法，以便 State 响应配置的变化.</li>
+<li>dispose()：当包含该 State 对象的子树被永久从树中移除时，框架会调用此方法。开发者应在此方法中释放对象保留的任何资源（如停止动画、取消订阅等)。</li>
+<li>setState(): 修改 State 中的数据后, 必须调用 setState(() {}) 方法. 这会通知 Flutter 框架“内部状态已发生变化，可能会影响用户界面”，框架随后会将该 State 标记为“脏状态”，并触发 build 方法重新构建 UI 树，从而更新屏幕显示.</li>
+</ol>
 <h2 id="参考链接">参考链接</h2>
 <ol>
 <li><a href="https://zhuanlan.zhihu.com/p/1989017634285577333">如何从零开始,启动一个Flutter项目</a></li>
@@ -455,6 +477,12 @@ r
     <li><a href="#解释-flutter-的-build-函数">解释 flutter 的 build 函数</a></li>
     <li><a href="#解释-flutter-项目的-pubspecyaml-文件">解释 flutter 项目的 pubspec.yaml 文件</a></li>
     <li><a href="#解释-flutter-项目的-child-和-children">解释 flutter 项目的 child 和 children</a></li>
+    <li><a href="#解释-flutter-项目的-statelesswidget-和-statefulwidget">解释 flutter 项目的 StatelessWidget 和 StatefulWidget</a>
+      <ul>
+        <li><a href="#statelesswidget无状态组件">StatelessWidget(无状态组件)</a></li>
+        <li><a href="#statefulwidget有状态组件">StatefulWidget(有状态组件)</a></li>
+      </ul>
+    </li>
     <li><a href="#参考链接">参考链接</a></li>
   </ul>
 </nav>

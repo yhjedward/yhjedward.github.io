@@ -35,6 +35,74 @@ export const MediaPlayer = (() => {
         loadStaticVideoPlaylist();
     }
 
+    function bindWindowDrag(windowEl, titlebar) {
+        if (!windowEl || !titlebar) return;
+
+        let isDragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+        let activePointerId = null;
+
+        const startWindowDrag = (e) => {
+            if (windowEl.classList.contains('maximized')) return;
+            if (e.target.closest('.window-controls')) return;
+
+            const rect = windowEl.getBoundingClientRect();
+
+            windowEl.style.setProperty('transform', 'none', 'important');
+            windowEl.style.setProperty('left', `${rect.left}px`, 'important');
+            windowEl.style.setProperty('top', `${rect.top}px`, 'important');
+
+            isDragging = true;
+            activePointerId = typeof e.pointerId === 'number' ? e.pointerId : null;
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+            windowEl.style.transition = 'none';
+
+            if (titlebar.setPointerCapture && activePointerId !== null) {
+                try {
+                    titlebar.setPointerCapture(activePointerId);
+                } catch {
+                    // no-op
+                }
+            }
+
+            e.preventDefault();
+        };
+
+        const handleWindowDragMove = (e) => {
+            if (!isDragging) return;
+            if (activePointerId !== null && typeof e.pointerId === 'number' && e.pointerId !== activePointerId) return;
+
+            const newLeft = e.clientX - offsetX;
+            const newTop = e.clientY - offsetY;
+
+            const maxLeft = window.innerWidth - 100;
+            const maxTop = window.innerHeight - 40;
+            const minLeft = -windowEl.offsetWidth + 100;
+            const minTop = 0;
+
+            windowEl.style.setProperty('left', `${Math.max(minLeft, Math.min(maxLeft, newLeft))}px`, 'important');
+            windowEl.style.setProperty('top', `${Math.max(minTop, Math.min(maxTop, newTop))}px`, 'important');
+
+            e.preventDefault();
+        };
+
+        const endWindowDrag = (e) => {
+            if (!isDragging) return;
+            if (activePointerId !== null && typeof e.pointerId === 'number' && e.pointerId !== activePointerId) return;
+
+            isDragging = false;
+            activePointerId = null;
+            if (windowEl) windowEl.style.transition = '';
+        };
+
+        titlebar.addEventListener('pointerdown', startWindowDrag);
+        document.addEventListener('pointermove', handleWindowDragMove);
+        document.addEventListener('pointerup', endWindowDrag);
+        document.addEventListener('pointercancel', endWindowDrag);
+    }
+
     function updateImageTransform(img) {
         if (!img) return;
         img.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px) scale(${currentScale})`;
@@ -524,6 +592,9 @@ export const MediaPlayer = (() => {
 
         document.body.appendChild(audioPlayer);
 
+        const titlebar = audioPlayer.querySelector('.window-titlebar');
+        bindWindowDrag(audioPlayer, titlebar);
+
         const taskbarIcon = document.createElement('a');
         taskbarIcon.href = '#';
         taskbarIcon.className = 'taskbar-item';
@@ -637,22 +708,46 @@ export const MediaPlayer = (() => {
             audio.volume = volumeSlider.value / 100;
         });
 
-        // 进度条拖拽功能
+        // 进度条拖拽功能（支持鼠标和触摸）
         let isDraggingProgress = false;
+        let progressPointerId = null;
 
-        progressContainer.addEventListener('mousedown', (e) => {
+        const startProgressDrag = (e) => {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
             isDraggingProgress = true;
+            progressPointerId = typeof e.pointerId === 'number' ? e.pointerId : null;
             updateProgress(e);
-        });
+            if (progressContainer.setPointerCapture && progressPointerId !== null) {
+                try {
+                    progressContainer.setPointerCapture(progressPointerId);
+                } catch (err) {
+                    // ignore
+                }
+            }
+        };
 
-        document.addEventListener('mousemove', (e) => {
+        const stopProgressDrag = (e) => {
             if (!isDraggingProgress) return;
+            if (progressPointerId !== null && typeof e.pointerId === 'number' && e.pointerId !== progressPointerId) return;
+            isDraggingProgress = false;
+            progressPointerId = null;
+            if (progressContainer.releasePointerCapture && typeof e.pointerId === 'number') {
+                try {
+                    progressContainer.releasePointerCapture(e.pointerId);
+                } catch (err) {
+                    // ignore
+                }
+            }
+        };
+
+        progressContainer.addEventListener('pointerdown', startProgressDrag);
+        document.addEventListener('pointermove', (e) => {
+            if (!isDraggingProgress) return;
+            if (progressPointerId !== null && e.pointerId !== progressPointerId) return;
             updateProgress(e);
         });
-
-        document.addEventListener('mouseup', () => {
-            isDraggingProgress = false;
-        });
+        document.addEventListener('pointerup', stopProgressDrag);
+        document.addEventListener('pointercancel', stopProgressDrag);
 
         progressContainer.addEventListener('click', (e) => {
             updateProgress(e);
@@ -794,14 +889,6 @@ export const MediaPlayer = (() => {
         }
 
         videoPlayer.innerHTML = `
-            <div class="window-titlebar">
-                <div class="window-title">视频播放器</div>
-                <div class="window-controls">
-                    <button class="minimize video-minimize">─</button>
-                    <button class="maximize video-maximize">□</button>
-                    <button class="close video-close">×</button>
-                </div>
-            </div>
             <div class="video-player-body">
                 <div class="video-sidebar">
                     <div class="video-sidebar-header">播放列表</div>
@@ -809,10 +896,24 @@ export const MediaPlayer = (() => {
                 </div>
                 <div class="video-content">
                     <div class="video-header">
-                        <div class="video-title">正在加载...</div>
-                        <button class="video-playlist-toggle" title="显示/隐藏播放列表">播放列表</button>
+                        <div class="video-title">视频播放器</div>
+                        <div class="video-header-actions">
+                            <button class="video-playlist-toggle" title="显示/隐藏播放列表">播放列表</button>
+                            <div class="window-controls">
+                                <button class="minimize video-minimize" title="最小化">─</button>
+                                <button class="maximize video-maximize" title="最大化">□</button>
+                                <button class="close video-close" title="关闭">×</button>
+                            </div>
+                        </div>
                     </div>
-                    <video src="" class="video-element" style="width: 100%; height: 100%;"></video>
+                    <div class="video-main">
+                        <div class="video-stage">
+                            <video src="" class="video-element"></video>
+                            <div class="video-overlay">
+                                <button class="video-big-play" title="播放/暂停">▶</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="video-controls">
                         <div class="video-progress">
                             <div class="progress-bar-bg">
@@ -821,12 +922,15 @@ export const MediaPlayer = (() => {
                             <div class="progress-time">0:00 / 0:00</div>
                         </div>
                         <div class="control-buttons">
-                            <button class="video-prev-track" title="上一个">⏮</button>
-                            <button class="video-play-pause" title="播放/暂停">⏵</button>
-                            <button class="video-next-track" title="下一个">⏭</button>
+                            <div class="control-actions">
+                                <button class="video-prev-track" title="上一个">⏮</button>
+                                <button class="video-play-pause" title="播放/暂停">⏵</button>
+                                <button class="video-next-track" title="下一个">⏭</button>
+                            </div>
                             <div class="video-volume-control">
                                 <span class="volume-icon">🔊</span>
                                 <input type="range" min="0" max="100" value="50" class="video-volume-slider">
+                                <button class="video-fullscreen" title="全屏">⛶</button>
                             </div>
                         </div>
                     </div>
@@ -835,6 +939,9 @@ export const MediaPlayer = (() => {
         `;
 
         document.body.appendChild(videoPlayer);
+
+        const titlebar = videoPlayer.querySelector('.video-header');
+        bindWindowDrag(videoPlayer, titlebar);
 
         const taskbarIcon = document.createElement('a');
         taskbarIcon.href = '#';
@@ -858,11 +965,13 @@ export const MediaPlayer = (() => {
         const minimizeBtn = videoPlayer.querySelector('.video-minimize');
         const maximizeBtn = videoPlayer.querySelector('.video-maximize');
         const video = videoPlayer.querySelector('video');
-        const titlebar = videoPlayer.querySelector('.window-titlebar');
+        const titlebar = videoPlayer.querySelector('.video-header');
         const playPauseBtn = videoPlayer.querySelector('.video-play-pause');
+        const bigPlayBtn = videoPlayer.querySelector('.video-big-play');
         const prevBtn = videoPlayer.querySelector('.video-prev-track');
         const nextBtn = videoPlayer.querySelector('.video-next-track');
         const volumeSlider = videoPlayer.querySelector('.video-volume-slider');
+        const fullscreenBtn = videoPlayer.querySelector('.video-fullscreen');
         const progressContainer = videoPlayer.querySelector('.progress-bar-bg');
         const progressBar = videoPlayer.querySelector('.progress-bar-fill');
         const timeInfo = videoPlayer.querySelector('.progress-time');
@@ -877,8 +986,12 @@ export const MediaPlayer = (() => {
 
         minimizeBtn.addEventListener('click', () => {
             videoPlayer.classList.add('minimized');
-            videoPlayer.style.display = 'none';
             taskbarIcon.style.display = 'flex';
+            setTimeout(() => {
+                if (videoPlayer.classList.contains('minimized')) {
+                    videoPlayer.style.display = 'none';
+                }
+            }, 260);
         });
 
         maximizeBtn.addEventListener('click', () => {
@@ -892,11 +1005,17 @@ export const MediaPlayer = (() => {
         taskbarIcon.addEventListener('click', (e) => {
             e.preventDefault();
             if (videoPlayer.classList.contains('minimized') || videoPlayer.style.display === 'none') {
-                videoPlayer.classList.remove('minimized');
                 videoPlayer.style.display = 'flex';
+                requestAnimationFrame(() => {
+                    videoPlayer.classList.remove('minimized');
+                });
             } else {
                 videoPlayer.classList.add('minimized');
-                videoPlayer.style.display = 'none';
+                setTimeout(() => {
+                    if (videoPlayer.classList.contains('minimized')) {
+                        videoPlayer.style.display = 'none';
+                    }
+                }, 260);
             }
         });
 
@@ -908,16 +1027,50 @@ export const MediaPlayer = (() => {
             });
         }
 
-        // 播放/暂停按钮
-        playPauseBtn.addEventListener('click', () => {
+        if (fullscreenBtn) {
+            fullscreenBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const videoStage = videoPlayer.querySelector('.video-stage');
+                if (!videoStage) return;
+
+                if (document.fullscreenElement === videoStage || document.webkitFullscreenElement === videoStage) {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen().catch(() => {});
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                } else if (videoStage.requestFullscreen) {
+                    videoStage.requestFullscreen();
+                } else if (videoStage.webkitRequestFullscreen) {
+                    videoStage.webkitRequestFullscreen();
+                } else if (videoStage.mozRequestFullScreen) {
+                    videoStage.mozRequestFullScreen();
+                } else if (videoStage.msRequestFullscreen) {
+                    videoStage.msRequestFullscreen();
+                }
+            });
+        }
+
+        const togglePlayback = () => {
             if (video.paused) {
                 video.play();
                 playPauseBtn.textContent = '⏸';
+                if (bigPlayBtn) bigPlayBtn.textContent = '⏸';
             } else {
                 video.pause();
                 playPauseBtn.textContent = '⏵';
+                if (bigPlayBtn) bigPlayBtn.textContent = '▶';
             }
-        });
+        };
+
+        // 播放/暂停按钮
+        playPauseBtn.addEventListener('click', togglePlayback);
+        if (bigPlayBtn) {
+            bigPlayBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                togglePlayback();
+            });
+        }
 
         // 上一个/下一个按钮
         prevBtn.addEventListener('click', () => {
@@ -951,22 +1104,46 @@ export const MediaPlayer = (() => {
             video.volume = volumeSlider.value / 100;
         });
 
-        // 进度条拖拽功能
+        // 进度条拖拽功能（支持鼠标和触摸）
         let isDraggingProgress = false;
+        let progressPointerId = null;
 
-        progressContainer.addEventListener('mousedown', (e) => {
+        const startProgressDrag = (e) => {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
             isDraggingProgress = true;
+            progressPointerId = typeof e.pointerId === 'number' ? e.pointerId : null;
             updateProgress(e);
-        });
+            if (progressContainer.setPointerCapture && progressPointerId !== null) {
+                try {
+                    progressContainer.setPointerCapture(progressPointerId);
+                } catch (err) {
+                    // ignore
+                }
+            }
+        };
 
-        document.addEventListener('mousemove', (e) => {
+        const stopProgressDrag = (e) => {
             if (!isDraggingProgress) return;
+            if (progressPointerId !== null && typeof e.pointerId === 'number' && e.pointerId !== progressPointerId) return;
+            isDraggingProgress = false;
+            progressPointerId = null;
+            if (progressContainer.releasePointerCapture && typeof e.pointerId === 'number') {
+                try {
+                    progressContainer.releasePointerCapture(e.pointerId);
+                } catch (err) {
+                    // ignore
+                }
+            }
+        };
+
+        progressContainer.addEventListener('pointerdown', startProgressDrag);
+        document.addEventListener('pointermove', (e) => {
+            if (!isDraggingProgress) return;
+            if (progressPointerId !== null && e.pointerId !== progressPointerId) return;
             updateProgress(e);
         });
-
-        document.addEventListener('mouseup', () => {
-            isDraggingProgress = false;
-        });
+        document.addEventListener('pointerup', stopProgressDrag);
+        document.addEventListener('pointercancel', stopProgressDrag);
 
         progressContainer.addEventListener('click', (e) => {
             updateProgress(e);

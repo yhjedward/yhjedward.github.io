@@ -81,6 +81,9 @@
     padding: 18px;
     gap: 18px;
     align-items: stretch;
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
 }
 
 .audio-player .player-top {
@@ -89,6 +92,7 @@
     gap: 18px;
     align-items: stretch;
     min-width: 0;
+    min-height: 0;
 }
 
 .audio-player .playlist-panel {
@@ -204,17 +208,20 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .audio-player .song-title {
     font-size: 20px;
     font-weight: 700;
-        line-height: 1.5;
-        letter-spacing: 0.01em;
-        overflow-wrap: anywhere;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    overflow-wrap: anywhere;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-width: 0;
 }
 
 .audio-player .progress-container {
@@ -420,21 +427,68 @@
 
 @media (max-width: 700px) {
     .audio-player {
-        width: min(95vw, 480px);
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+        width: 100vw;
+        height: 100vh;
+        min-width: auto;
+        min-height: auto;
+        top: 0;
+        left: 0;
+        transform: none;
+        border-radius: 0;
+    }
+
+    .audio-player .window-titlebar {
+        padding: 12px 14px;
+    }
+
+    .audio-player .audio-content {
+        flex-direction: column;
+        padding: 14px;
     }
 
     .audio-player .player-top {
         flex-direction: column;
-        align-items: center;
+        gap: 14px;
     }
 
     .audio-player .cover-panel {
         width: 100%;
         min-width: auto;
-        aspect-ratio: 1.1 / 1;
+        aspect-ratio: 1 / 1;
+        border-radius: 20px;
+    }
+
+    .audio-player .cover-wrapper {
+        padding: 20px;
+    }
+
+    .audio-player .song-title {
+        font-size: 18px;
+    }
+
+    .audio-player .progress-container {
+        height: 14px;
+        touch-action: none;
+    }
+
+    .audio-player .time-info {
+        font-size: 13px;
+    }
+
+    .audio-player .controls-row {
+        gap: 12px;
+    }
+
+    .audio-player .play-pause {
+        width: 64px;
+        height: 64px;
+        font-size: 26px;
+    }
+
+    .audio-player .prev-track,
+    .audio-player .next-track {
+        width: 44px;
+        height: 44px;
     }
 
     .audio-player .player-meta-row {
@@ -442,7 +496,22 @@
         align-items: stretch;
     }
 
+    .audio-player .playlist-panel {
+        width: 100%;
+        max-height: 240px;
+    }
+
+    .audio-player .playlist-toggle {
+        width: 100%;
+        justify-content: center;
+    }
+
     .audio-player .volume-control {
         width: 100%;
     }
+
+    .audio-player .playlist-item {
+        font-size: 14px;
+    }
 }
+

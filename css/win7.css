@@ -1135,13 +1135,16 @@ body[data-theme="dark"] .start-menu-right {
 }
 
 .audio-player:not(.maximized):not(.minimized) {
-    width: 400px;
-    height: 200px;
+    width: min(720px, calc(100vw - 60px));
+    height: min(560px, calc(100vh - 100px));
+    max-width: 720px;
+    max-height: 560px;
 }
 
+/* 视频播放器尺寸由 videoPlayer.css 控制 */
 .video-player:not(.maximized):not(.minimized) {
-    width: 800px;
-    height: 500px;
+    width: auto;
+    height: auto;
 }
 
 /* 增强型代码块样式 - 适配黑色主题 */
@@ -2643,7 +2646,8 @@ body[data-theme="dark"] .toc-container .toc-link:visited {
         top: 20px !important;
         left: 20px !important;
         width: calc(100vw - 40px) !important;
-        height: 180px !important;
+        height: min(82vh, 520px) !important;
+        max-height: 520px !important;
         border-radius: 8px;
     }
 
@@ -2713,10 +2717,12 @@ body[data-theme="dark"] .toc-container .toc-link:visited {
         margin: 0 3px;
     }
 
-    .video-player .play-pause {
+    .video-player .play-pause,
+    .video-player .video-play-pause {
         font-size: 22px;
     }
 
+    .video-player .video-volume-slider,
     .video-player .volume-slider {
         width: 50px;
     }
